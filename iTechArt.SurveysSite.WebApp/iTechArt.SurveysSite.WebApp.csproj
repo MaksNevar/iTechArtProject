@@ -8,4 +8,8 @@
     <ProjectReference Include="..\iTechArt\iTechArt.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>
