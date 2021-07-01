@@ -17,7 +17,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
         public HomeController(ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddFile(@"C:\iTechArtProject\iTechArt\Common\logs\HomeControllerLogger.txt");
+            loggerFactory.AddFile(@"..\iTechArt\Common\logs\HomeControllerLogger.txt");
             _logger = loggerFactory.CreateLogger("Logger");
         }
 
