@@ -1,0 +1,12 @@
+Method saying Hello, User started working at 18:05:55
+Executing ViewResult, running view Index.
+Executed ViewResult - view Index executed in 1365.5271ms.
+Executed action iTechArt.SurveysSite.WebApp.Controllers.HomeController.Index (iTechArt.SurveysSite.WebApp) in 1633.1811ms
+Executed endpoint 'iTechArt.SurveysSite.WebApp.Controllers.HomeController.Index (iTechArt.SurveysSite.WebApp)'
+Request finished in 2702.2197ms 200 text/html; charset=utf-8
+Method saying Hello, User started working at 12:39:36
+Executing ViewResult, running view Index.
+Executed ViewResult - view Index executed in 303.1367ms.
+Executed action iTechArt.SurveysSite.WebApp.Controllers.HomeController.Index (iTechArt.SurveysSite.WebApp) in 482.5754ms
+Executed endpoint 'iTechArt.SurveysSite.WebApp.Controllers.HomeController.Index (iTechArt.SurveysSite.WebApp)'
+Request finished in 796.6245ms 200 text/html; charset=utf-8
