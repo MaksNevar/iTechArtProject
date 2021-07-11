@@ -1,7 +1,20 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+<head>
+    <style>
+        div {
+            margin-top: 275px;
+            text-align: center
+        }
+    </style>
+</head>
 <div class="text-center">
-    <h1>Hello, User</h1>
+
+    @using (Html.BeginForm("ButtonClick", "Home"))
+    {
+        <p>Number of clicks: @ViewData["clicks"]</p>
+        <button type="submit" name="clickMeButton">Click me</button>
+    }
+
 </div>

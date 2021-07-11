@@ -43,7 +43,8 @@ namespace iTechArt.Repositories
 
         public void Update(T item)
         {
-            throw new System.NotImplementedException();
+            dbContext.Set<T>().Attach(item);
+            dbContext.Entry(item).State = EntityState.Modified;
         }
     }
 }
