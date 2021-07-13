@@ -24,8 +24,12 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             var dbContext = new ButtonClicksCounterContext(options);
             _unitOfWork = new UnitOfWork(dbContext, new Repository<ButtonClicksCounter>(dbContext, _logger));
 
-            _unitOfWork.Repository.Create(new ButtonClicksCounter() { Clicks = 0 });
-            _unitOfWork.Save();
+            if (_unitOfWork.Repository.GetOne(1) == null)
+            {
+                _unitOfWork.Repository.Create(new ButtonClicksCounter() {Clicks = 0});
+                _unitOfWork.Save();
+            }
+
             _currentClicks = _unitOfWork.Repository.GetOne(1);
         }
         public IActionResult Index()

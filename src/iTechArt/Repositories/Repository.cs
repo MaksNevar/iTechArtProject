@@ -7,48 +7,48 @@ namespace iTechArt.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        protected readonly DbContext DbContext;
-        protected readonly ILogger Logger;
+        protected readonly DbContext dbContext;
+        protected readonly ILogger logger;
 
 
         public Repository(DbContext context, ILogger logger)
         {
-            DbContext = context;
-            Logger = logger;
+            dbContext = context;
+            this.logger = logger;
         }
 
 
         public void Create(T item)
         {
-            Logger.LogInformation("Creating a new object with repository");
-            DbContext.Set<T>().Add(item);
+            logger.LogInformation("Creating a new object with repository");
+            dbContext.Set<T>().Add(item);
         }
 
         public IEnumerable<T> GetAll()
         {
-            Logger.LogInformation("Getting all instances of the entity");
+            logger.LogInformation("Getting all instances of the entity");
 
-            return DbContext.Set<T>().ToList();
+            return dbContext.Set<T>().ToList();
         }
 
         public T GetOne(int id)
         {
-            Logger.LogInformation($"Trying to find an object with id {id} in the db");
+            logger.LogInformation($"Trying to find an object with id {id} in the db");
 
-            return DbContext.Set<T>().Find(id);
+            return dbContext.Set<T>().Find(id);
         }
 
         public void Delete(int id)
         {
-            Logger.LogInformation($"Trying to delete an object with id {id} from the db");
-            DbContext.Set<T>().Remove(GetOne(id));
+            logger.LogInformation($"Trying to delete an object with id {id} from the db");
+            dbContext.Set<T>().Remove(GetOne(id));
         }
 
         public void Update(T item)
         {
-            Logger.LogInformation("Updating an object");
-            DbContext.Set<T>().Attach(item);
-            DbContext.Entry(item).State = EntityState.Modified;
+            logger.LogInformation("Updating an object");
+            dbContext.Set<T>().Attach(item);
+            dbContext.Entry(item).State = EntityState.Modified;
         }
     }
 }
