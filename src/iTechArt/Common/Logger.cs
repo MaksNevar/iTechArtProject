@@ -7,7 +7,7 @@ namespace iTechArt.Common
     public sealed class Logger : ILogger
     {
         private readonly string _filePath;
-        private static readonly object _lock = new object();
+        private static readonly object Lock = new object();
 
         public Logger(string path) => _filePath = path;
 
@@ -23,12 +23,10 @@ namespace iTechArt.Common
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
-            if (formatter != null)
+            if (formatter == null) return;
+            lock (Lock)
             {
-                lock (_lock)
-                {
-                    File.AppendAllText(_filePath, formatter(state, exception) + Environment.NewLine);
-                }
+                File.AppendAllText(_filePath, formatter(state, exception) + Environment.NewLine);
             }
         }
     }

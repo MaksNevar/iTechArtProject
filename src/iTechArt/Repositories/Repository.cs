@@ -1,50 +1,54 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using iTechArt.Common;
 using Microsoft.Extensions.Logging;
 
 namespace iTechArt.Repositories
 {
-    class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class
     {
-        protected readonly DbContext dbContext;
-        protected readonly ILogger logger;
+        protected readonly DbContext DbContext;
+        protected readonly ILogger Logger;
 
-        public Repository(DbContext context, string logFilePath, ILoggerFactory loggerFactory)
+
+        public Repository(DbContext context, ILogger logger)
         {
-            dbContext = context;
-            loggerFactory.AddFile(logFilePath);
-            logger = loggerFactory.CreateLogger("Logger");
+            DbContext = context;
+            Logger = logger;
         }
+
+
         public void Create(T item)
         {
-            logger.LogInformation("Creating a new object with repository");
-            dbContext.Set<T>().Add(item);
+            Logger.LogInformation("Creating a new object with repository");
+            DbContext.Set<T>().Add(item);
         }
 
         public IEnumerable<T> GetAll()
         {
-            logger.LogInformation("Getting all instances of the entity");
-            return dbContext.Set<T>().ToList();
+            Logger.LogInformation("Getting all instances of the entity");
+
+            return DbContext.Set<T>().ToList();
         }
 
         public T GetOne(int id)
         {
-            logger.LogInformation($"Trying to find an object with id {id} in the db");
-            return dbContext.Set<T>().Find(id);
+            Logger.LogInformation($"Trying to find an object with id {id} in the db");
+
+            return DbContext.Set<T>().Find(id);
         }
 
         public void Delete(int id)
         {
-            logger.LogInformation($"Trying to delete an object with id {id} from the db");
-            dbContext.Set<T>().Remove(GetOne(id));
+            Logger.LogInformation($"Trying to delete an object with id {id} from the db");
+            DbContext.Set<T>().Remove(GetOne(id));
         }
 
         public void Update(T item)
         {
-            dbContext.Set<T>().Attach(item);
-            dbContext.Entry(item).State = EntityState.Modified;
+            Logger.LogInformation("Updating an object");
+            DbContext.Set<T>().Attach(item);
+            DbContext.Entry(item).State = EntityState.Modified;
         }
     }
 }

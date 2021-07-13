@@ -2,9 +2,9 @@
 
 namespace iTechArt.Common
 {
-    class LoggerProvider : ILoggerProvider
+    internal class LoggerProvider : ILoggerProvider
     {
-        private string _path;
+        private readonly string _path;
 
         public LoggerProvider(string path)
         {

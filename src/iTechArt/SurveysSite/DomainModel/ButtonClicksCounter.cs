@@ -2,7 +2,7 @@
 
 namespace iTechArt.SurveysSite.DomainModel
 {
-    public class ButtonClicksCounter
+    public sealed class ButtonClicksCounter
     {
         [Key]
         public int Id { get; set; }

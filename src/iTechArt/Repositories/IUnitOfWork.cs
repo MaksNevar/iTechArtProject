@@ -2,8 +2,8 @@
 
 namespace iTechArt.Repositories
 {
-    interface IUnitOfWork : IDisposable
+    internal interface IUnitOfWork : IDisposable
     {
-        int Save();
+        void Save();
     }
 }

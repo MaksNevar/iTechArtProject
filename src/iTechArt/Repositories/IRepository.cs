@@ -2,7 +2,7 @@
 
 namespace iTechArt.Repositories
 {
-    interface IRepository<T> where T : class
+    internal interface IRepository<T> where T : class
     {
         IEnumerable<T> GetAll();
         T GetOne(int id);
