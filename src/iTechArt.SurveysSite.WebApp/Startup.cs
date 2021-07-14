@@ -1,4 +1,6 @@
+using iTechArt.SurveysSite.Repositories;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +18,9 @@ namespace iTechArt.SurveysSite.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContext<ButtonClicksCounterContext>(opt 
+                => opt.UseInMemoryDatabase("TestDb"));
         }
 
         public void Configure(IApplicationBuilder app)

@@ -3,7 +3,6 @@ using iTechArt.Repositories;
 using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace iTechArt.SurveysSite.WebApp.Controllers
@@ -15,22 +14,20 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         private readonly ButtonClicksCounter _currentClicks;
 
 
-        public HomeController(ILoggerFactory loggerFactory)
+        public HomeController(ILoggerFactory loggerFactory, ButtonClicksCounterContext dbContext)
         {
             loggerFactory.AddFile(@"..\iTechArt\Common\logs\logs.txt");
             _logger = loggerFactory.CreateLogger("Logger");
 
-            var options = new DbContextOptionsBuilder<ButtonClicksCounterContext>().UseInMemoryDatabase("TestDb").Options;
-            var dbContext = new ButtonClicksCounterContext(options);
             _unitOfWork = new UnitOfWork(dbContext, new Repository<ButtonClicksCounter>(dbContext, _logger));
 
-            if (_unitOfWork.Repository.GetOne(1) == null)
+            if (_unitOfWork.Repository.GetById(1) == null)
             {
                 _unitOfWork.Repository.Create(new ButtonClicksCounter() {Clicks = 0});
                 _unitOfWork.Save();
             }
 
-            _currentClicks = _unitOfWork.Repository.GetOne(1);
+            _currentClicks = _unitOfWork.Repository.GetById(1);
         }
         public IActionResult Index()
         {

@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace iTechArt.Repositories
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected readonly DbContext dbContext;
         protected readonly ILogger logger;
@@ -18,37 +18,37 @@ namespace iTechArt.Repositories
         }
 
 
-        public void Create(T item)
+        public void Create(TEntity item)
         {
             logger.LogInformation("Creating a new object with repository");
-            dbContext.Set<T>().Add(item);
+            dbContext.Set<TEntity>().Add(item);
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<TEntity> GetAll()
         {
             logger.LogInformation("Getting all instances of the entity");
 
-            return dbContext.Set<T>().ToList();
+            return dbContext.Set<TEntity>().ToList();
         }
 
-        public T GetOne(int id)
+        public TEntity GetById(object id)
         {
             logger.LogInformation($"Trying to find an object with id {id} in the db");
 
-            return dbContext.Set<T>().Find(id);
+            return dbContext.Set<TEntity>().Find(id);
         }
 
-        public void Delete(int id)
+        public void Delete(TEntity item)
         {
-            logger.LogInformation($"Trying to delete an object with id {id} from the db");
-            dbContext.Set<T>().Remove(GetOne(id));
+            logger.LogInformation($"Trying to delete an object {item} from the db");
+            dbContext.Set<TEntity>().Remove(item);
         }
 
-        public void Update(T item)
+        public void Update(TEntity item)
         {
             logger.LogInformation("Updating an object");
-            dbContext.Set<T>().Attach(item);
-            dbContext.Entry(item).State = EntityState.Modified;
+
+            dbContext.Set<TEntity>().Update(item);
         }
     }
 }
