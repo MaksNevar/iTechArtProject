@@ -27,7 +27,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 _unitOfWork.Save();
             }
 
-            _currentClicks = _unitOfWork.Repository.GetById(1);
+            //_currentClicks = _unitOfWork.Repository.GetById(1);
         }
         public IActionResult Index()
         {

@@ -7,7 +7,7 @@ namespace iTechArt.Common
         public static ILoggerFactory AddFile(this ILoggerFactory factory,
                                         string filePath)
         {
-            factory.AddProvider(new LoggerProvider(filePath));
+            //factory.AddProvider(new LoggerProvider(filePath));
 
             return factory;
         }

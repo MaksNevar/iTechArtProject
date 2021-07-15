@@ -11,11 +11,7 @@
     </style>
 </head>
 <div class="text-center">
-
-    @using (Html.BeginForm("ButtonClick", "Home"))
-    {
-        <p>Number of clicks: @Model.Clicks</p>
-        <button type="submit" name="clickMeButton">Click me</button>
-    }
+    <p>Number of clicks: @Model.Clicks</p>
+    <button type="submit" name="clickMeButton" onclick="location.href='@Url.Action("ButtonClick")'">Click me</button>
 
 </div>

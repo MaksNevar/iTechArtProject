@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace iTechArt.Repositories
+namespace iTechArt.Common
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
@@ -24,18 +24,18 @@ namespace iTechArt.Repositories
             dbContext.Set<TEntity>().Add(item);
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAll()
         {
             logger.LogInformation("Getting all instances of the entity");
 
-            return dbContext.Set<TEntity>().ToList();
+            return await dbContext.Set<TEntity>().ToListAsync();
         }
 
-        public TEntity GetById(object id)
+        public async Task<TEntity> GetById(object id)
         {
             logger.LogInformation($"Trying to find an object with id {id} in the db");
 
-            return dbContext.Set<TEntity>().Find(id);
+            return await dbContext.Set<TEntity>().FindAsync(id);
         }
 
         public void Delete(TEntity item)

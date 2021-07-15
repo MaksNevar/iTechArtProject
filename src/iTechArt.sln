@@ -4,8 +4,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTechArt.SurveysSite.WebApp", "iTechArt.SurveysSite.WebApp\iTechArt.SurveysSite.WebApp.csproj", "{E71744D2-0939-4981-ABB5-874947234006}"
+	ProjectSection(ProjectDependencies) = postProject
+		{025C35FF-5AF6-4FDD-88A3-E6D6E08507ED} = {025C35FF-5AF6-4FDD-88A3-E6D6E08507ED}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt", "iTechArt\iTechArt.csproj", "{F53933F0-836A-4685-9313-25EDF5B425DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTechArt.Common", "iTechArt\iTechArt.Common.csproj", "{F53933F0-836A-4685-9313-25EDF5B425DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.SurveysSite.Repositories", "iTechArt.SurveysSite.Repositories\iTechArt.SurveysSite.Repositories.csproj", "{025C35FF-5AF6-4FDD-88A3-E6D6E08507ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +26,10 @@ Global
 		{F53933F0-836A-4685-9313-25EDF5B425DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F53933F0-836A-4685-9313-25EDF5B425DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F53933F0-836A-4685-9313-25EDF5B425DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{025C35FF-5AF6-4FDD-88A3-E6D6E08507ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{025C35FF-5AF6-4FDD-88A3-E6D6E08507ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{025C35FF-5AF6-4FDD-88A3-E6D6E08507ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{025C35FF-5AF6-4FDD-88A3-E6D6E08507ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
