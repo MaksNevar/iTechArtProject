@@ -14,4 +14,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DomainModel\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
 </Project>

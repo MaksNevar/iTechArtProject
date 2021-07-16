@@ -1,5 +1,6 @@
 using iTechArt.SurveysSite.Repositories;
 using Microsoft.AspNetCore.Builder;
+using iTechArt.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

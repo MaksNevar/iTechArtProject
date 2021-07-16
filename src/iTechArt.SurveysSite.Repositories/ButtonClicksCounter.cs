@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace iTechArt.SurveysSite.DomainModel
+namespace iTechArt.SurveysSite.Repositories
 {
     public sealed class ButtonClicksCounter
     {

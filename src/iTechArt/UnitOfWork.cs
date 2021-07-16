@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using iTechArt.SurveysSite.DomainModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace iTechArt.Common
 {
-    public class UnitOfWork<TEntity> : IUnitOfWork where TEntity : class
+    public class UnitOfWork<TContext> : IUnitOfWork where TContext : DbContext
     {
-        private readonly DbContext _dbContext;
+        private readonly TContext _dbContext;
 
         private readonly ILogger _logger;
 
@@ -17,22 +16,22 @@ namespace iTechArt.Common
 
         private readonly Dictionary<Type, object> _repositories = new Dictionary<Type, object>();
         
-        public UnitOfWork(DbContext context, ILogger logger)
+        public UnitOfWork(TContext context, ILogger logger)
         {
             _dbContext = context;
             _logger = logger;
         }
 
-        public IRepository<TEntity> GetRepository()
+        public IRepository<TContext> GetRepository()
         {
             RegisterRepository();
 
-            return _repositories[typeof(TEntity)] as IRepository<TEntity>;
+            return _repositories[typeof(TContext)] as IRepository<TContext>;
         }
 
         private void RegisterRepository()
         {
-            _repositories.TryAdd(typeof(TEntity), new Repository<TEntity>(_dbContext, _logger));
+            _repositories.TryAdd(typeof(TContext), new Repository<TContext>(_dbContext, _logger));
         }
         public virtual void Dispose(bool disposing)
         {
