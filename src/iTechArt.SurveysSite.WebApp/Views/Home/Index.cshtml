@@ -11,6 +11,10 @@
     </style>
 </head>
 <div class="text-center">
-    <p>Number of clicks: @Model.Clicks</p>
-    <button type="submit" name="clickMeButton" onclick="location.href = '@Url.Action("ButtonClick")'">Click me</button>
+    <form method="post">
+        <p>Number of clicks: @Model.Clicks</p>
+        <input type="submit" value="Click me" asp-action="ButtonClick"/>
+    </form>
+    
+
 </div>

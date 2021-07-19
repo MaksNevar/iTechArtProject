@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\iTechArt.SurveysSite.Repositories\iTechArt.SurveysSite.Repositories.csproj" />
+    <ProjectReference Include="..\iTechArt\iTechArt.Common.csproj" />
+  </ItemGroup>
+
 </Project>

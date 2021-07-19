@@ -11,33 +11,33 @@ namespace iTechArt.Common
 
         public Logger(ILogger logger) => _logger = logger;
 
-        public void Log(LogLevel level, Exception ex, string message)
+        public void Log(LogLevel level, string message)
         {
             switch (level)
             {
                 case LogLevel.Debug:
                 {
-                    _logger.Debug(ex, message);
+                    _logger.Debug(message);
                     break;
                 }
                 case LogLevel.Information:
                 {
-                    _logger.Information(ex, message);
+                    _logger.Information(message);
                     break;
                 }
                 case LogLevel.Warning:
                 {
-                    _logger.Warning(ex, message);
+                    _logger.Warning(message);
                     break;
                 }
                 case LogLevel.Error:
                 {
-                    _logger.Error(ex, message);
+                    _logger.Error(message);
                     break;
                 }
                 case LogLevel.Critical:
                 {
-                    _logger.Fatal(ex, message);
+                    _logger.Fatal(message);
                     break;
                 }
                 default:

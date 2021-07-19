@@ -1,6 +1,7 @@
 using iTechArt.SurveysSite.Repositories;
 using Microsoft.AspNetCore.Builder;
 using iTechArt.Common;
+using iTechArt.SurveysSite.Foundation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +32,8 @@ namespace iTechArt.SurveysSite.WebApp
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
+
+            services.AddScoped<ButtonClicksLogic>();
         }
 
         public void Configure(IApplicationBuilder app)

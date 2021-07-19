@@ -1,58 +1,40 @@
 ﻿using System;
 using System.Linq;
 using iTechArt.Common;
+using iTechArt.SurveysSite.Foundation;
 using iTechArt.SurveysSite.Repositories;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Serilog;
 
 namespace iTechArt.SurveysSite.WebApp.Controllers
 {
     public sealed class HomeController : Controller
     {
         private readonly ILog _logger;
-        private readonly IUnitOfWork<ButtonClicksCounterContext> _unitOfWork;
-        private ButtonClicksCounter _currentClicks;
+
+        private readonly ButtonClicksLogic _buttonClicks;
 
 
-        public HomeController(ILog logger, IUnitOfWork<ButtonClicksCounterContext> unitOfWork)
+        public HomeController(ILog logger, ButtonClicksLogic buttonClicks)
         {
             _logger = logger;
 
-            _unitOfWork = unitOfWork;
-
-            //_currentClicks = new ButtonClicksCounter();
-            //_unitOfWork = new UnitOfWork<ButtonClicksCounterContext>(dbContext, _logger);
-
-            //if (_unitOfWork.Repository.GetById(1) == null)
-            //{
-            //    _unitOfWork.Repository.Create(new ButtonClicksCounter() {Clicks = 0});
-            //    _unitOfWork.Save();
-            //}
-
-            //_currentClicks = _unitOfWork.Repository.GetById(1);
-
-            _unitOfWork.GetRepository<ButtonClicksCounter>().Create(new ButtonClicksCounter());
-            _unitOfWork.SaveAsync();
+            _buttonClicks = buttonClicks;
         }
+
+        [HttpGet]
         public IActionResult Index()
         {
-            _logger.Log(LogLevel.Information, new Exception(),"Displaying current clicks number");
+            _logger.Log(LogLevel.Information, "Displaying current clicks number");
 
-            return View(_unitOfWork.GetRepository<ButtonClicksCounter>().GetAllAsync().Result.FirstOrDefault());
+            return View(_buttonClicks.GetCurrentButtonClicks());
         }
-
-        public IActionResult ButtonClick(string clickMeButton)
+        
+        public IActionResult ButtonClick()
         {
+            _buttonClicks.IncrementButtonClicks();
 
-            var temp = _unitOfWork.GetRepository<ButtonClicksCounter>().GetAllAsync();
-            _currentClicks = temp.Result.FirstOrDefault();
-            _currentClicks.Clicks++;
-            _unitOfWork.GetRepository<ButtonClicksCounter>().Update(_currentClicks);
-            _unitOfWork.SaveAsync();
-
-            return View("Index", _currentClicks);
+            return RedirectToAction("Index");
         }
     }
 }

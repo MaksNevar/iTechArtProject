@@ -21,35 +21,35 @@ namespace iTechArt.Common
 
         public void Create(TEntity item)
         {
-            _logger.Log(LogLevel.Information, new Exception(), "Creating a new object with repository");
+            _logger.Log(LogLevel.Information,  "Creating a new object with repository");
 
             _dbContext.Set<TEntity>().Add(item);
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            _logger.Log(LogLevel.Information, new Exception(), "Getting all instances of the entity");
+            _logger.Log(LogLevel.Information,  "Getting all instances of the entity");
 
             return await _dbContext.Set<TEntity>().ToListAsync();
         }
 
         public async Task<TEntity> GetByIdAsync(object id)
         {
-            _logger.Log(LogLevel.Information, new Exception(), $"Trying to find an object with id {id} in the db");
+            _logger.Log(LogLevel.Information,  $"Trying to find an object with id {id} in the db");
 
             return await _dbContext.Set<TEntity>().FindAsync(id);
         }
 
         public void Delete(TEntity item)
         {
-            _logger.Log(LogLevel.Information, new Exception(), $"Trying to delete an object {item} from the db");
+            _logger.Log(LogLevel.Information,  $"Trying to delete an object {item} from the db");
 
             _dbContext.Set<TEntity>().Remove(item);
         }
 
         public void Update(TEntity item)
         {
-            _logger.Log(LogLevel.Information, new Exception(), $"Updating an object {item}");
+            _logger.Log(LogLevel.Information,  $"Updating an object {item}");
 
             _dbContext.Set<TEntity>().Update(item);
         }
