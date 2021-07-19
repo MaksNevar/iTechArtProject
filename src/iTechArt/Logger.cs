@@ -1,35 +1,48 @@
 ﻿using System;
 using System.IO;
 using Microsoft.Extensions.Logging;
+using ILogger = Serilog.ILogger;
 
 namespace iTechArt.Common
 {
-    public sealed class Logger : ILogger
+    public sealed class Logger : ILog
     {
-        //private readonly ILogger _logger;
-        private readonly string _filePath;
-        private static readonly object Lock = new object();
+        private readonly ILogger _logger;
 
-        public Logger(string path) => _filePath = path;
+        public Logger(ILogger logger) => _logger = logger;
 
-        //public void Log(string message)
-        //{
-        //    _logger.LogInformation(message);
-        //}
-        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        public void Log(LogLevel level, Exception ex, string message)
         {
-            if (formatter == null) return;
-            lock (Lock)
+            switch (level)
             {
-                File.AppendAllText(_filePath, formatter(state, exception) + Environment.NewLine);
+                case LogLevel.Debug:
+                {
+                    _logger.Debug(ex, message);
+                    break;
+                }
+                case LogLevel.Information:
+                {
+                    _logger.Information(ex, message);
+                    break;
+                }
+                case LogLevel.Warning:
+                {
+                    _logger.Warning(ex, message);
+                    break;
+                }
+                case LogLevel.Error:
+                {
+                    _logger.Error(ex, message);
+                    break;
+                }
+                case LogLevel.Critical:
+                {
+                    _logger.Fatal(ex, message);
+                    break;
+                }
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(level), level, null);
             }
-        }
-
-        public bool IsEnabled(LogLevel logLevel) => true;
-
-        public IDisposable BeginScope<TState>(TState state)
-        {
-            return null;
         }
     }
 }

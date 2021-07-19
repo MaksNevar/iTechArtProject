@@ -4,6 +4,7 @@ using iTechArt.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 
 namespace iTechArt.SurveysSite.WebApp
 {
@@ -22,6 +23,14 @@ namespace iTechArt.SurveysSite.WebApp
 
             services.AddDbContext<ButtonClicksCounterContext>(opt 
                 => opt.UseInMemoryDatabase("TestDb"));
+
+            services.AddSingleton<ILog, Logger>();
+
+            services.AddSingleton(Log.Logger);
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+            services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
         }
 
         public void Configure(IApplicationBuilder app)

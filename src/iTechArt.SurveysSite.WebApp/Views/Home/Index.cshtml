@@ -12,6 +12,5 @@
 </head>
 <div class="text-center">
     <p>Number of clicks: @Model.Clicks</p>
-    <button type="submit" name="clickMeButton" onclick="location.href='@Url.Action("ButtonClick")'">Click me</button>
-
+    <button type="submit" name="clickMeButton" onclick="location.href = '@Url.Action("ButtonClick")'">Click me</button>
 </div>

@@ -1,21 +1,28 @@
-﻿using iTechArt.Common;
+﻿using System;
+using System.Linq;
+using iTechArt.Common;
 using iTechArt.SurveysSite.Repositories;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace iTechArt.SurveysSite.WebApp.Controllers
 {
     public sealed class HomeController : Controller
     {
-        private readonly ILogger _logger;
-        private readonly UnitOfWork<ButtonClicksCounterContext> _unitOfWork;
-        private readonly ButtonClicksCounter _currentClicks;
+        private readonly ILog _logger;
+        private readonly IUnitOfWork<ButtonClicksCounterContext> _unitOfWork;
+        private ButtonClicksCounter _currentClicks;
 
 
-        public HomeController(ILogger logger, ButtonClicksCounterContext dbContext)
+        public HomeController(ILog logger, IUnitOfWork<ButtonClicksCounterContext> unitOfWork)
         {
             _logger = logger;
 
+            _unitOfWork = unitOfWork;
+
+            //_currentClicks = new ButtonClicksCounter();
             //_unitOfWork = new UnitOfWork<ButtonClicksCounterContext>(dbContext, _logger);
 
             //if (_unitOfWork.Repository.GetById(1) == null)
@@ -25,19 +32,25 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             //}
 
             //_currentClicks = _unitOfWork.Repository.GetById(1);
+
+            _unitOfWork.GetRepository<ButtonClicksCounter>().Create(new ButtonClicksCounter());
+            _unitOfWork.SaveAsync();
         }
         public IActionResult Index()
         {
-            _logger.LogInformation("Displaying current clicks number");
+            _logger.Log(LogLevel.Information, new Exception(),"Displaying current clicks number");
 
-            return View(_currentClicks);
+            return View(_unitOfWork.GetRepository<ButtonClicksCounter>().GetAllAsync().Result.FirstOrDefault());
         }
 
         public IActionResult ButtonClick(string clickMeButton)
         {
+
+            var temp = _unitOfWork.GetRepository<ButtonClicksCounter>().GetAllAsync();
+            _currentClicks = temp.Result.FirstOrDefault();
             _currentClicks.Clicks++;
-            //_unitOfWork.Repository.Update(_currentClicks);
-            //_unitOfWork.Save();
+            _unitOfWork.GetRepository<ButtonClicksCounter>().Update(_currentClicks);
+            _unitOfWork.SaveAsync();
 
             return View("Index", _currentClicks);
         }

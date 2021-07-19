@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace iTechArt.Common
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork<TContext> : IDisposable where TContext : DbContext
     {
-        Task<int> Save();
+        IRepository<TEntity> GetRepository<TEntity>() where TEntity : class;
+        void SaveAsync();
     }
 }

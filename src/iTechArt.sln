@@ -12,6 +12,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTechArt.Common", "iTechArt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.SurveysSite.Repositories", "iTechArt.SurveysSite.Repositories\iTechArt.SurveysSite.Repositories.csproj", "{025C35FF-5AF6-4FDD-88A3-E6D6E08507ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.SurveysSite.DomainModel", "iTechArt.SurveysSite.DomainModel\iTechArt.SurveysSite.DomainModel.csproj", "{D5FE5821-E950-4CF4-A8D0-6D5DA9321D52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.SurveysSite.Foundation", "iTechArt.SurveysSite.Foundation\iTechArt.SurveysSite.Foundation.csproj", "{F0D00880-FC29-4FA6-802C-38249F3E048D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +34,14 @@ Global
 		{025C35FF-5AF6-4FDD-88A3-E6D6E08507ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{025C35FF-5AF6-4FDD-88A3-E6D6E08507ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{025C35FF-5AF6-4FDD-88A3-E6D6E08507ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5FE5821-E950-4CF4-A8D0-6D5DA9321D52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5FE5821-E950-4CF4-A8D0-6D5DA9321D52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5FE5821-E950-4CF4-A8D0-6D5DA9321D52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5FE5821-E950-4CF4-A8D0-6D5DA9321D52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0D00880-FC29-4FA6-802C-38249F3E048D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0D00880-FC29-4FA6-802C-38249F3E048D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0D00880-FC29-4FA6-802C-38249F3E048D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0D00880-FC29-4FA6-802C-38249F3E048D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
