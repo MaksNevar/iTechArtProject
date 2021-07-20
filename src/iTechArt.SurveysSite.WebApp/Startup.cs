@@ -29,8 +29,6 @@ namespace iTechArt.SurveysSite.WebApp
 
             services.AddSingleton(Log.Logger);
 
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-
             services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
 
             services.AddScoped<ButtonClicksLogic>();
