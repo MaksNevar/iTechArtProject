@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\iTechArt.SurveysSite.DomainModel\iTechArt.SurveysSite.DomainModel.csproj" />
+    <ProjectReference Include="..\iTechArt\iTechArt.Common.csproj" />
   </ItemGroup>
 
 </Project>

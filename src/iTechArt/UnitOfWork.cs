@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace iTechArt.Common
 {
-    public class UnitOfWork<TContext> : IUnitOfWork<TContext> where TContext : DbContext
+    public class UnitOfWork<TContext> : IUnitOfWork where TContext : DbContext
     {
-        private readonly TContext _dbContext;
+        protected readonly TContext _dbContext;
         
-        private readonly ILog _logger;
+        protected readonly ILog _logger;
 
         private bool _disposed;
 
-        private readonly Dictionary<Type, object> _repositories;
+        protected readonly Dictionary<Type, object> _repositories;
 
-        private readonly Dictionary<Type, object> _entitiesToRepositories;
+        protected readonly Dictionary<Type, Type> _registeredRepositoryTypes;
         
         public UnitOfWork(TContext context, ILog logger)
         {
@@ -22,41 +23,40 @@ namespace iTechArt.Common
             _logger = logger;
 
             _repositories = new Dictionary<Type, object>();
-            _entitiesToRepositories = new Dictionary<Type, object>();
+            _registeredRepositoryTypes = new Dictionary<Type, Type>();
         }
 
         public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
-            if (_repositories.TryGetValue(typeof(TContext), out var repo))
+            if (_repositories.TryGetValue(typeof(TEntity), out var repo))
             {
-                return repo as IRepository<TEntity>;
+                return (IRepository<TEntity>)repo;
             }
 
-            if (_entitiesToRepositories.TryGetValue(typeof(TEntity), out repo))
+            if (_registeredRepositoryTypes.TryGetValue(typeof(TEntity), out var repoType))
             {
-                RegisterRepository(repo as IRepository<TEntity>);
+                RegisterRepository<TEntity>(repoType);
 
-                return repo as IRepository<TEntity>;
+                return (IRepository<TEntity>)_repositories[typeof(TEntity)];
             }
 
-            RegisterRepository<TEntity>();
-
-            return _repositories[typeof(TContext)] as IRepository<TEntity>;
+            return new Repository<TEntity>(_dbContext, _logger);
         }
-
-        private void RegisterRepository<TEntity>() where TEntity : class
+        
+        private void RegisterRepository<TEntity>(Type repositoryType) where TEntity : class
         {
-            var tempRepo = new Repository<TEntity>(_dbContext, _logger);
+            var repository = Activator.CreateInstance(repositoryType, _dbContext, _logger);
 
-            RegisterRepository(tempRepo);
-            _entitiesToRepositories.Add(typeof(TEntity), tempRepo);
+            _repositories.Add(typeof(TEntity), repository);
         }
 
-        private void RegisterRepository<TEntity>(IRepository<TEntity> repository) where TEntity : class
+        protected void RegisterRepositoryTypes<TEntity>(params Type[] types)
         {
-            _repositories.Add(typeof(TContext), repository);
+            foreach (var type in types)
+            {
+               _registeredRepositoryTypes.Add(typeof(TEntity), type); 
+            }
         }
-
         public virtual void Dispose(bool disposing)
         {
             if (_disposed) return;
@@ -75,8 +75,8 @@ namespace iTechArt.Common
             GC.SuppressFinalize(this);
         }
 
-        public async void SaveAsync()
-        {
+        public async Task SaveAsync()
+        { 
             await _dbContext.SaveChangesAsync();
         }
     }

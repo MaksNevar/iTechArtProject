@@ -1,10 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Threading.Tasks;
 using iTechArt.Common;
 using iTechArt.SurveysSite.Foundation;
-using iTechArt.SurveysSite.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace iTechArt.SurveysSite.WebApp.Controllers
 {
@@ -12,10 +9,10 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
     {
         private readonly ILog _logger;
 
-        private readonly ButtonClicksLogic _buttonClicks;
+        private readonly IButtonClicksService _buttonClicks;
 
 
-        public HomeController(ILog logger, ButtonClicksLogic buttonClicks)
+        public HomeController(ILog logger, IButtonClicksService buttonClicks)
         {
             _logger = logger;
 
@@ -23,16 +20,16 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             _logger.Log(LogLevel.Information, "Displaying current clicks number");
 
-            return View(_buttonClicks.GetCurrentButtonClicks());
+            return View(await _buttonClicks.GetCurrentButtonClicks());
         }
         
-        public IActionResult ButtonClick()
+        public async Task<IActionResult> ButtonClick()
         {
-            _buttonClicks.IncrementButtonClicks();
+            await _buttonClicks.IncrementButtonClicks();
 
             return RedirectToAction("Index");
         }

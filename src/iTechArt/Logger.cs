@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;
+using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using ILogger = Serilog.ILogger;
 
@@ -9,40 +9,24 @@ namespace iTechArt.Common
     {
         private readonly ILogger _logger;
 
-        public Logger(ILogger logger) => _logger = logger;
+        private readonly List<Action<string>> _methodList;
+        public Logger(ILogger logger)
+        {
+            _logger = logger;
+
+            _methodList = new List<Action<string>>
+            {
+                message => _logger.Debug(message),
+                message => _logger.Information(message),
+                message => _logger.Warning(message),
+                message => _logger.Error(message),
+                message => _logger.Fatal(message)
+            };
+        }
 
         public void Log(LogLevel level, string message)
         {
-            switch (level)
-            {
-                case LogLevel.Debug:
-                {
-                    _logger.Debug(message);
-                    break;
-                }
-                case LogLevel.Information:
-                {
-                    _logger.Information(message);
-                    break;
-                }
-                case LogLevel.Warning:
-                {
-                    _logger.Warning(message);
-                    break;
-                }
-                case LogLevel.Error:
-                {
-                    _logger.Error(message);
-                    break;
-                }
-                case LogLevel.Critical:
-                {
-                    _logger.Fatal(message);
-                    break;
-                }
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(level), level, null);
-            }
+            _methodList[(int) level].Invoke(message);
         }
     }
 }

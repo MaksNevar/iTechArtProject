@@ -29,9 +29,11 @@ namespace iTechArt.SurveysSite.WebApp
 
             services.AddSingleton(Log.Logger);
 
-            services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
+            services.AddScoped<IButtonClickRepository, ButtonClickRepository>();
 
-            services.AddScoped<ButtonClicksLogic>();
+            services.AddScoped<IButtonClickUnitOfWork, ButtonClickUnitOfWork>();
+
+            services.AddScoped<IButtonClicksService, ButtonClicksService>();
         }
 
         public void Configure(IApplicationBuilder app)

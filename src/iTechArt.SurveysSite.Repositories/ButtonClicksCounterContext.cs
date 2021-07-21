@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using iTechArt.SurveysSite.DomainModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace iTechArt.SurveysSite.Repositories
 {
