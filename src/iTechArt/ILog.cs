@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-
-namespace iTechArt.Common
+﻿namespace iTechArt.Common
 {
     public interface ILog
     {
