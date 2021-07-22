@@ -1,27 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Serilog.Events;
 using ILogger = Serilog.ILogger;
 
 namespace iTechArt.Common
 {
     public sealed class Logger : ILog
     {
-        private readonly List<Action<string>> _methodList;
+        private readonly ILogger _logger;
+
+
         public Logger(ILogger logger)
         {
-            _methodList = new List<Action<string>>
-            {
-                logger.Debug,
-                logger.Information,
-                logger.Warning,
-                logger.Error,
-                logger.Fatal
-            };
+            _logger = logger;
         }
+
 
         public void Log(LogLevel level, string message)
         {
-            _methodList[(int) level].Invoke(message);
+            _logger.Write((LogEventLevel)level, message);
         }
     }
 }

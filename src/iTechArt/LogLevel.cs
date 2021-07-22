@@ -1,11 +1,13 @@
-﻿namespace iTechArt.Common
+﻿using Serilog.Events;
+
+namespace iTechArt.Common
 {
     public enum LogLevel
     {
-        Debug,
-        Information,
-        Warning,
-        Error,
-        Fatal
+        Debug = LogEventLevel.Debug,
+        Information = LogEventLevel.Information,
+        Warning = LogEventLevel.Warning,
+        Error = LogEventLevel.Error,
+        Fatal = LogEventLevel.Fatal
     }
 }

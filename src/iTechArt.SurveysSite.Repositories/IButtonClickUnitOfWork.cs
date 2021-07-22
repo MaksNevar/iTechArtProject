@@ -1,15 +1,9 @@
-﻿using System.Threading.Tasks;
-using iTechArt.Common;
-using iTechArt.SurveysSite.DomainModel;
+﻿using iTechArt.Common;
 
 namespace iTechArt.SurveysSite.Repositories
 {
     public interface IButtonClickUnitOfWork : IUnitOfWork
     {
-        void Create(ButtonClicksCounter item);
-
-        Task<ButtonClicksCounter> GetByIdAsync(object id);
-
-        void Update(ButtonClicksCounter item);
+        public ButtonClickRepository Repository { get; }
     }
 }

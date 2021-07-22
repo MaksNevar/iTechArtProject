@@ -8,7 +8,6 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
     public sealed class HomeController : Controller
     {
         private readonly ILog _logger;
-
         private readonly IButtonClicksService _buttonClicks;
 
 
@@ -19,10 +18,10 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             _buttonClicks = buttonClicks;
         }
 
-        [HttpGet]
+
         public async Task<IActionResult> Index()
         {
-            _logger.Log(LogLevel.Information, "Displaying current clicks number");
+            _logger.LogInformation("Displaying current clicks number");
 
             return View(await _buttonClicks.GetCurrentButtonClicks());
         }

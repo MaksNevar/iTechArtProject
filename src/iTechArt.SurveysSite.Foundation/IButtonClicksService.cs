@@ -6,7 +6,6 @@ namespace iTechArt.SurveysSite.Foundation
     public interface IButtonClicksService
     {
         Task IncrementButtonClicks();
-
         Task<ButtonClicksCounter> GetCurrentButtonClicks();
     }
 }

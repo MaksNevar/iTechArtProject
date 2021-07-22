@@ -7,6 +7,7 @@ namespace iTechArt.SurveysSite.Repositories
     {
         public DbSet<ButtonClicksCounter> ButtonClicks { get; set; }
 
+
         public ButtonClicksCounterContext(DbContextOptions<ButtonClicksCounterContext> options)
             : base(options)
         {

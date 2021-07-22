@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using iTechArt.SurveysSite.DomainModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace iTechArt.Common
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {
         protected readonly DbContext _dbContext;
         protected readonly ILog _logger;
@@ -19,35 +20,36 @@ namespace iTechArt.Common
 
         public void Create(TEntity item)
         {
-            _logger.Log(LogLevel.Information,  "Creating a new object with repository");
+            _logger.LogInformation("Creating a new object with repository");
 
             _dbContext.Set<TEntity>().Add(item);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync()
+        public async Task<IQueryable<TEntity>> GetAllAsync()
         {
-            _logger.Log(LogLevel.Information,  "Getting all instances of the entity");
+            _logger.LogInformation("Getting all instances of the entity");
 
-            return await _dbContext.Set<TEntity>().ToListAsync();
+            return (await _dbContext.Set<TEntity>().ToListAsync()).AsQueryable();
         }
 
         public async Task<TEntity> GetByIdAsync(object id)
         {
-            _logger.Log(LogLevel.Information,  $"Trying to find an object with id {id} in the db");
+            _logger.LogInformation($"Trying to find an object with id {id} in the db");
 
             return await _dbContext.Set<TEntity>().FindAsync(id);
         }
 
         public void Delete(TEntity item)
         {
-            _logger.Log(LogLevel.Information,  $"Trying to delete an object {item} from the db");
+            _logger.LogInformation($"Trying to delete an object {item} from the db");
 
             _dbContext.Set<TEntity>().Remove(item);
         }
 
+
         public void Update(TEntity item)
         {
-            _logger.Log(LogLevel.Information,  $"Updating an object {item}");
+            _logger.LogInformation($"Updating an object {item}");
 
             _dbContext.Set<TEntity>().Update(item);
         }
