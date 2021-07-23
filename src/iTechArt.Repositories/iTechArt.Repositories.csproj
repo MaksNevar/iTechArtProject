@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -11,8 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\iTechArt.Repositories\iTechArt.Repositories.csproj" />
-    <ProjectReference Include="..\iTechArt.SurveysSite.Repositories\iTechArt.SurveysSite.Repositories.csproj" />
+    <ProjectReference Include="..\iTechArt.SurveysSite.DomainModel\iTechArt.SurveysSite.DomainModel.csproj" />
     <ProjectReference Include="..\iTechArt\iTechArt.Common.csproj" />
   </ItemGroup>
 

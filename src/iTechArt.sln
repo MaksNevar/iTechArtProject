@@ -10,11 +10,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTechArt.SurveysSite.WebApp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTechArt.Common", "iTechArt\iTechArt.Common.csproj", "{F53933F0-836A-4685-9313-25EDF5B425DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.SurveysSite.Repositories", "iTechArt.SurveysSite.Repositories\iTechArt.SurveysSite.Repositories.csproj", "{025C35FF-5AF6-4FDD-88A3-E6D6E08507ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTechArt.SurveysSite.Repositories", "iTechArt.SurveysSite.Repositories\iTechArt.SurveysSite.Repositories.csproj", "{025C35FF-5AF6-4FDD-88A3-E6D6E08507ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.SurveysSite.DomainModel", "iTechArt.SurveysSite.DomainModel\iTechArt.SurveysSite.DomainModel.csproj", "{D5FE5821-E950-4CF4-A8D0-6D5DA9321D52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTechArt.SurveysSite.DomainModel", "iTechArt.SurveysSite.DomainModel\iTechArt.SurveysSite.DomainModel.csproj", "{D5FE5821-E950-4CF4-A8D0-6D5DA9321D52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.SurveysSite.Foundation", "iTechArt.SurveysSite.Foundation\iTechArt.SurveysSite.Foundation.csproj", "{F0D00880-FC29-4FA6-802C-38249F3E048D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTechArt.SurveysSite.Foundation", "iTechArt.SurveysSite.Foundation\iTechArt.SurveysSite.Foundation.csproj", "{F0D00880-FC29-4FA6-802C-38249F3E048D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.Repositories", "iTechArt.Repositories\iTechArt.Repositories.csproj", "{6588EFC0-5B35-43FA-B4F0-5218DA4DAC72}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +44,10 @@ Global
 		{F0D00880-FC29-4FA6-802C-38249F3E048D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0D00880-FC29-4FA6-802C-38249F3E048D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F0D00880-FC29-4FA6-802C-38249F3E048D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6588EFC0-5B35-43FA-B4F0-5218DA4DAC72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6588EFC0-5B35-43FA-B4F0-5218DA4DAC72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6588EFC0-5B35-43FA-B4F0-5218DA4DAC72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6588EFC0-5B35-43FA-B4F0-5218DA4DAC72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

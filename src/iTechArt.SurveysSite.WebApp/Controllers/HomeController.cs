@@ -23,12 +23,12 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         {
             _logger.LogInformation("Displaying current clicks number");
 
-            return View(await _buttonClicks.GetCurrentButtonClicks());
+            return View(await _buttonClicks.GetCurrentButtonClicksAsync());
         }
         
         public async Task<IActionResult> ButtonClick()
         {
-            await _buttonClicks.IncrementButtonClicks();
+            await _buttonClicks.IncrementButtonClicksAsync();
 
             return RedirectToAction("Index");
         }

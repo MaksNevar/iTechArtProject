@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using iTechArt.SurveysSite.DomainModel;
+using iTechArt.Common;
+using iTechArt.Repositories.Repository;
 using Microsoft.EntityFrameworkCore;
 
-namespace iTechArt.Common
+namespace iTechArt.Repositories.UnitOfWork
 {
     public class UnitOfWork<TContext> : IUnitOfWork where TContext : DbContext
     {
@@ -26,7 +27,7 @@ namespace iTechArt.Common
         }
 
 
-        public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class, IEntity
+        public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             if (_repositories.TryGetValue(typeof(TEntity), out var repo))
             {
@@ -39,12 +40,14 @@ namespace iTechArt.Common
 
                 _repositories.Add(typeof(TEntity), repository);
 
-                return (IRepository<TEntity>)_repositories[typeof(TEntity)];
+                return (IRepository<TEntity>)repository;
             }
 
-            _repositories.Add(typeof(TEntity), new Repository<TEntity>(_dbContext, _logger));
+            var notRegisteredRepository = new Repository<TEntity>(_dbContext, _logger);
 
-            return (IRepository<TEntity>)_repositories[typeof(TEntity)];
+            _repositories.Add(typeof(TEntity), notRegisteredRepository);
+
+            return notRegisteredRepository;
         }
         
         public virtual void Dispose(bool disposing)
@@ -71,7 +74,7 @@ namespace iTechArt.Common
         }
 
 
-        protected void RegisterRepositoryTypes<TEntity, TRepo>() where TEntity : class, IEntity
+        protected void RegisterRepositoryTypes<TEntity, TRepo>() where TEntity : class
            where TRepo : IRepository<TEntity>
         {
             _registeredRepositoryTypes.Add(typeof(TEntity), typeof(TRepo));

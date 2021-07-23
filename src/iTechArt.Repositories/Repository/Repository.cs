@@ -1,11 +1,12 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using iTechArt.SurveysSite.DomainModel;
+using iTechArt.Common;
 using Microsoft.EntityFrameworkCore;
 
-namespace iTechArt.Common
+namespace iTechArt.Repositories.Repository
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected readonly DbContext _dbContext;
         protected readonly ILog _logger;
@@ -25,11 +26,11 @@ namespace iTechArt.Common
             _dbContext.Set<TEntity>().Add(item);
         }
 
-        public async Task<IQueryable<TEntity>> GetAllAsync()
+        public async Task<IReadOnlyCollection<TEntity>> GetAllAsync()
         {
             _logger.LogInformation("Getting all instances of the entity");
 
-            return (await _dbContext.Set<TEntity>().ToListAsync()).AsQueryable();
+            return await _dbContext.Set<TEntity>().ToListAsync();
         }
 
         public async Task<TEntity> GetByIdAsync(object id)

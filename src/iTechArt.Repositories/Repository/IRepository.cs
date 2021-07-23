@@ -1,0 +1,14 @@
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace iTechArt.Repositories.Repository
+{
+    public interface IRepository<TEntity> where TEntity : class
+    {
+        Task<IReadOnlyCollection<TEntity>> GetAllAsync();
+        Task<TEntity> GetByIdAsync(object id);
+        void Create(TEntity item);
+        void Update(TEntity item);
+        void Delete(TEntity item);
+    }
+}

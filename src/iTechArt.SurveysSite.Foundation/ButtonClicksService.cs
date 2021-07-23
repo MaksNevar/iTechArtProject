@@ -1,48 +1,49 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
-using iTechArt.SurveysSite.Repositories;
+using iTechArt.SurveysSite.Repositories.UnitOfWorks;
 
 namespace iTechArt.SurveysSite.Foundation
 {
     public class ButtonClicksService : IButtonClicksService
     {
+        private static bool _entityAdded;
         private readonly IButtonClickUnitOfWork _unitOfWork;
-        private static bool _instanceAdded;
 
 
         static ButtonClicksService()
         {
-            _instanceAdded = false;
+            _entityAdded = false;
         }
-
         public ButtonClicksService(IButtonClickUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
 
-            if (!_instanceAdded)
+            if (!_entityAdded)
             {
-                _unitOfWork.Repository.Create(new ButtonClicksCounter());
+                _unitOfWork.ButtonClickRepository.Create(new ButtonClicksCounter());
                 _unitOfWork.SaveAsync();
-                _instanceAdded = true;
+
+                _entityAdded = true;
             }
+            
         }
 
 
-        public async Task IncrementButtonClicks()
+        public async Task IncrementButtonClicksAsync()
         {
             var currentClicksCounter = await
-                GetCurrentButtonClicks();
+                GetCurrentButtonClicksAsync();
 
             currentClicksCounter.Clicks++;
-            _unitOfWork.Repository.Update(currentClicksCounter);
+            _unitOfWork.ButtonClickRepository.Update(currentClicksCounter);
 
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task<ButtonClicksCounter> GetCurrentButtonClicks()
+        public async Task<ButtonClicksCounter> GetCurrentButtonClicksAsync()
         {
-            return (await _unitOfWork.Repository.GetAllAsync()).FirstOrDefault();
+            return (await _unitOfWork.ButtonClickRepository.GetAllAsync()).FirstOrDefault();
         }
     }
 }

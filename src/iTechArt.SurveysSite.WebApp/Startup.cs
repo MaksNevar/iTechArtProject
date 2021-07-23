@@ -1,7 +1,8 @@
-using iTechArt.SurveysSite.Repositories;
 using Microsoft.AspNetCore.Builder;
 using iTechArt.Common;
 using iTechArt.SurveysSite.Foundation;
+using iTechArt.SurveysSite.Repositories.DbContexts;
+using iTechArt.SurveysSite.Repositories.UnitOfWorks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +23,7 @@ namespace iTechArt.SurveysSite.WebApp
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<ButtonClicksCounterContext>(opt 
+            services.AddDbContext<ButtonClicksCounterDbContext>(opt 
                 => opt.UseInMemoryDatabase("TestDb"));
 
             services.AddSingleton<ILog, Logger>();
