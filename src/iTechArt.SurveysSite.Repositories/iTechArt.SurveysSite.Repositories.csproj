@@ -21,4 +21,10 @@
     <ProjectReference Include="..\iTechArt\iTechArt.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DbContexts\" />
+    <Folder Include="Repositories\" />
+    <Folder Include="UnitOfWorks\" />
+  </ItemGroup>
+
 </Project>

@@ -1,8 +1,8 @@
 ﻿namespace iTechArt.SurveysSite.DomainModel
 {
-    public sealed class ButtonClicksCounter
+    public class User
     {
         public int Id { get; set; }
-        public int Clicks { get; set; }
+        public string FullName { get; set; }
     }
 }

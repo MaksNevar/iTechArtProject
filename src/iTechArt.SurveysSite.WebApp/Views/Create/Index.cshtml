@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div>
+    <form method="post">
+        <span>User name: </span>
+        <input type="text" name="username"/>
+        <button type="submit" asp-action="CreateUser">Create user</button>
+    </form>
+    
+
+    @if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+        <script type="text/javascript">
+            window.onload = function() {
+                alert("@ViewBag.Message");
+            }
+        </script>
+    }
+</div>
+

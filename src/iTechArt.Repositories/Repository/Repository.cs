@@ -21,14 +21,14 @@ namespace iTechArt.Repositories.Repository
 
         public void Create(TEntity item)
         {
-            _logger.LogInformation("Creating a new object with repository");
+            _logger.LogInformation($"Creating a new object {typeof(TEntity)} with repository");
 
             _dbContext.Set<TEntity>().Add(item);
         }
 
         public async Task<IReadOnlyCollection<TEntity>> GetAllAsync()
         {
-            _logger.LogInformation("Getting all instances of the entity");
+            _logger.LogInformation($"Getting all instances of the {typeof(TEntity)} entity");
 
             return await _dbContext.Set<TEntity>().ToListAsync();
         }

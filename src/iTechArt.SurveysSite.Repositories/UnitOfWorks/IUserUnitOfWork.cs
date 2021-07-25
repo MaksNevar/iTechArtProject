@@ -3,8 +3,8 @@ using iTechArt.SurveysSite.Repositories.Repositories;
 
 namespace iTechArt.SurveysSite.Repositories.UnitOfWorks
 {
-    public interface IButtonClickUnitOfWork : IUnitOfWork
+    public interface IUserUnitOfWork : IUnitOfWork
     {
-        public ButtonClickRepository ButtonClickRepository { get; }
+        public UserRepository UserRepository { get; }
     }
 }

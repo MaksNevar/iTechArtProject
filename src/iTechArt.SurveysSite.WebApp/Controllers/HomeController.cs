@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using iTechArt.Common;
+using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Foundation;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,30 +8,23 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 {
     public sealed class HomeController : Controller
     {
-        private readonly ILog _logger;
-        private readonly IButtonClicksService _buttonClicks;
+        private readonly IUserService _userService;
 
 
-        public HomeController(ILog logger, IButtonClicksService buttonClicks)
+        public HomeController(IUserService userService)
         {
-            _logger = logger;
-
-            _buttonClicks = buttonClicks;
+            _userService = userService;
         }
 
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            _logger.LogInformation("Displaying current clicks number");
-
-            return View(await _buttonClicks.GetCurrentButtonClicksAsync());
+            return View();
         }
-        
-        public async Task<IActionResult> ButtonClick()
-        {
-            await _buttonClicks.IncrementButtonClicksAsync();
 
-            return RedirectToAction("Index");
+        public async Task<IActionResult> DisplayAllUsersAsync()
+        {
+            return View("DisplayAllUsers", await _userService.GetAllUsersAsync());
         }
     }
 }

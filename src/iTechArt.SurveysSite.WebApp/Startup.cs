@@ -23,20 +23,28 @@ namespace iTechArt.SurveysSite.WebApp
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<ButtonClicksCounterDbContext>(opt 
-                => opt.UseInMemoryDatabase("TestDb"));
+            services.AddDbContext<UserDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddSingleton<ILog, Logger>();
 
             services.AddSingleton(Log.Logger);
 
-            services.AddScoped<IButtonClickUnitOfWork, ButtonClickUnitOfWork>();
+            services.AddScoped<IUserUnitOfWork, UserUnitOfWork>();
 
-            services.AddScoped<IButtonClicksService, ButtonClicksService>();
+            services.AddScoped<IUserService, UserService>();
         }
 
         public void Configure(IApplicationBuilder app)
         {
+            using (var serviceScope = app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                using var context = serviceScope.ServiceProvider.GetService<UserDbContext>();
+                context.Database.Migrate();
+            }
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
