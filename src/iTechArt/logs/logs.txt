@@ -1,2 +1,1 @@
-2021-07-25 12:49:24.521 +03:00 [INF] Creating a new object iTechArt.SurveysSite.DomainModel.User with repository
-2021-07-25 12:49:28.930 +03:00 [INF] Getting all instances of the iTechArt.SurveysSite.DomainModel.User entity
+2021-07-25 22:30:14.005 +03:00 [INF] Getting all instances of the iTechArt.SurveysSite.DomainModel.User entity

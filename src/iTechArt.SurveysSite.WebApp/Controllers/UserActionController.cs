@@ -1,21 +1,22 @@
-﻿using iTechArt.SurveysSite.DomainModel;
+﻿using System.Threading.Tasks;
+using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Foundation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace iTechArt.SurveysSite.WebApp.Controllers
 {
-    public class CreateController : Controller
+    public class UserActionController : Controller
     {
         private readonly IUserService _userService;
 
 
-        public CreateController(IUserService userService)
+        public UserActionController(IUserService userService)
         {
             _userService = userService;
         }
 
-
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult CreateUser()
         {
             return View();
         }
@@ -27,7 +28,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             {
                 ViewBag.Message = "Username cannot be empty";
 
-                return View("Index");
+                return View();
             }
 
             var newUser = new User() {FullName = username};
@@ -35,7 +36,12 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
             ViewBag.Message = "User created";
 
-            return View("Index");
+            return View();
+        }
+
+        public async Task<IActionResult> DisplayAllUsersAsync()
+        {
+            return View("DisplayAllUsers", await _userService.GetAllUsersAsync());
         }
     }
 }
