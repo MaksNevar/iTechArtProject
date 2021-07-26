@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
 
@@ -9,7 +8,6 @@
         <input type="text" name="username"/>
         <button type="submit" asp-action="CreateUser">Create user</button>
     </form>
-    
 
     @if (!string.IsNullOrEmpty(ViewBag.Message))
     {
@@ -20,4 +18,3 @@
         </script>
     }
 </div>
-

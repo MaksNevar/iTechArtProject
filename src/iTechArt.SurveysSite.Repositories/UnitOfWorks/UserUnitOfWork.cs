@@ -8,13 +8,13 @@ namespace iTechArt.SurveysSite.Repositories.UnitOfWorks
 {
     public class UserUnitOfWork : UnitOfWork<UserDbContext>, IUserUnitOfWork
     {
-        public UserRepository UserRepository => (UserRepository) GetRepository<User>();
+        public IUserRepository UserRepository => (IUserRepository) GetRepository<User>();
 
 
         public UserUnitOfWork(UserDbContext context, ILog logger) 
             : base(context, logger)
         {
-            RegisterRepositoryTypes<User, UserRepository>();
+            RegisterRepositoryType<User, UserRepository>();
         }
     }
 }

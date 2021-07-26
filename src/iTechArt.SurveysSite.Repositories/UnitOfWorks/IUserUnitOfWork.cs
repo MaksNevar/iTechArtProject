@@ -5,6 +5,6 @@ namespace iTechArt.SurveysSite.Repositories.UnitOfWorks
 {
     public interface IUserUnitOfWork : IUnitOfWork
     {
-        public UserRepository UserRepository { get; }
+        public IUserRepository UserRepository { get; }
     }
 }

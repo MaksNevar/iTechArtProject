@@ -5,7 +5,7 @@ using iTechArt.SurveysSite.Repositories.DbContexts;
 
 namespace iTechArt.SurveysSite.Repositories.Repositories
 {
-    public class UserRepository : Repository<User>
+    public class UserRepository : Repository<User>, IUserRepository
     {
         public UserRepository(UserDbContext dbContext, ILog logger)
             : base(dbContext, logger)

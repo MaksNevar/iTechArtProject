@@ -14,7 +14,7 @@ namespace iTechArt.Repositories.UnitOfWork
 
         protected readonly Dictionary<Type, object> _repositories;
         protected readonly Dictionary<Type, Type> _registeredRepositoryTypes;
-        private bool _disposed;
+        private bool _isDisposed;
 
 
         public UnitOfWork(TContext context, ILog logger)
@@ -29,37 +29,27 @@ namespace iTechArt.Repositories.UnitOfWork
 
         public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
-            if (_repositories.TryGetValue(typeof(TEntity), out var repo))
+            var entityType = typeof(TEntity);
+
+            if (_repositories.TryGetValue(entityType, out var repository))
             {
-                return (IRepository<TEntity>)repo;
-            }
-
-            if (_registeredRepositoryTypes.TryGetValue(typeof(TEntity), out var repoType))
-            {
-                var repository = Activator.CreateInstance(repoType, _dbContext, _logger);
-
-                _repositories.Add(typeof(TEntity), repository);
-
                 return (IRepository<TEntity>)repository;
             }
 
-            var notRegisteredRepository = new Repository<TEntity>(_dbContext, _logger);
-
-            _repositories.Add(typeof(TEntity), notRegisteredRepository);
-
-            return notRegisteredRepository;
-        }
-        
-        public virtual void Dispose(bool disposing)
-        {
-            if (_disposed) return;
-
-            if (disposing)
+            if (_registeredRepositoryTypes.TryGetValue(entityType, out var repoType))
             {
-                _dbContext.Dispose();
+                var customRepository = Activator.CreateInstance(repoType, _dbContext, _logger);
+
+                _repositories.Add(entityType, customRepository);
+
+                return (IRepository<TEntity>)customRepository;
             }
 
-            _disposed = true;
+            repository = new Repository<TEntity>(_dbContext, _logger);
+
+            _repositories.Add(entityType, repository);
+
+            return (IRepository<TEntity>)repository;
         }
 
         public void Dispose()
@@ -69,15 +59,30 @@ namespace iTechArt.Repositories.UnitOfWork
         }
 
         public async Task SaveAsync()
-        { 
+        {
             await _dbContext.SaveChangesAsync();
         }
 
 
-        protected void RegisterRepositoryTypes<TEntity, TRepo>() where TEntity : class
-           where TRepo : IRepository<TEntity>
+        protected virtual void Dispose(bool disposing)
         {
-            _registeredRepositoryTypes.Add(typeof(TEntity), typeof(TRepo));
+            if (_isDisposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                _dbContext.Dispose();
+            }
+
+            _isDisposed = true;
+        }
+
+        protected void RegisterRepositoryType<TEntity, TRepository>() where TEntity : class
+           where TRepository : IRepository<TEntity>
+        {
+            _registeredRepositoryTypes.Add(typeof(TEntity), typeof(TRepository));
         }
     }
 }

@@ -15,6 +15,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             _userService = userService;
         }
 
+
         [HttpGet]
         public IActionResult CreateUser()
         {
@@ -31,7 +32,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 return View();
             }
 
-            var newUser = new User() {FullName = username};
+            var newUser = new User() { FullName = username };
             _userService.CreateUser(newUser);
 
             ViewBag.Message = "User created";

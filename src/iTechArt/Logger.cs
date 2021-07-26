@@ -1,4 +1,5 @@
-﻿using Serilog.Events;
+﻿using System;
+using Serilog.Events;
 using ILogger = Serilog.ILogger;
 
 namespace iTechArt.Common
@@ -17,6 +18,11 @@ namespace iTechArt.Common
         public void Log(LogLevel level, string message)
         {
             _logger.Write((LogEventLevel)level, message);
+        }
+
+        public void Log(LogLevel level, Exception exception, string message)
+        {
+            _logger.Write((LogEventLevel)level, exception, message);
         }
     }
 }
