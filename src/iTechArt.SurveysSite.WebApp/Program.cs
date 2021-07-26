@@ -10,6 +10,7 @@ namespace iTechArt.SurveysSite.WebApp
         {
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.File(@"../iTechArt/logs/logs.txt")
+                .MinimumLevel.Debug()
                 .CreateLogger();
 
             CreateHostBuilder(args).Build().Run();

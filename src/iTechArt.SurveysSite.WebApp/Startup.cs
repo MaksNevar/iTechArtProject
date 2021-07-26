@@ -12,19 +12,21 @@ namespace iTechArt.SurveysSite.WebApp
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-                
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<ButtonClicksCounterDbContext>(opt 
-                => opt.UseInMemoryDatabase("TestDb"));
+            services.AddDbContext<ButtonClicksCounterDbContext>(optionsAction
+                => optionsAction.UseInMemoryDatabase("TestDb"));
 
             services.AddSingleton<ILog, Logger>();
 

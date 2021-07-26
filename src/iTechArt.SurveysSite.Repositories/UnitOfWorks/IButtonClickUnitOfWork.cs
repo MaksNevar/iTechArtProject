@@ -5,6 +5,6 @@ namespace iTechArt.SurveysSite.Repositories.UnitOfWorks
 {
     public interface IButtonClickUnitOfWork : IUnitOfWork
     {
-        public ButtonClickRepository ButtonClickRepository { get; }
+        IButtonClickRepository ButtonClickRepository { get; }
     }
 }

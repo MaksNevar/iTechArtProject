@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using iTechArt.Common;
 using Microsoft.EntityFrameworkCore;
@@ -19,40 +18,39 @@ namespace iTechArt.Repositories.Repository
         }
 
 
-        public void Create(TEntity item)
-        {
-            _logger.LogInformation("Creating a new object with repository");
-
-            _dbContext.Set<TEntity>().Add(item);
-        }
-
         public async Task<IReadOnlyCollection<TEntity>> GetAllAsync()
         {
-            _logger.LogInformation("Getting all instances of the entity");
+            _logger.LogDebug("Getting all instances of the entity");
 
             return await _dbContext.Set<TEntity>().ToListAsync();
         }
 
-        public async Task<TEntity> GetByIdAsync(object id)
+        public async Task<TEntity> GetByIdAsync(params object[] keyValues)
         {
-            _logger.LogInformation($"Trying to find an object with id {id} in the db");
+            _logger.LogDebug($"Trying to find an object in the db");
 
-            return await _dbContext.Set<TEntity>().FindAsync(id);
+            return await _dbContext.Set<TEntity>().FindAsync(keyValues);
+        }
+
+        public void Create(TEntity item)
+        {
+            _logger.LogDebug("Creating a new object with repository");
+
+            _dbContext.Set<TEntity>().Add(item);
+        }
+
+        public void Update(TEntity item)
+        {
+            _logger.LogDebug($"Updating an object {item}");
+
+            _dbContext.Set<TEntity>().Update(item);
         }
 
         public void Delete(TEntity item)
         {
-            _logger.LogInformation($"Trying to delete an object {item} from the db");
+            _logger.LogDebug($"Trying to delete an object {item} from the db");
 
             _dbContext.Set<TEntity>().Remove(item);
-        }
-
-
-        public void Update(TEntity item)
-        {
-            _logger.LogInformation($"Updating an object {item}");
-
-            _dbContext.Set<TEntity>().Update(item);
         }
     }
 }

@@ -8,14 +8,14 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
     public sealed class HomeController : Controller
     {
         private readonly ILog _logger;
-        private readonly IButtonClicksService _buttonClicks;
+        private readonly IButtonClicksService _buttonClicksService;
 
 
-        public HomeController(ILog logger, IButtonClicksService buttonClicks)
+        public HomeController(ILog logger, IButtonClicksService buttonClicksService)
         {
             _logger = logger;
 
-            _buttonClicks = buttonClicks;
+            _buttonClicksService = buttonClicksService;
         }
 
 
@@ -23,12 +23,12 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         {
             _logger.LogInformation("Displaying current clicks number");
 
-            return View(await _buttonClicks.GetCurrentButtonClicksAsync());
+            return View(await _buttonClicksService.GetButtonClicksAsync());
         }
-        
+
         public async Task<IActionResult> ButtonClick()
         {
-            await _buttonClicks.IncrementButtonClicksAsync();
+            await _buttonClicksService.IncrementButtonClicksAsync();
 
             return RedirectToAction("Index");
         }

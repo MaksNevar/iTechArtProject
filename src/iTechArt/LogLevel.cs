@@ -1,6 +1,4 @@
-﻿using Serilog.Events;
-
-namespace iTechArt.Common
+﻿namespace iTechArt.Common
 {
     public enum LogLevel
     {

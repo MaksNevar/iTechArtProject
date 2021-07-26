@@ -8,13 +8,13 @@ namespace iTechArt.SurveysSite.Repositories.UnitOfWorks
 {
     public class ButtonClickUnitOfWork : UnitOfWork<ButtonClicksCounterDbContext>, IButtonClickUnitOfWork
     {
-        public ButtonClickRepository ButtonClickRepository => (ButtonClickRepository)GetRepository<ButtonClicksCounter>();
+        public IButtonClickRepository ButtonClickRepository => (IButtonClickRepository)GetRepository<ButtonClicksCounter>();
 
 
         public ButtonClickUnitOfWork(ButtonClicksCounterDbContext context, ILog logger)
             : base(context, logger)
         {
-            RegisterRepositoryTypes<ButtonClicksCounter, ButtonClickRepository>();
+            RegisterRepositoryType<ButtonClicksCounter, ButtonClickRepository>();
         }
     }
 }

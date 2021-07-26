@@ -3,6 +3,8 @@
     ViewData["Title"] = "Home Page";
 }
 <head>
+    <title>Button clicks page</title>
+
     <style>
         div {
             margin-top: 275px;
@@ -10,11 +12,9 @@
         }
     </style>
 </head>
-<div class="text-center">
+<div>
     <form method="post">
         <p>Number of clicks: @Model.Clicks</p>
         <input type="submit" value="Click me" asp-action="ButtonClick"/>
     </form>
-    
-
 </div>
