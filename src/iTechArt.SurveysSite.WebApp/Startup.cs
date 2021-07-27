@@ -25,8 +25,8 @@ namespace iTechArt.SurveysSite.WebApp
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<ButtonClicksCounterDbContext>(optionsAction
-                => optionsAction.UseInMemoryDatabase("TestDb"));
+            services.AddDbContext<ButtonClicksCounterDbContext>(options =>
+                options.UseInMemoryDatabase("TestDb"));
 
             services.AddSingleton<ILog, Logger>();
 
