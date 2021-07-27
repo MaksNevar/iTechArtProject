@@ -39,6 +39,12 @@ namespace iTechArt.SurveysSite.WebApp
 
         public void Configure(IApplicationBuilder app)
         {
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                using var dbContext = serviceScope.ServiceProvider.GetService<ButtonClicksCounterDbContext>();
+                dbContext.Database.EnsureCreated();
+            }
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

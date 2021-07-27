@@ -8,8 +8,7 @@ namespace iTechArt.SurveysSite.Repositories.UnitOfWorks
 {
     public class ButtonClickUnitOfWork : UnitOfWork<ButtonClicksCounterDbContext>, IButtonClickUnitOfWork
     {
-        public IButtonClickRepository ButtonClickRepository => 
-            (IButtonClickRepository)GetRepository<ButtonClicksCounter>();
+        public IButtonClickRepository ButtonClickRepository => (IButtonClickRepository)GetRepository<ButtonClicksCounter>();
 
 
         public ButtonClickUnitOfWork(ButtonClicksCounterDbContext context, ILog logger)

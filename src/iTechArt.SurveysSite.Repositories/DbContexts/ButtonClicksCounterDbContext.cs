@@ -14,11 +14,10 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
 
         }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ButtonClicksCounter>()
-                .HasKey(buttonClicksCounter => buttonClicksCounter.Id);
+                .HasData(new ButtonClicksCounter(){Id = 1, Clicks = 0});
         }
     }
 }

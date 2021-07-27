@@ -1,15 +1,14 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using iTechArt.Common;
 using iTechArt.Repositories.Repository;
 using iTechArt.SurveysSite.DomainModel;
-using iTechArt.SurveysSite.Repositories.DbContexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace iTechArt.SurveysSite.Repositories.Repositories
 {
     public class ButtonClickRepository : Repository<ButtonClicksCounter>, IButtonClickRepository
     {
-        public ButtonClickRepository(ButtonClicksCounterDbContext context, ILog logger)
+        public ButtonClickRepository(DbContext context, ILog logger)
             : base(context, logger)
         {
 
@@ -18,7 +17,7 @@ namespace iTechArt.SurveysSite.Repositories.Repositories
 
         public async Task<ButtonClicksCounter> GetButtonClicksAsync()
         {
-            return (await GetAllAsync()).SingleOrDefault();
+            return  await _dbContext.Set<ButtonClicksCounter>().SingleOrDefaultAsync();
         }
     }
 }
