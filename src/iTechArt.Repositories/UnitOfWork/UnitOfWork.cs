@@ -36,31 +36,21 @@ namespace iTechArt.Repositories.UnitOfWork
                 return (IRepository<TEntity>)repository;
             }
 
-            if (_registeredRepositoryTypes.TryGetValue(entityType, out var repoType))
-            {
-                var customRepository = Activator.CreateInstance(repoType, _dbContext, _logger);
-
-                _repositories.Add(entityType, customRepository);
-
-                return (IRepository<TEntity>)customRepository;
-            }
-
-            repository = new Repository<TEntity>(_dbContext, _logger);
-
+            repository = CreateRepository<TEntity>();
             _repositories.Add(entityType, repository);
 
             return (IRepository<TEntity>)repository;
+        }
+
+        public async Task SaveAsync()
+        {
+            await _dbContext.SaveChangesAsync();
         }
 
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        public async Task SaveAsync()
-        {
-            await _dbContext.SaveChangesAsync();
         }
 
 
@@ -83,6 +73,19 @@ namespace iTechArt.Repositories.UnitOfWork
            where TRepository : IRepository<TEntity>
         {
             _registeredRepositoryTypes.Add(typeof(TEntity), typeof(TRepository));
+        }
+
+
+        private IRepository<TEntity> CreateRepository<TEntity>() where TEntity : class
+        {
+            if (_registeredRepositoryTypes.TryGetValue(typeof(TEntity), out var repositoryType))
+            {
+                var customRepository = Activator.CreateInstance(repositoryType, _dbContext, _logger);
+
+                return (IRepository<TEntity>)customRepository;
+            }
+
+            return new Repository<TEntity>(_dbContext, _logger);
         }
     }
 }

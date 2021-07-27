@@ -12,11 +12,5 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
         {
 
         }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<User>()
-                .HasKey(key => key.Id);
-        }
     }
 }
