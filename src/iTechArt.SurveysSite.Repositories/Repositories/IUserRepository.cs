@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using iTechArt.Repositories.Repository;
+﻿using iTechArt.Repositories.Repository;
 using iTechArt.SurveysSite.DomainModel;
 
 namespace iTechArt.SurveysSite.Repositories.Repositories
