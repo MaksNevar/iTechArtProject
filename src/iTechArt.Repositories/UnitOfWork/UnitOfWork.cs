@@ -36,7 +36,7 @@ namespace iTechArt.Repositories.UnitOfWork
                 return (IRepository<TEntity>)repository;
             }
 
-            repository = CreateRepository<TEntity>(entityType);
+            repository = CreateRepository<TEntity>();
             _repositories.Add(entityType, repository);
 
             return (IRepository<TEntity>)repository;
@@ -76,9 +76,9 @@ namespace iTechArt.Repositories.UnitOfWork
         }
 
 
-        private IRepository<TEntity> CreateRepository<TEntity>(Type entityType) where TEntity : class
+        private IRepository<TEntity> CreateRepository<TEntity>() where TEntity : class
         {
-            if (_registeredRepositoryTypes.TryGetValue(entityType, out var repositoryType))
+            if (_registeredRepositoryTypes.TryGetValue(typeof(TEntity), out var repositoryType))
             {
                 var customRepository = Activator.CreateInstance(repositoryType, _dbContext, _logger);
 
