@@ -9,11 +9,11 @@ namespace iTechArt.Repositories.UnitOfWork
 {
     public class UnitOfWork<TContext> : IUnitOfWork where TContext : DbContext
     {
-        protected readonly TContext _dbContext;
-        protected readonly ILog _logger;
+        private readonly TContext _dbContext;
+        private readonly ILog _logger;
 
-        protected readonly Dictionary<Type, object> _repositories;
-        protected readonly Dictionary<Type, Type> _registeredRepositoryTypes;
+        private readonly Dictionary<Type, object> _repositories;
+        private readonly Dictionary<Type, Type> _registeredRepositoryTypes;
         private bool _isDisposed;
 
 

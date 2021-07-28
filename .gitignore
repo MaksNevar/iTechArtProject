@@ -31,3 +31,5 @@ msbuild.wrn
 .vs/
 
 _ReSharper.Caches
+
+src/iTechArt/logs

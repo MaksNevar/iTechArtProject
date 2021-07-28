@@ -25,7 +25,10 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             _logger.LogInformation("Displaying current clicks number");
 
             var currentButtonClicksCounter = await _buttonClicksService.GetButtonClicksAsync();
-            var buttonClicks = new ButtonClicksCounterViewModel() {Clicks = currentButtonClicksCounter.Clicks};
+            var buttonClicks = new ButtonClicksCounterViewModel
+            {
+                Clicks = currentButtonClicksCounter.Clicks
+            };
 
             return View(buttonClicks);
         }

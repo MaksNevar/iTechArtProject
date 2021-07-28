@@ -1,5 +1,6 @@
 using iTechArt.SurveysSite.Repositories.DbContexts;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
@@ -14,7 +15,22 @@ namespace iTechArt.SurveysSite.WebApp
                 .MinimumLevel.Debug()
                 .CreateLogger();
 
-            CreateHostBuilder(args).Build().Run();
+            var hostBuilder = CreateHostBuilder(args);
+            var host = hostBuilder.Build();
+
+            using (var serviceScope = host
+                .Services
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                using var dbContext = serviceScope
+                    .ServiceProvider
+                    .GetRequiredService<ButtonClicksCounterDbContext>();
+                dbContext.Database.EnsureCreated();
+            }
+            
+
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
