@@ -17,7 +17,7 @@ namespace iTechArt.SurveysSite.Repositories.Repositories
 
         public async Task<ButtonClicksCounter> GetButtonClicksAsync()
         {
-            return  await _dbContext.Set<ButtonClicksCounter>().SingleOrDefaultAsync();
+            return await _dbContext.Set<ButtonClicksCounter>().SingleOrDefaultAsync();
         }
     }
 }
