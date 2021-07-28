@@ -1,11 +1,12 @@
-﻿@{
+﻿@model iTechArt.SurveysSite.WebApp.ViewModels.UserViewModel
+@{
     ViewData["Title"] = "Index";
 }
 
 <div>
     <form method="post">
         <span>User name: </span>
-        <input type="text" name="username"/>
+        @Html.EditorFor(model => model.FullName)
         <button type="submit" asp-action="CreateUser">Create user</button>
     </form>
 

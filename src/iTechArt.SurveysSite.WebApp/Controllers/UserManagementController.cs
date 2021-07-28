@@ -1,7 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Foundation;
-using iTechArt.SurveysSite.WebApp.ViewModel;
+using iTechArt.SurveysSite.WebApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace iTechArt.SurveysSite.WebApp.Controllers
@@ -24,16 +25,21 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateUser(string username)
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateUser(UserViewModel userToCreate)
         {
-            if (string.IsNullOrWhiteSpace(username))
+            if (!ModelState.IsValid)
             {
                 ViewBag.Message = "Username cannot be empty";
 
                 return View();
             }
 
-            var newUser = new User() { FullName = username };
+            var newUser = new User()
+            {
+                FullName = userToCreate.FullName
+            };
+
             _userService.CreateUser(newUser);
 
             ViewBag.Message = "User created";
@@ -45,9 +51,18 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         public async Task<IActionResult> DisplayAllUsersAsync()
         {
             var users = await _userService.GetAllUsersAsync();
-            var userViewModel = new UserViewModel() {Users = users};
+            var usersList = users.Select(user => new UserViewModel
+            {
+                Id = user.Id, 
+                FullName = user.FullName
+            }).ToList();
 
-            return View("DisplayAllUsers", userViewModel);
+            var usersViewModel = new UsersViewModel
+            {
+                Users = usersList
+            };
+
+            return View("DisplayAllUsers", usersViewModel);
         }
     }
 }

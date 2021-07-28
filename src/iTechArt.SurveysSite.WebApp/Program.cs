@@ -1,4 +1,8 @@
+using System.Threading.Tasks;
+using iTechArt.SurveysSite.Repositories.DbContexts;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
@@ -6,14 +10,29 @@ namespace iTechArt.SurveysSite.WebApp
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.File(@"../iTechArt/logs/logs.txt")
                 .MinimumLevel.Debug()
                 .CreateLogger();
 
-            CreateHostBuilder(args).Build().Run();
+            var hostBuilder = CreateHostBuilder(args);
+            var host = hostBuilder.Build();
+
+            using (var serviceScope = host
+                .Services
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                await using var dbContext = serviceScope
+                    .ServiceProvider
+                    .GetRequiredService<UserDbContext>();
+                await dbContext.Database.MigrateAsync();
+            }
+
+
+            await host.RunAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

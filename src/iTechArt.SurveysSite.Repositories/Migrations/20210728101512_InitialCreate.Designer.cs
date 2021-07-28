@@ -9,7 +9,7 @@ using iTechArt.SurveysSite.Repositories.DbContexts;
 namespace iTechArt.SurveysSite.Repositories.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20210727201445_InitialCreate")]
+    [Migration("20210728101512_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,6 +28,7 @@ namespace iTechArt.SurveysSite.Repositories.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("FullName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

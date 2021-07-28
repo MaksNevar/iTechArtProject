@@ -12,5 +12,13 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
         {
 
         }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .Property(user => user.FullName)
+                .IsRequired();
+        }
     }
 }
