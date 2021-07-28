@@ -1,16 +1,17 @@
 ﻿using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Foundation;
+using iTechArt.SurveysSite.WebApp.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace iTechArt.SurveysSite.WebApp.Controllers
 {
-    public class UserActionController : Controller
+    public class UserManagementController : Controller
     {
         private readonly IUserService _userService;
 
 
-        public UserActionController(IUserService userService)
+        public UserManagementController(IUserService userService)
         {
             _userService = userService;
         }
@@ -40,9 +41,13 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             return View();
         }
 
+        [HttpGet]
         public async Task<IActionResult> DisplayAllUsersAsync()
         {
-            return View("DisplayAllUsers", await _userService.GetAllUsersAsync());
+            var users = await _userService.GetAllUsersAsync();
+            var userViewModel = new UserViewModel() {Users = users};
+
+            return View("DisplayAllUsers", userViewModel);
         }
     }
 }

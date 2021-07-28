@@ -2,7 +2,7 @@
 
 namespace iTechArt.SurveysSite.Repositories.Migrations
 {
-    public partial class startmigration : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

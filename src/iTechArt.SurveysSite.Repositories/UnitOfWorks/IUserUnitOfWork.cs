@@ -1,10 +1,11 @@
-﻿using iTechArt.Repositories.UnitOfWork;
-using iTechArt.SurveysSite.Repositories.Repositories;
+﻿using iTechArt.Repositories.Repository;
+using iTechArt.Repositories.UnitOfWork;
+using iTechArt.SurveysSite.DomainModel;
 
 namespace iTechArt.SurveysSite.Repositories.UnitOfWorks
 {
     public interface IUserUnitOfWork : IUnitOfWork
     {
-        public IUserRepository UserRepository { get; }
+        IRepository<User> UserRepository { get; }
     }
 }

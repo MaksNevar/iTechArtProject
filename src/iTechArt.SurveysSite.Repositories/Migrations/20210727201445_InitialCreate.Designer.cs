@@ -9,8 +9,8 @@ using iTechArt.SurveysSite.Repositories.DbContexts;
 namespace iTechArt.SurveysSite.Repositories.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20210723105810_start-migration")]
-    partial class startmigration
+    [Migration("20210727201445_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
