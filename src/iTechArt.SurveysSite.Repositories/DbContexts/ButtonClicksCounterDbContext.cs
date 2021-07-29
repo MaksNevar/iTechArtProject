@@ -5,9 +5,6 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
 {
     public sealed class ButtonClicksCounterDbContext : DbContext
     {
-        public DbSet<ButtonClicksCounter> ButtonClicks { get; set; }
-
-
         public ButtonClicksCounterDbContext(DbContextOptions<ButtonClicksCounterDbContext> options)
             : base(options)
         {

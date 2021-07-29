@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace iTechArt.SurveysSite.Repositories.Repositories
 {
+    [UsedImplicitly]
     public class ButtonClickRepository : Repository<ButtonClicksCounter>, IButtonClickRepository
     {
         public ButtonClickRepository(DbContext context, ILog logger)

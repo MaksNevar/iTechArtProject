@@ -6,7 +6,7 @@ using Serilog;
 
 namespace iTechArt.SurveysSite.WebApp
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
@@ -28,12 +28,11 @@ namespace iTechArt.SurveysSite.WebApp
                     .GetRequiredService<ButtonClicksCounterDbContext>();
                 dbContext.Database.EnsureCreated();
             }
-            
 
             host.Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
