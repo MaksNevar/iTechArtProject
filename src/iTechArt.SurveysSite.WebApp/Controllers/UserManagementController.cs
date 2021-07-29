@@ -53,7 +53,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             var users = await _userService.GetAllUsersAsync();
             var usersList = users.Select(user => new UserViewModel
             {
-                Id = user.Id, 
+                Id = user.Id,
                 FullName = user.FullName
             }).ToList();
 

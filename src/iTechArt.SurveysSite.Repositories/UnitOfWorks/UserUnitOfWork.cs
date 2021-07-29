@@ -11,7 +11,7 @@ namespace iTechArt.SurveysSite.Repositories.UnitOfWorks
         public IRepository<User> UserRepository => GetRepository<User>();
 
 
-        public UserUnitOfWork(UserDbContext context, ILog logger) 
+        public UserUnitOfWork(UserDbContext context, ILog logger)
             : base(context, logger)
         {
             RegisterRepositoryType<User, Repository<User>>();
