@@ -41,6 +41,8 @@ namespace iTechArt.SurveysSite.WebApp
         {
             app.UseHttpsRedirection();
 
+            app.UseStaticFiles();
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>

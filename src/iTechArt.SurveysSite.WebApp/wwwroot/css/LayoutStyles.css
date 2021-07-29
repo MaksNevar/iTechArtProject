@@ -1,0 +1,15 @@
+﻿header {
+    font-size: 20px;
+    background-color: grey;
+    height: 30px;
+}
+
+header a {
+    float: right;
+    padding-right: 20px;
+}
+
+html, body {
+    margin: 0;
+    padding: 0
+}
