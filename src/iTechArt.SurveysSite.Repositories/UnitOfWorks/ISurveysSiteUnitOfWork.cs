@@ -4,7 +4,7 @@ using iTechArt.SurveysSite.DomainModel;
 
 namespace iTechArt.SurveysSite.Repositories.UnitOfWorks
 {
-    public interface IUserUnitOfWork : IUnitOfWork
+    public interface ISurveysSiteUnitOfWork : IUnitOfWork
     {
         IRepository<User> UserRepository { get; }
     }

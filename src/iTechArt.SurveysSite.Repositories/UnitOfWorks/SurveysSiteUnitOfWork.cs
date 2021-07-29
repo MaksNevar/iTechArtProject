@@ -6,12 +6,12 @@ using iTechArt.SurveysSite.Repositories.DbContexts;
 
 namespace iTechArt.SurveysSite.Repositories.UnitOfWorks
 {
-    public class UserUnitOfWork : UnitOfWork<SurveysSiteDbContext>, IUserUnitOfWork
+    public class SurveysSiteUnitOfWork : UnitOfWork<SurveysSiteDbContext>, ISurveysSiteUnitOfWork
     {
         public IRepository<User> UserRepository => GetRepository<User>();
 
 
-        public UserUnitOfWork(SurveysSiteDbContext context, ILog logger)
+        public SurveysSiteUnitOfWork(SurveysSiteDbContext context, ILog logger)
             : base(context, logger)
         {
             RegisterRepositoryType<User, Repository<User>>();
