@@ -26,7 +26,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateUser(UserViewModel userToCreate)
+        public async Task<IActionResult> CreateUser(UserViewModel userToCreate)
         {
             if (!ModelState.IsValid)
             {
@@ -40,7 +40,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 FullName = userToCreate.FullName
             };
 
-            _userService.CreateUser(newUser);
+            await _userService.CreateUserAsync(newUser);
 
             ViewBag.Message = "User created";
 

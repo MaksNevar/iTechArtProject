@@ -8,6 +8,6 @@ namespace iTechArt.SurveysSite.Foundation
     {
         Task<IReadOnlyCollection<User>> GetAllUsersAsync();
 
-        Task CreateUser(User userToCreate);
+        Task CreateUserAsync(User userToCreate);
     }
 }

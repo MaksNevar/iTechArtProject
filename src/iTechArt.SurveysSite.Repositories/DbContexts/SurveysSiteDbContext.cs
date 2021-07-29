@@ -1,13 +1,15 @@
-﻿using iTechArt.SurveysSite.DomainModel;
+﻿using iTechArt.Common;
+using iTechArt.SurveysSite.DomainModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace iTechArt.SurveysSite.Repositories.DbContexts
 {
-    public class UserDbContext : DbContext
+    public class SurveysSiteDbContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
+        [UsedImplicitly]
+        public DbSet<User> User { get; set; }
 
-        public UserDbContext(DbContextOptions<UserDbContext> options)
+        public SurveysSiteDbContext(DbContextOptions<SurveysSiteDbContext> options)
             : base(options)
         {
 

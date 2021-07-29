@@ -21,7 +21,7 @@ namespace iTechArt.SurveysSite.Foundation
             return await _unitOfWork.UserRepository.GetAllAsync();
         }
 
-        public async Task CreateUser(User userToCreate)
+        public async Task CreateUserAsync(User userToCreate)
         {
             _unitOfWork.UserRepository.Create(userToCreate);
             await _unitOfWork.SaveAsync();

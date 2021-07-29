@@ -8,7 +8,7 @@ using Serilog;
 
 namespace iTechArt.SurveysSite.WebApp
 {
-    public class Program
+    public static class Program
     {
         public static async Task Main(string[] args)
         {
@@ -27,15 +27,14 @@ namespace iTechArt.SurveysSite.WebApp
             {
                 await using var dbContext = serviceScope
                     .ServiceProvider
-                    .GetRequiredService<UserDbContext>();
+                    .GetRequiredService<SurveysSiteDbContext>();
                 await dbContext.Database.MigrateAsync();
             }
-
 
             await host.RunAsync();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

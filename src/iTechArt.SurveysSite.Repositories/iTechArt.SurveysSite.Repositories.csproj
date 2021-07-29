@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DbContexts\" />
     <Folder Include="UnitOfWorks\" />
   </ItemGroup>
 

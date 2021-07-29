@@ -17,7 +17,7 @@ namespace iTechArt.Repositories.UnitOfWork
         private bool _isDisposed;
 
 
-        public UnitOfWork(TContext context, ILog logger)
+        protected UnitOfWork(TContext context, ILog logger)
         {
             _dbContext = context;
             _logger = logger;
@@ -78,14 +78,15 @@ namespace iTechArt.Repositories.UnitOfWork
 
         private IRepository<TEntity> CreateRepository<TEntity>() where TEntity : class
         {
-            if (_registeredRepositoryTypes.TryGetValue(typeof(TEntity), out var repositoryType))
+            if (!_registeredRepositoryTypes.TryGetValue(typeof(TEntity), out var repositoryType))
             {
-                var customRepository = Activator.CreateInstance(repositoryType, _dbContext, _logger);
-
-                return (IRepository<TEntity>)customRepository;
+                return new Repository<TEntity>(_dbContext, _logger);
             }
 
-            return new Repository<TEntity>(_dbContext, _logger);
+            var customRepository = Activator.CreateInstance(repositoryType, _dbContext, _logger);
+
+            return (IRepository<TEntity>)customRepository;
+
         }
     }
 }

@@ -12,7 +12,7 @@ namespace iTechArt.SurveysSite.WebApp
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
 
         public Startup(IConfiguration configuration)
@@ -25,7 +25,7 @@ namespace iTechArt.SurveysSite.WebApp
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<UserDbContext>(options =>
+            services.AddDbContext<SurveysSiteDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddSingleton<ILog, Logger>();
@@ -46,8 +46,8 @@ namespace iTechArt.SurveysSite.WebApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
