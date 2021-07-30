@@ -35,7 +35,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 return View();
             }
 
-            var newUser = new User()
+            var newUser = new User
             {
                 FullName = userToCreate.FullName
             };
