@@ -31,6 +31,7 @@ namespace iTechArt.SurveysSite.WebApp
             host.Run();
         }
 
+
         private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
