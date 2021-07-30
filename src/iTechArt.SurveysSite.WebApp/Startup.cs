@@ -32,7 +32,7 @@ namespace iTechArt.SurveysSite.WebApp
 
             services.AddSingleton(Log.Logger);
 
-            services.AddScoped<IUserUnitOfWork, UserUnitOfWork>();
+            services.AddScoped<ISurveysSiteUnitOfWork, SurveysSiteUnitOfWork>();
 
             services.AddScoped<IUserService, UserService>();
         }

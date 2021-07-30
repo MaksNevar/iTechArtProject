@@ -7,10 +7,10 @@ namespace iTechArt.SurveysSite.Foundation
 {
     public class UserService : IUserService
     {
-        private readonly IUserUnitOfWork _unitOfWork;
+        private readonly ISurveysSiteUnitOfWork _unitOfWork;
 
 
-        public UserService(IUserUnitOfWork unitOfWork)
+        public UserService(ISurveysSiteUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

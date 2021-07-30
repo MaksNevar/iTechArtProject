@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace iTechArt.SurveysSite.WebApp.Controllers
 {
-    public class UserManagementController : Controller
+    public class SignInController : Controller
     {
         private readonly IUserService _userService;
 
 
-        public UserManagementController(IUserService userService)
+        public SignInController(IUserService userService)
         {
             _userService = userService;
         }
