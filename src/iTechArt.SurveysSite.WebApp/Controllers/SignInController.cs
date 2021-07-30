@@ -35,9 +35,9 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 return View();
             }
 
-            var newUser = new User()
+            var newUser = new User
             {
-                FullName = userToCreate.FullName
+                UserName = userToCreate.FullName
             };
 
             await _userService.CreateUserAsync(newUser);
@@ -54,7 +54,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             var usersList = users.Select(user => new UserViewModel
             {
                 Id = user.Id,
-                FullName = user.FullName
+                FullName = user.UserName
             }).ToList();
 
             var usersViewModel = new UsersViewModel
