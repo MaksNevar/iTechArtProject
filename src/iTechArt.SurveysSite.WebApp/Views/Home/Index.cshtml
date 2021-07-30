@@ -1,7 +1,20 @@
-﻿@{
+﻿@model iTechArt.SurveysSite.WebApp.ViewModel.ButtonClicksCounterViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
+<head>
+    <title>Button clicks page</title>
 
-<div class="text-center">
-    <h1>Hello, User</h1>
+    <style>
+        div {
+            margin-top: 275px;
+            text-align: center
+        }
+    </style>
+</head>
+<div>
+    <form method="post">
+        <p>Number of clicks: @Model.Clicks</p>
+        <input type="submit" value="Click me" asp-action="ButtonClick"/>
+    </form>
 </div>

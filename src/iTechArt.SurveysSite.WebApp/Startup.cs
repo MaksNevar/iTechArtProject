@@ -1,23 +1,30 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using iTechArt.Common;
+using iTechArt.SurveysSite.Foundation;
+using iTechArt.SurveysSite.Repositories.DbContexts;
+using iTechArt.SurveysSite.Repositories.UnitOfWorks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace iTechArt.SurveysSite.WebApp
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContext<ButtonClicksCounterDbContext>(options =>
+                options.UseInMemoryDatabase("TestDb"));
+
+            services.AddSingleton<ILog, Logger>();
+
+            services.AddSingleton(Log.Logger);
+
+            services.AddScoped<IButtonClickUnitOfWork, ButtonClickUnitOfWork>();
+
+            services.AddScoped<IButtonClicksService, ButtonClicksService>();
         }
 
         public void Configure(IApplicationBuilder app)
@@ -29,8 +36,8 @@ namespace iTechArt.SurveysSite.WebApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
