@@ -4,7 +4,6 @@ using iTechArt.SurveysSite.Foundation;
 using iTechArt.SurveysSite.Repositories.DbContexts;
 using iTechArt.SurveysSite.Repositories.UnitOfWorks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
@@ -37,8 +36,8 @@ namespace iTechArt.SurveysSite.WebApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

@@ -86,7 +86,6 @@ namespace iTechArt.Repositories.UnitOfWork
             var customRepository = Activator.CreateInstance(repositoryType, _dbContext, _logger);
 
             return (IRepository<TEntity>)customRepository;
-
         }
     }
 }

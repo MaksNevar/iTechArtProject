@@ -20,7 +20,6 @@ namespace iTechArt.SurveysSite.WebApp
 
             using (var serviceScope = host
                 .Services
-                .GetRequiredService<IServiceScopeFactory>()
                 .CreateScope())
             {
                 using var dbContext = serviceScope
