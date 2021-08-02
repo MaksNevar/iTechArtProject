@@ -18,12 +18,16 @@ namespace iTechArt.SurveysSite.Foundation
 
         public async Task<IReadOnlyCollection<User>> GetAllUsersAsync()
         {
-            return await _unitOfWork.UserRepository.GetAllAsync();
+            var userRepository = _unitOfWork.GetRepository<User>();
+
+            return await userRepository.GetAllAsync();
         }
 
         public async Task CreateUserAsync(User userToCreate)
         {
-            _unitOfWork.UserRepository.Create(userToCreate);
+            var userRepository = _unitOfWork.GetRepository<User>();
+
+            userRepository.Create(userToCreate);
             await _unitOfWork.SaveAsync();
         }
     }
