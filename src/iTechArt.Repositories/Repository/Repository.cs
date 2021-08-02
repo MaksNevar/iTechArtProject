@@ -7,7 +7,7 @@ namespace iTechArt.Repositories.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        protected readonly DbContext _dbContext;
+        private readonly DbContext _dbContext;
         private readonly ILog _logger;
 
 
@@ -27,7 +27,7 @@ namespace iTechArt.Repositories.Repository
 
         public async Task<TEntity> GetByIdAsync(params object[] keyValues)
         {
-            _logger.LogDebug($"Trying to find an object in the db");
+            _logger.LogDebug("Getting an instance by key values");
 
             return await _dbContext.Set<TEntity>().FindAsync(keyValues);
         }

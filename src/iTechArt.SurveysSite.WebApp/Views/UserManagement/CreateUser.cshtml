@@ -1,0 +1,21 @@
+﻿@model iTechArt.SurveysSite.WebApp.ViewModels.UserViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div>
+    <form method="post">
+        <span>User name: </span>
+        @Html.EditorFor(model => model.FullName)
+        <button type="submit" asp-action="CreateUser">Create user</button>
+    </form>
+
+    @if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+        <script type="text/javascript">
+            window.onload = function() {
+                alert("@ViewBag.Message");
+            }
+        </script>
+    }
+</div>
