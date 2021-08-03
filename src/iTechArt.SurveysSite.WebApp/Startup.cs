@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using iTechArt.Common;
+using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Foundation;
+using iTechArt.SurveysSite.Repositories;
 using iTechArt.SurveysSite.Repositories.DbContexts;
 using iTechArt.SurveysSite.Repositories.UnitOfWorks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,6 +38,10 @@ namespace iTechArt.SurveysSite.WebApp
             services.AddScoped<ISurveysSiteUnitOfWork, SurveysSiteUnitOfWork>();
 
             services.AddScoped<IUserService, UserService>();
+
+            services.AddIdentityCore<User>()
+                .AddEntityFrameworkStores<SurveysSiteDbContext>()
+                .AddUserStore<UserStore>();
         }
 
         public void Configure(IApplicationBuilder app)
@@ -44,6 +51,10 @@ namespace iTechArt.SurveysSite.WebApp
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

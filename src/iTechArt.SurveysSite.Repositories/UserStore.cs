@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using iTechArt.Repositories.UnitOfWork;
 using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Repositories.UnitOfWorks;
 using Microsoft.AspNet.Identity;

@@ -1,30 +1,34 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
-using iTechArt.SurveysSite.Repositories.UnitOfWorks;
+using Microsoft.AspNetCore.Identity;
 
 namespace iTechArt.SurveysSite.Foundation
 {
     public class UserService : IUserService
     {
-        private readonly ISurveysSiteUnitOfWork _unitOfWork;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
 
-        public UserService(ISurveysSiteUnitOfWork unitOfWork)
+        public UserService(UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            _unitOfWork = unitOfWork;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
 
-        public async Task<IReadOnlyCollection<User>> GetAllUsersAsync()
+        public async Task<User> SignInAsync(string login, string password)
         {
-            return await _unitOfWork.UserRepository.GetAllAsync();
-        }
+            var result = await _signInManager.PasswordSignInAsync(login, password, false, false);
 
-        public async Task CreateUserAsync(User userToCreate)
-        {
-            _unitOfWork.UserRepository.Create(userToCreate);
-            await _unitOfWork.SaveAsync();
+            if (!result.Succeeded)
+            {
+                return null;
+            }
+
+            var user = await _userManager.FindByNameAsync(login);
+
+            return user;
         }
     }
 }
