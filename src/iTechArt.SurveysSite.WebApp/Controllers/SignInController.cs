@@ -43,9 +43,13 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 {
                     return Redirect("~/Home/Index");
                 }
+
+                ViewBag.Message = "Password is not correct";
+
+                return View();
             }
 
-            ViewBag.Message = "Password is not correct";
+            ViewBag.Message = "Please enter login and password";
 
             return View();
         }
