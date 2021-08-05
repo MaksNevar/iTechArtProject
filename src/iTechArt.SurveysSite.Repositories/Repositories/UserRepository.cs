@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace iTechArt.SurveysSite.Repositories.Repositories
 {
+    [UsedImplicitly]
     public class UserRepository : Repository<User>, IUserRepository
     {
         public UserRepository(DbContext dbContext, ILog logger)
@@ -15,13 +16,13 @@ namespace iTechArt.SurveysSite.Repositories.Repositories
 
         }
 
-        public async Task<User> GetByNameAsync(string name)
+        public async Task<User> GetByNameAsync(string normalizedUserName)
         {
             var userList = await GetAllAsync();
 
-            var user = userList.SingleOrDefault(userToFind => userToFind.UserName.Equals(name));
+            var user = userList.SingleOrDefault(userToFind => userToFind.NormalizedUserName.Equals(normalizedUserName));
 
-            return await Task.FromResult(user);
+            return user;
         }
     }
 }

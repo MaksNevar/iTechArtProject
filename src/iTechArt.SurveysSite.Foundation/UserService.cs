@@ -30,5 +30,17 @@ namespace iTechArt.SurveysSite.Foundation
 
             return user;
         }
+
+        public async Task SignOutAsync()
+        {
+            await _signInManager.SignOutAsync();
+        }
+
+        public async Task<User> GetUserByNameAsync(string login)
+        {
+            var user = await _userManager.FindByNameAsync(login);
+
+            return user;
+        }
     }
 }

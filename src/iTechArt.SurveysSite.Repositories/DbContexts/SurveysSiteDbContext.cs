@@ -1,5 +1,4 @@
-﻿using iTechArt.Common;
-using iTechArt.SurveysSite.DomainModel;
+﻿using iTechArt.SurveysSite.DomainModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace iTechArt.SurveysSite.Repositories.DbContexts
@@ -15,6 +14,7 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<User>()
                 .Property(user => user.UserName)
                 .IsRequired();

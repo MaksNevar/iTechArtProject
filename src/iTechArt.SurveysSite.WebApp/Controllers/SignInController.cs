@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using iTechArt.SurveysSite.DomainModel;
+﻿using System.Threading.Tasks;
 using iTechArt.SurveysSite.Foundation;
 using iTechArt.SurveysSite.WebApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -19,50 +17,45 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
 
         [HttpGet]
-        public IActionResult CreateUser()
+        public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateUser(UserViewModel userToCreate)
+        public async Task<IActionResult> Login(UserViewModel userView)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                ViewBag.Message = "Username cannot be empty";
+                var user = await _userService.GetUserByNameAsync(userView.UserName);
 
-                return View();
+                if (user == null)
+                {
+                    ViewBag.Message = "The user does not exist";
+
+                    return View();
+                }
+
+                user = await _userService.SignInAsync(userView.UserName, userView.Password);
+
+                if (user != null)
+                {
+                    return Redirect("~/Home/Index");
+                }
             }
 
-            var newUser = new User
-            {
-                UserName = userToCreate.FullName
-            };
-
-            await _userService.CreateUserAsync(newUser);
-
-            ViewBag.Message = "User created";
+            ViewBag.Message = "Password is not correct";
 
             return View();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> DisplayAllUsersAsync()
+        [HttpPost]
+        public async Task<IActionResult> Logout()
         {
-            var users = await _userService.GetAllUsersAsync();
-            var usersList = users.Select(user => new UserViewModel
-            {
-                Id = user.Id,
-                FullName = user.UserName
-            }).ToList();
+            await _userService.SignOutAsync();
 
-            var usersViewModel = new UsersViewModel
-            {
-                Users = usersList
-            };
-
-            return View("DisplayAllUsers", usersViewModel);
+            return Redirect("~/Home/Index");
         }
     }
 }

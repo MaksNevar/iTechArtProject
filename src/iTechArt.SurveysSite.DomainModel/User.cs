@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNet.Identity;
-
-namespace iTechArt.SurveysSite.DomainModel
+﻿namespace iTechArt.SurveysSite.DomainModel
 {
-    public class User : IUser<int>
+    public class User
     {
-        public int Id { get; }
+        public string UserId { get; set; }
 
         public string UserName { get; set; }
 
         public string PasswordHash { get; set; }
+
+        public string NormalizedUserName { get; set; }
     }
 }

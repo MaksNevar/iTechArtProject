@@ -1,9 +1,5 @@
-﻿.companyName {
-    font-size: 90px;
-}
-.companyName h1 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
+﻿.logo {
+    display: block;
+    margin: 0 auto;
+    width: 50%;
 }

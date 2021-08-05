@@ -1,6 +1,8 @@
 using System.Threading.Tasks;
+using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Repositories.DbContexts;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -29,6 +31,21 @@ namespace iTechArt.SurveysSite.WebApp
                     .ServiceProvider
                     .GetRequiredService<SurveysSiteDbContext>();
                 await dbContext.Database.MigrateAsync();
+
+                
+
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<User>>();
+                var admin = await userManager.FindByNameAsync("admin");
+                if (admin == null)
+                {
+                    admin = new User
+                    {
+                        UserId = "",
+                        UserName = "admin"
+                    };
+
+                    await userManager.CreateAsync(admin, "admin123");
+                }
             }
 
             await host.RunAsync();

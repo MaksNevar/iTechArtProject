@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using iTechArt.Common;
 using iTechArt.SurveysSite.DomainModel;
@@ -5,7 +6,7 @@ using iTechArt.SurveysSite.Foundation;
 using iTechArt.SurveysSite.Repositories;
 using iTechArt.SurveysSite.Repositories.DbContexts;
 using iTechArt.SurveysSite.Repositories.UnitOfWorks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,12 +37,36 @@ namespace iTechArt.SurveysSite.WebApp
             services.AddSingleton(Log.Logger);
 
             services.AddScoped<ISurveysSiteUnitOfWork, SurveysSiteUnitOfWork>();
+            
+            var builder = services.AddIdentityCore<User>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            });
+            builder = new IdentityBuilder(builder.UserType, builder.Services);
+            builder.AddSignInManager<SignInManager<User>>();
+            builder.AddUserStore<UserStore>();
+            builder.AddDefaultTokenProviders();
+
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultScheme = IdentityConstants.ApplicationScheme;
+                    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+                    options.DefaultSignOutScheme = IdentityConstants.ExternalScheme;
+                })
+                .AddIdentityCookies();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(2);
+                options.LoginPath = "/SignIn/Login";
+                options.SlidingExpiration = true;
+            });
+
+            services.AddTransient<IUserStore<User>, UserStore>();
 
             services.AddScoped<IUserService, UserService>();
-
-            services.AddIdentityCore<User>()
-                .AddEntityFrameworkStores<SurveysSiteDbContext>()
-                .AddUserStore<UserStore>();
         }
 
         public void Configure(IApplicationBuilder app)
@@ -52,9 +77,11 @@ namespace iTechArt.SurveysSite.WebApp
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseCookiePolicy();
 
             app.UseAuthentication();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

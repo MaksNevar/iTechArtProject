@@ -6,6 +6,6 @@ namespace iTechArt.SurveysSite.Repositories.Repositories
 {
     public interface IUserRepository : IRepository<User>
     {
-        Task<User> GetByNameAsync(string name);
+        Task<User> GetByNameAsync(string normalizedUserName);
     }
 }
