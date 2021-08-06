@@ -28,7 +28,6 @@ namespace iTechArt.SurveysSite.WebApp
 
             using (var serviceScope = host
                 .Services
-                .GetRequiredService<IServiceScopeFactory>()
                 .CreateScope())
             {
                 await using var dbContext = serviceScope
@@ -51,6 +50,7 @@ namespace iTechArt.SurveysSite.WebApp
 
             await host.RunAsync();
         }
+
 
         private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)

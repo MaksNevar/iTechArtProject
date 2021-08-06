@@ -57,7 +57,7 @@ namespace iTechArt.SurveysSite.WebApp
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(2);
+                options.ExpireTimeSpan = TimeSpan.FromDays(14);
                 options.LoginPath = "/SignIn/Login";
                 options.SlidingExpiration = true;
             });

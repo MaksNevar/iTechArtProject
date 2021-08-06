@@ -17,8 +17,8 @@ namespace iTechArt.SurveysSite.Repositories.Repositories
 
         public async Task<User> GetByNameAsync(string normalizedUserName)
         {
-            var user = await _dbContext.Set<User>()
-                .SingleOrDefaultAsync(userToFind => userToFind.NormalizedUserName.Equals(normalizedUserName));
+            var user = await DbContext.Set<User>()
+                .SingleOrDefaultAsync(userToFind => userToFind.NormalizedUserName == normalizedUserName);
 
             return user;
         }

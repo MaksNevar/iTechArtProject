@@ -14,13 +14,9 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<User>()
                 .Property(user => user.UserName)
                 .IsRequired();
-
-            modelBuilder.Entity<User>()
-                .ToTable("User");
 
             modelBuilder.Entity<User>()
                 .Property(user => user.PasswordHash)

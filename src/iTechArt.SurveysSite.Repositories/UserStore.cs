@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using iTechArt.Common;
 using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Repositories.UnitOfWorks;
 using Microsoft.AspNetCore.Identity;
 
 namespace iTechArt.SurveysSite.Repositories
 {
+    [UsedImplicitly]
     public class UserStore : IUserPasswordStore<User>
     {
         private readonly ISurveysSiteUnitOfWork _unitOfWork;
+
 
         public UserStore(ISurveysSiteUnitOfWork unitOfWork)
         {
