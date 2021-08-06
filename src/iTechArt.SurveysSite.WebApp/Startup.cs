@@ -62,8 +62,6 @@ namespace iTechArt.SurveysSite.WebApp
                 options.SlidingExpiration = true;
             });
 
-            services.AddTransient<IUserStore<User>, UserStore>();
-
             services.AddScoped<IUserService, UserService>();
         }
 
