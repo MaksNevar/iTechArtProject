@@ -35,7 +35,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
             if (user == null)
             {
-                ModelState.AddModelError("", "User does not exist");
+                ModelState.AddModelError("", $"User \"{userView.UserName}\" does not exist");
 
                 return View(userView);
             }
