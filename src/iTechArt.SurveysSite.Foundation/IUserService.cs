@@ -5,7 +5,7 @@ namespace iTechArt.SurveysSite.Foundation
 {
     public interface IUserService
     {
-        Task<User> SignInAsync(string login, string password);
+        Task<bool> SignInAsync(string login, string password);
 
         Task SignOutAsync();
 

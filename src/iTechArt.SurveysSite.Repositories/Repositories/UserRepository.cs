@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using iTechArt.Common;
 using iTechArt.Repositories.Repository;
 using iTechArt.SurveysSite.DomainModel;
@@ -18,9 +17,8 @@ namespace iTechArt.SurveysSite.Repositories.Repositories
 
         public async Task<User> GetByNameAsync(string normalizedUserName)
         {
-            var userList = await GetAllAsync();
-
-            var user = userList.SingleOrDefault(userToFind => userToFind.NormalizedUserName.Equals(normalizedUserName));
+            var user = await _dbContext.Set<User>()
+                .SingleOrDefaultAsync(userToFind => userToFind.NormalizedUserName.Equals(normalizedUserName));
 
             return user;
         }

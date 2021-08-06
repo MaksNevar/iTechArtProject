@@ -26,32 +26,30 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UserViewModel userView)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var user = await _userService.GetUserByNameAsync(userView.UserName);
-
-                if (user == null)
-                {
-                    ViewBag.Message = "The user does not exist";
-
-                    return View();
-                }
-
-                user = await _userService.SignInAsync(userView.UserName, userView.Password);
-
-                if (user != null)
-                {
-                    return Redirect("~/Home/Index");
-                }
-
-                ViewBag.Message = "Password is not correct";
-
-                return View();
+                return View(userView);
             }
 
-            ViewBag.Message = "Please enter login and password";
+            var user = await _userService.GetUserByNameAsync(userView.UserName);
 
-            return View();
+            if (user == null)
+            {
+                ModelState.AddModelError("", "User does not exist");
+
+                return View(userView);
+            }
+
+            var result = await _userService.SignInAsync(userView.UserName, userView.Password);
+
+            if (result)
+            {
+                return Redirect("~/Home/Index");
+            }
+
+            ModelState.AddModelError("", "Password is not correct");
+
+            return View(userView);
         }
 
         [HttpPost]

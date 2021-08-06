@@ -4,10 +4,10 @@ namespace iTechArt.SurveysSite.WebApp.ViewModels
 {
     public class UserViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Please enter username")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter password")]
         public string Password { get; set; }
     }
 }

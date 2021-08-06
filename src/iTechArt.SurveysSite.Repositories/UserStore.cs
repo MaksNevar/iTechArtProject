@@ -31,7 +31,7 @@ namespace iTechArt.SurveysSite.Repositories
                 throw new ArgumentNullException(nameof(user));
             }
 
-            return Task.FromResult(user.UserId);
+            return Task.FromResult(user.Id.ToString());
         }
 
         public Task<string> GetUserNameAsync(User user, CancellationToken cancellationToken)

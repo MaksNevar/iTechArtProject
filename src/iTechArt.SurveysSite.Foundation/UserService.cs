@@ -17,18 +17,11 @@ namespace iTechArt.SurveysSite.Foundation
         }
 
 
-        public async Task<User> SignInAsync(string login, string password)
+        public async Task<bool> SignInAsync(string login, string password)
         {
             var result = await _signInManager.PasswordSignInAsync(login, password, false, false);
 
-            if (!result.Succeeded)
-            {
-                return null;
-            }
-
-            var user = await _userManager.FindByNameAsync(login);
-
-            return user;
+            return result.Succeeded;
         }
 
         public async Task SignOutAsync()

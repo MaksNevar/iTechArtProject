@@ -43,10 +43,8 @@ namespace iTechArt.SurveysSite.WebApp
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
             });
-            builder = new IdentityBuilder(builder.UserType, builder.Services);
             builder.AddSignInManager<SignInManager<User>>();
             builder.AddUserStore<UserStore>();
-            builder.AddDefaultTokenProviders();
 
             services.AddAuthentication(options =>
                 {
@@ -80,8 +78,6 @@ namespace iTechArt.SurveysSite.WebApp
             app.UseCookiePolicy();
 
             app.UseAuthentication();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
