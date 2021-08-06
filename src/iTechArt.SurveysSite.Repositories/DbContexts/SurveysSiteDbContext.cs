@@ -25,6 +25,10 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
             modelBuilder.Entity<User>()
                 .Property(user => user.PasswordHash)
                 .IsRequired();
+
+            modelBuilder.Entity<User>()
+                .Property(user => user.NormalizedUserName)
+                .IsRequired();
         }
     }
 }

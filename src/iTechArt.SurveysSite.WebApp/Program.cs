@@ -4,6 +4,7 @@ using iTechArt.SurveysSite.Repositories.DbContexts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -14,9 +15,12 @@ namespace iTechArt.SurveysSite.WebApp
     {
         public static async Task Main(string[] args)
         {
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.File(@"../iTechArt/logs/logs.txt")
-                .MinimumLevel.Debug()
+                .ReadFrom.Configuration(configuration)
                 .CreateLogger();
 
             var hostBuilder = CreateHostBuilder(args);

@@ -9,7 +9,7 @@ using iTechArt.SurveysSite.Repositories.DbContexts;
 namespace iTechArt.SurveysSite.Repositories.Migrations
 {
     [DbContext(typeof(SurveysSiteDbContext))]
-    [Migration("20210804090844_Changes_in_User_structure")]
+    [Migration("20210806074320_Changes_in_User_structure")]
     partial class Changes_in_User_structure
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,10 +22,13 @@ namespace iTechArt.SurveysSite.Repositories.Migrations
 
             modelBuilder.Entity("iTechArt.SurveysSite.DomainModel.User", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("NormalizedUserName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
@@ -36,7 +39,7 @@ namespace iTechArt.SurveysSite.Repositories.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.ToTable("User");
                 });
