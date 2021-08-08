@@ -54,14 +54,6 @@ namespace iTechArt.SurveysSite.WebApp
                 })
                 .AddIdentityCookies();
 
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromDays(14);
-                options.LoginPath = "/SignIn/Login";
-                options.SlidingExpiration = true;
-            });
-
             services.AddScoped<IUserService, UserService>();
         }
 
@@ -72,8 +64,6 @@ namespace iTechArt.SurveysSite.WebApp
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseCookiePolicy();
 
             app.UseAuthentication();
 

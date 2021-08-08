@@ -7,9 +7,10 @@ namespace iTechArt.Repositories.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        protected DbContext DbContext { get;  }
-
         private readonly ILog _logger;
+
+
+        protected DbContext DbContext { get;  }
 
 
         public Repository(DbContext context, ILog logger)
