@@ -45,6 +45,8 @@ namespace iTechArt.SurveysSite.WebApp
             });
             builder.AddSignInManager<SignInManager<User>>();
             builder.AddUserStore<UserStore>();
+            builder.AddRoles<Role>();
+            builder.AddRoleStore<RoleStore>();
 
             services.AddAuthentication(options =>
                 {

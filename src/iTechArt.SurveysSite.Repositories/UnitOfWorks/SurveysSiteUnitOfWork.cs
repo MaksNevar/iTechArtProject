@@ -15,6 +15,7 @@ namespace iTechArt.SurveysSite.Repositories.UnitOfWorks
             : base(context, logger)
         {
             RegisterRepositoryType<User, UserRepository>();
+            RegisterRepositoryType<Role, RoleRepository>();
         }
     }
 }
