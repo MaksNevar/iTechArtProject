@@ -1,34 +1,39 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
-using iTechArt.SurveysSite.Repositories.UnitOfWorks;
+using Microsoft.AspNetCore.Identity;
 
 namespace iTechArt.SurveysSite.Foundation
 {
     public class UserService : IUserService
     {
-        private readonly ISurveysSiteUnitOfWork _unitOfWork;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
 
-        public UserService(ISurveysSiteUnitOfWork unitOfWork)
+        public UserService(UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            _unitOfWork = unitOfWork;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
 
-        public async Task<IReadOnlyCollection<User>> GetAllUsersAsync()
+        public async Task<bool> SignInAsync(string login, string password)
         {
-            var userRepository = _unitOfWork.GetRepository<User>();
+            var result = await _signInManager.PasswordSignInAsync(login, password, false, false);
 
-            return await userRepository.GetAllAsync();
+            return result.Succeeded;
         }
 
-        public async Task CreateUserAsync(User userToCreate)
+        public async Task SignOutAsync()
         {
-            var userRepository = _unitOfWork.GetRepository<User>();
+            await _signInManager.SignOutAsync();
+        }
 
-            userRepository.Create(userToCreate);
-            await _unitOfWork.SaveAsync();
+        public async Task<User> GetUserByUsernameAsync(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+
+            return user;
         }
     }
 }

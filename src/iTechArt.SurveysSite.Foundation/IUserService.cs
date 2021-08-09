@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
 
 namespace iTechArt.SurveysSite.Foundation
 {
     public interface IUserService
     {
-        Task<IReadOnlyCollection<User>> GetAllUsersAsync();
+        Task<bool> SignInAsync(string login, string password);
 
-        Task CreateUserAsync(User userToCreate);
+        Task SignOutAsync();
+
+        Task<User> GetUserByUsernameAsync(string userName);
     }
 }

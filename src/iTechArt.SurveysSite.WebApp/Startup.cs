@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using iTechArt.Common;
+using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Foundation;
+using iTechArt.SurveysSite.Repositories;
 using iTechArt.SurveysSite.Repositories.DbContexts;
 using iTechArt.SurveysSite.Repositories.UnitOfWorks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +36,22 @@ namespace iTechArt.SurveysSite.WebApp
             services.AddSingleton(Log.Logger);
 
             services.AddScoped<ISurveysSiteUnitOfWork, SurveysSiteUnitOfWork>();
+            
+            var builder = services.AddIdentityCore<User>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            });
+            builder.AddSignInManager<SignInManager<User>>();
+            builder.AddUserStore<UserStore>();
+
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultScheme = IdentityConstants.ApplicationScheme;
+                    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+                    options.DefaultSignOutScheme = IdentityConstants.ExternalScheme;
+                })
+                .AddIdentityCookies();
 
             services.AddScoped<IUserService, UserService>();
         }
@@ -41,7 +60,11 @@ namespace iTechArt.SurveysSite.WebApp
         {
             app.UseHttpsRedirection();
 
+            app.UseStaticFiles();
+
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

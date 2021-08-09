@@ -1,7 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<div>
-    <button type="submit" name="CreateUser" onclick="location.href = '@Url.Action("CreateUser", "UserManagement")'">Create new user</button>
-    <button type="submit" style="margin-left: 100px" onclick="location.href='@Url.Action("DisplayAllUsers", "UserManagement")'">Display all users</button>
-</div>
+<head>
+    <title>Main page</title>
+    <link rel="stylesheet" href="/css/MainPageStyles.css"/>
+</head>
+<body>
+    <div>
+        <img src="/images/iTechArt_logo.png" class="logo"/>
+    </div>
+</body>
