@@ -9,5 +9,7 @@
         public string PasswordHash { get; set; }
 
         public string NormalizedUserName { get; set; }
+
+        public Role Role { get; set; }
     }
 }

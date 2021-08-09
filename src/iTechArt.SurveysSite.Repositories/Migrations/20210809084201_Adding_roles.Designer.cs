@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using iTechArt.SurveysSite.Repositories.DbContexts;
 
 namespace iTechArt.SurveysSite.Repositories.Migrations
 {
     [DbContext(typeof(SurveysSiteDbContext))]
-    partial class SurveysSiteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210809084201_Adding_roles")]
+    partial class Adding_roles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

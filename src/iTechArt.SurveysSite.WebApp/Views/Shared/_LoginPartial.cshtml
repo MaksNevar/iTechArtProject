@@ -1,7 +1,6 @@
 ﻿@using iTechArt.SurveysSite.DomainModel
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<User> _signInManager
-@inject UserManager<User> _userManager
 
 <ul class="navbar-nav">
     @if (_signInManager.IsSignedIn(User))
