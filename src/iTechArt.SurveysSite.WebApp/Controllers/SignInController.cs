@@ -32,6 +32,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             }
 
             var user = await _userService.GetUserByNameAsync(userView.UserName);
+
             if (user == null)
             {
                 ModelState.AddModelError("", $"User \"{userView.UserName}\" does not exist");
@@ -40,6 +41,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             }
 
             var result = await _userService.SignInAsync(userView.UserName, userView.Password);
+
             if (result)
             {
                 return Redirect("~/Home/Index");

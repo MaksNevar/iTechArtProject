@@ -39,6 +39,7 @@ namespace iTechArt.SurveysSite.WebApp
                     .ServiceProvider
                     .GetRequiredService<UserManager<User>>();
                 var admin = await userManager.FindByNameAsync("admin");
+
                 if (admin == null)
                 {
                     admin = new User

@@ -30,6 +30,7 @@ namespace iTechArt.Repositories.UnitOfWork
         public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             var entityType = typeof(TEntity);
+
             if (_repositories.TryGetValue(entityType, out var repository))
             {
                 return (IRepository<TEntity>)repository;

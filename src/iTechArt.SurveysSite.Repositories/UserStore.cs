@@ -28,6 +28,7 @@ namespace iTechArt.SurveysSite.Repositories
         public Task<string> GetUserIdAsync(User user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user));
@@ -39,6 +40,7 @@ namespace iTechArt.SurveysSite.Repositories
         public Task<string> GetUserNameAsync(User user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user));
@@ -50,6 +52,7 @@ namespace iTechArt.SurveysSite.Repositories
         public Task SetUserNameAsync(User user, string userName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user));
@@ -63,6 +66,7 @@ namespace iTechArt.SurveysSite.Repositories
         public Task<string> GetNormalizedUserNameAsync(User user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user));
@@ -74,6 +78,7 @@ namespace iTechArt.SurveysSite.Repositories
         public Task SetNormalizedUserNameAsync(User user, string normalizedName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user));
@@ -87,6 +92,7 @@ namespace iTechArt.SurveysSite.Repositories
         public async Task<IdentityResult> CreateAsync(User user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user));
@@ -101,6 +107,7 @@ namespace iTechArt.SurveysSite.Repositories
         public async Task<IdentityResult> UpdateAsync(User user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user));
@@ -115,6 +122,7 @@ namespace iTechArt.SurveysSite.Repositories
         public async Task<IdentityResult> DeleteAsync(User user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user));
@@ -145,6 +153,7 @@ namespace iTechArt.SurveysSite.Repositories
         public Task SetPasswordHashAsync(User user, string passwordHash, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user));
@@ -158,6 +167,7 @@ namespace iTechArt.SurveysSite.Repositories
         public Task<string> GetPasswordHashAsync(User user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user));
@@ -171,6 +181,7 @@ namespace iTechArt.SurveysSite.Repositories
         public Task<bool> HasPasswordAsync(User user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user));
