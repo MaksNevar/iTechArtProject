@@ -35,7 +35,9 @@ namespace iTechArt.SurveysSite.WebApp
                     .GetRequiredService<SurveysSiteDbContext>();
                 await dbContext.Database.MigrateAsync();
 
-                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<User>>();
+                var userManager = serviceScope
+                    .ServiceProvider
+                    .GetRequiredService<UserManager<User>>();
                 var admin = await userManager.FindByNameAsync("admin");
                 if (admin == null)
                 {

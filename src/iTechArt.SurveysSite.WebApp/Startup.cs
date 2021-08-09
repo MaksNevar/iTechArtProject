@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Builder;
 using iTechArt.Common;
 using iTechArt.SurveysSite.DomainModel;
