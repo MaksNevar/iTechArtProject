@@ -1,4 +1,6 @@
-﻿namespace iTechArt.SurveysSite.DomainModel
+﻿using System.Collections.Generic;
+
+namespace iTechArt.SurveysSite.DomainModel
 {
     public class Role
     {
@@ -7,5 +9,7 @@
         public string Name { get; set; }
 
         public string NormalizedName { get; set; }
+
+        public ICollection<User> Users { get; set; }
     }
 }

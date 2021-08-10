@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
+using Microsoft.AspNetCore.Identity;
 
 namespace iTechArt.SurveysSite.Foundation
 {
@@ -10,5 +11,7 @@ namespace iTechArt.SurveysSite.Foundation
         Task SignOutAsync();
 
         Task<User> GetUserByNameAsync(string login);
+
+        Task<IdentityResult> CreateUserAsync(string userName, string email, string password);
     }
 }

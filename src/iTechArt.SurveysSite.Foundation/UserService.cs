@@ -8,12 +8,14 @@ namespace iTechArt.SurveysSite.Foundation
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly RoleManager<Role> _roleManager;
 
 
-        public UserService(UserManager<User> userManager, SignInManager<User> signInManager)
+        public UserService(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<Role> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
 
@@ -34,6 +36,21 @@ namespace iTechArt.SurveysSite.Foundation
             var user = await _userManager.FindByNameAsync(login);
 
             return user;
+        }
+
+        public async Task<IdentityResult> CreateUserAsync(string userName, string email, string password)
+        {
+            var role = await _roleManager.FindByNameAsync("User");
+            var user = new User
+            {
+                UserName = userName,
+                Email = email,
+                Role = role
+            };
+
+            var result = await _userManager.CreateAsync(user, password);
+
+            return result;
         }
     }
 }

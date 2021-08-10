@@ -26,6 +26,15 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
                 .Property(user => user.NormalizedUserName)
                 .IsRequired();
 
+            modelBuilder.Entity<User>()
+                .Property(user => user.Email)
+                .IsRequired();
+
+            modelBuilder.Entity<User>()
+                .HasOne(user => user.Role)
+                .WithMany(role => role.Users)
+                .IsRequired();
+
             modelBuilder.Entity<Role>()
                 .ToTable("UserRole");
 

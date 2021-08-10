@@ -6,11 +6,19 @@ namespace iTechArt.SurveysSite.Repositories.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<string>(
+                name: "Email",
+                table: "User",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
+
             migrationBuilder.AddColumn<int>(
                 name: "RoleId",
                 table: "User",
                 type: "int",
-                nullable: true);
+                nullable: false,
+                defaultValue: 0);
 
             migrationBuilder.CreateTable(
                 name: "UserRole",
@@ -37,7 +45,7 @@ namespace iTechArt.SurveysSite.Repositories.Migrations
                 column: "RoleId",
                 principalTable: "UserRole",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -51,6 +59,10 @@ namespace iTechArt.SurveysSite.Repositories.Migrations
 
             migrationBuilder.DropIndex(
                 name: "IX_User_RoleId",
+                table: "User");
+
+            migrationBuilder.DropColumn(
+                name: "Email",
                 table: "User");
 
             migrationBuilder.DropColumn(
