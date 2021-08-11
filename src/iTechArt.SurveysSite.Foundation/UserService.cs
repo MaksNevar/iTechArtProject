@@ -31,7 +31,7 @@ namespace iTechArt.SurveysSite.Foundation
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<User> GetUserByNameAsync(string login)
+        public async Task<User> GetUserByUsernameAsync(string login)
         {
             var user = await _userManager.FindByNameAsync(login);
 

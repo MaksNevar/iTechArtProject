@@ -31,7 +31,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 return View(userView);
             }
 
-            var user = await _userService.GetUserByNameAsync(userView.UserName);
+            var user = await _userService.GetUserByUsernameAsync(userView.UserName);
 
             if (user == null)
             {

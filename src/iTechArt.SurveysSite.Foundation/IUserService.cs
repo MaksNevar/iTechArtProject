@@ -10,7 +10,7 @@ namespace iTechArt.SurveysSite.Foundation
 
         Task SignOutAsync();
 
-        Task<User> GetUserByNameAsync(string login);
+        Task<User> GetUserByUsernameAsync(string login);
 
         Task<IdentityResult> CreateUserAsync(string userName, string email, string password);
     }

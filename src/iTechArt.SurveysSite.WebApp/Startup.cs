@@ -75,8 +75,6 @@ namespace iTechArt.SurveysSite.WebApp
 
             app.UseRouting();
 
-            app.UseCookiePolicy();
-
             app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>

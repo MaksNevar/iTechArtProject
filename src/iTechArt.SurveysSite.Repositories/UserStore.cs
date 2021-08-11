@@ -35,6 +35,7 @@ namespace iTechArt.SurveysSite.Repositories
             }
 
             var userId = user.Id;
+
             return Task.FromResult(userId.ToString());
         }
 
@@ -141,6 +142,7 @@ namespace iTechArt.SurveysSite.Repositories
             var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
 
             return user;
+
         }
 
         public async Task<User> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
