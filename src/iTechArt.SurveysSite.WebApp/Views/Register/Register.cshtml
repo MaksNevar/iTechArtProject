@@ -20,7 +20,15 @@
         </div>
         <div class="row">
             <div class="col-md-12 form-group">
-                @Html.TextBoxFor(model => model.Password, new { type = "password", @class = "form-control", placeholder = "Password", autocomplete = "off" })
+                @Html.TextBoxFor(model => model.Password, new { type = "password", @class = "form-control", placeholder = "Password", autocomplete = "off", id = "password" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group form-check">
+                <input class="form-check-input" type="checkbox" id="showPass" value=""/>
+                <label class="form-check-label" for="showPass" id="labelPass">
+                    Show password
+                </label>
             </div>
         </div>
         <div class="row">
@@ -36,5 +44,18 @@
                 <input type="submit" class="btn btn-block btn-login" value="Sign up">
             </div>
         </div>
+        <script>
+            $(function() {
+
+                $("#showPass").change(function() {
+                    var checked = $(this).is(":checked");
+                    if (checked) {
+                        $("#password").attr("type", "text");
+                    } else {
+                        $("#password").attr("type", "password");
+                    }
+                });
+            });
+        </script>
     </form>
 </div>

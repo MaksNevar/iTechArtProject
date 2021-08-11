@@ -40,8 +40,21 @@ namespace iTechArt.SurveysSite.Foundation
 
         public async Task<IdentityResult> CreateUserAsync(string userName, string email, string password)
         {
+            var user = await _userManager.FindByNameAsync(userName);
+
+            if (user != null)
+            {
+                var failedResult = IdentityResult.Failed(new IdentityError
+                {
+                    Code = "1",
+                    Description = "User already exists"
+                });
+
+                return failedResult;
+            }
+
             var role = await _roleManager.FindByNameAsync("User");
-            var user = new User
+            user = new User
             {
                 UserName = userName,
                 Email = email,

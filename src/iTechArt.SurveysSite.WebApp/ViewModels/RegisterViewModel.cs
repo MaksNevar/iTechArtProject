@@ -10,6 +10,7 @@ namespace iTechArt.SurveysSite.WebApp.ViewModels
         public string Login { get; set; }
 
         [Required(ErrorMessage = "Please enter email")]
+        [StringLength(35, MinimumLength = 10, ErrorMessage = "Email should be from 10 to 35 symbols")]
         [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Incorrect email address")]
         public string Email { get; set; }
 
