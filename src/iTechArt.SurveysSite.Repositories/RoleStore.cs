@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using iTechArt.Repositories.Repository;
+using iTechArt.Common;
 using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Repositories.Repositories;
 using iTechArt.SurveysSite.Repositories.UnitOfWorks;
@@ -10,10 +9,12 @@ using Microsoft.AspNetCore.Identity;
 
 namespace iTechArt.SurveysSite.Repositories
 {
+    [UsedImplicitly]
     public class RoleStore : IRoleStore<Role>
     {
         private readonly ISurveysSiteUnitOfWork _unitOfWork;
         private readonly IRoleRepository _roleRepository;
+
 
         public RoleStore(ISurveysSiteUnitOfWork unitOfWork)
         {
@@ -30,6 +31,7 @@ namespace iTechArt.SurveysSite.Repositories
         public async Task<IdentityResult> CreateAsync(Role role, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (role == null)
             {
                 throw new ArgumentNullException(nameof(role));
@@ -44,6 +46,7 @@ namespace iTechArt.SurveysSite.Repositories
         public async Task<IdentityResult> UpdateAsync(Role role, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (role == null)
             {
                 throw new ArgumentNullException(nameof(role));
@@ -58,6 +61,7 @@ namespace iTechArt.SurveysSite.Repositories
         public async Task<IdentityResult> DeleteAsync(Role role, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (role == null)
             {
                 throw new ArgumentNullException(nameof(role));
@@ -72,6 +76,7 @@ namespace iTechArt.SurveysSite.Repositories
         public Task<string> GetRoleIdAsync(Role role, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (role == null)
             {
                 throw new ArgumentNullException(nameof(role));
@@ -85,6 +90,7 @@ namespace iTechArt.SurveysSite.Repositories
         public Task<string> GetRoleNameAsync(Role role, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (role == null)
             {
                 throw new ArgumentNullException(nameof(role));
@@ -96,6 +102,7 @@ namespace iTechArt.SurveysSite.Repositories
         public Task SetRoleNameAsync(Role role, string roleName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (role == null)
             {
                 throw new ArgumentNullException(nameof(role));
@@ -109,6 +116,7 @@ namespace iTechArt.SurveysSite.Repositories
         public Task<string> GetNormalizedRoleNameAsync(Role role, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (role == null)
             {
                 throw new ArgumentNullException(nameof(role));
@@ -122,6 +130,7 @@ namespace iTechArt.SurveysSite.Repositories
         public Task SetNormalizedRoleNameAsync(Role role, string normalizedName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (role == null)
             {
                 throw new ArgumentNullException(nameof(role));

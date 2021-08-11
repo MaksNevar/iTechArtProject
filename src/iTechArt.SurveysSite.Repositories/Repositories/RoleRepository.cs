@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace iTechArt.SurveysSite.Repositories.Repositories
 {
+    [UsedImplicitly]
     public class RoleRepository : Repository<Role>, IRoleRepository
     {
         public RoleRepository(DbContext context, ILog logger) : base(context, logger)

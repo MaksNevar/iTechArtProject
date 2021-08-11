@@ -148,7 +148,7 @@ namespace iTechArt.SurveysSite.Repositories
         public async Task<User> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            var user = await _unitOfWork.UserRepository.GetByNameAsync(normalizedUserName);
+            var user = await _unitOfWork.UserRepository.GetUserByNameAsync(normalizedUserName);
 
             return user;
         }

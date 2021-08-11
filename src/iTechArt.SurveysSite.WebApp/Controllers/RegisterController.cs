@@ -1,9 +1,7 @@
 ﻿using System.Threading.Tasks;
-using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Foundation;
 using Microsoft.AspNetCore.Mvc;
 using iTechArt.SurveysSite.WebApp.ViewModels;
-using Microsoft.AspNetCore.Identity;
 
 namespace iTechArt.SurveysSite.WebApp.Controllers
 {
