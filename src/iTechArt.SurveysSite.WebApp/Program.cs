@@ -41,6 +41,7 @@ namespace iTechArt.SurveysSite.WebApp
 
                 var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<User>>();
                 var admin = await userManager.FindByNameAsync("admin");
+
                 if (admin == null)
                 {
                     var role = await roleManager.FindByNameAsync("admin");

@@ -37,7 +37,9 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
             if (result.Succeeded)
             {
-                return RedirectToAction("Login", "SignIn");
+                ViewBag.Message = "Registration is successful";
+
+                return View();
             }
 
             foreach (var error in result.Errors)
