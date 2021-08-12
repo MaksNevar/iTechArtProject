@@ -17,6 +17,7 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
             var userBuilder = modelBuilder.Entity<User>();
             userBuilder.Property(user => user.UserName)
                 .IsRequired();
+
             userBuilder.Property(user => user.PasswordHash)
                 .IsRequired();
 
@@ -32,10 +33,13 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
 
             var roleBuilder = modelBuilder.Entity<Role>();
             roleBuilder.ToTable("UserRole");
+
             roleBuilder.Property(role => role.Name)
                 .IsRequired();
+
             roleBuilder.Property(role => role.NormalizedName)
                 .IsRequired();
+
             roleBuilder.HasData(new Role
                 {
                     Id = 1,
