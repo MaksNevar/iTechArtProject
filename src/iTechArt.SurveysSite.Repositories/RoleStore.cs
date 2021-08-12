@@ -82,9 +82,7 @@ namespace iTechArt.SurveysSite.Repositories
                 throw new ArgumentNullException(nameof(role));
             }
 
-            var roleId = role.Id;
-
-            return Task.FromResult(roleId.ToString());
+            return Task.FromResult(role.Id.ToString());
         }
 
         public Task<string> GetRoleNameAsync(Role role, CancellationToken cancellationToken)

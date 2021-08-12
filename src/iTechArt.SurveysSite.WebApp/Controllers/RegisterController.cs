@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Foundation;
 using Microsoft.AspNetCore.Mvc;
 using iTechArt.SurveysSite.WebApp.ViewModels;
@@ -7,10 +8,10 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 {
     public class RegisterController : Controller
     {
-        private readonly IUserService _userService;
+        private readonly IAccountService _userService;
 
 
-        public RegisterController(IUserService userService)
+        public RegisterController(IAccountService userService)
         {
             _userService = userService;
         }
@@ -31,7 +32,13 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 return View(registerModel);
             }
 
-            var result = await _userService.CreateUserAsync(registerModel.Login, registerModel.Email, registerModel.Password);
+            var userToRegister = new User
+            {
+                UserName = registerModel.Login,
+                Email = registerModel.Email
+            };
+
+            var result = await _userService.RegisterAsync(userToRegister, registerModel.Password);
 
             if (result.Succeeded)
             {

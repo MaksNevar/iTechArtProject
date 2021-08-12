@@ -4,14 +4,12 @@ using Microsoft.AspNetCore.Identity;
 
 namespace iTechArt.SurveysSite.Foundation
 {
-    public interface IUserService
+    public interface IAccountService
     {
         Task<bool> SignInAsync(string login, string password);
 
         Task SignOutAsync();
 
-        Task<User> GetUserByUsernameAsync(string userName);
-
-        Task<IdentityResult> CreateUserAsync(string userName, string email, string password);
+        Task<IdentityResult> RegisterAsync(User user, string password);
     }
 }

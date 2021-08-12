@@ -14,37 +14,40 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-                .Property(user => user.UserName)
+            var userBuilder = modelBuilder.Entity<User>();
+            userBuilder.Property(user => user.UserName)
+                .IsRequired();
+            userBuilder.Property(user => user.PasswordHash)
                 .IsRequired();
 
-            modelBuilder.Entity<User>()
-                .Property(user => user.PasswordHash)
+            userBuilder.Property(user => user.NormalizedUserName)
                 .IsRequired();
 
-            modelBuilder.Entity<User>()
-                .Property(user => user.NormalizedUserName)
+            userBuilder.Property(user => user.Email)
                 .IsRequired();
 
-            modelBuilder.Entity<User>()
-                .Property(user => user.Email)
-                .IsRequired();
-
-            modelBuilder.Entity<User>()
-                .HasOne(user => user.Role)
+            userBuilder.HasOne(user => user.Role)
                 .WithMany(role => role.Users)
                 .IsRequired();
 
-            modelBuilder.Entity<Role>()
-                .ToTable("UserRole");
-
-            modelBuilder.Entity<Role>()
-                .Property(role => role.Name)
+            var roleBuilder = modelBuilder.Entity<Role>();
+            roleBuilder.ToTable("UserRole");
+            roleBuilder.Property(role => role.Name)
                 .IsRequired();
-
-            modelBuilder.Entity<Role>()
-                .Property(role => role.NormalizedName)
+            roleBuilder.Property(role => role.NormalizedName)
                 .IsRequired();
+            roleBuilder.HasData(new Role
+                {
+                    Id = 1,
+                    Name = RoleNames.AdminRole,
+                    NormalizedName = RoleNames.AdminRole
+                },
+                new Role
+                {
+                    Id = 2,
+                    Name = RoleNames.UserRole,
+                    NormalizedName = RoleNames.UserRole
+                });
         }
     }
 }

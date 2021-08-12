@@ -55,7 +55,9 @@ namespace iTechArt.SurveysSite.WebApp
                 })
                 .AddIdentityCookies();
 
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAccountService, AccountService>();
+
+            services.AddScoped<IUserManagementService, UserManagementService>();
         }
 
         public void Configure(IApplicationBuilder app)
