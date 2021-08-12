@@ -6,5 +6,7 @@ namespace iTechArt.SurveysSite.Repositories.UnitOfWorks
     public interface ISurveysSiteUnitOfWork : IUnitOfWork
     {
         IUserRepository UserRepository { get; }
+
+        IRoleRepository RoleRepository { get; }
     }
 }

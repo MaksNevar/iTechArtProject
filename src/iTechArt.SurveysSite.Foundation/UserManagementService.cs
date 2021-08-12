@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
 using Microsoft.AspNetCore.Identity;
 
@@ -17,6 +18,11 @@ namespace iTechArt.SurveysSite.Foundation
 
         public async Task<User> GetUserByUsernameAsync(string userName)
         {
+            if (string.IsNullOrEmpty(userName))
+            {
+                throw new ArgumentNullException(nameof(userName));
+            }
+
             var user = await _userManager.FindByNameAsync(userName);
 
             return user;
