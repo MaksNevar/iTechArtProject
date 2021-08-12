@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using iTechArt.Common;
@@ -10,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 namespace iTechArt.SurveysSite.Repositories
 {
     [UsedImplicitly]
-    public class UserStore : IUserPasswordStore<User>, IUserRoleStore<User>
+    public class UserStore : IUserPasswordStore<User>
     {
         private readonly ISurveysSiteUnitOfWork _unitOfWork;
 
@@ -190,113 +189,6 @@ namespace iTechArt.SurveysSite.Repositories
             }
 
             return Task.FromResult(user.PasswordHash != null);
-        }
-
-        public async Task AddToRoleAsync(User user, string roleName, CancellationToken cancellationToken)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
-
-            if (string.IsNullOrEmpty(roleName))
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
-
-            var role = await _unitOfWork.RoleRepository.GetRoleByNameAsync(roleName);
-
-            if (role == null)
-            {
-                return;
-            }
-
-            role.Users.Add(user);
-            await _unitOfWork.SaveAsync();
-        }
-
-        public async Task RemoveFromRoleAsync(User user, string roleName, CancellationToken cancellationToken)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
-
-            if (string.IsNullOrEmpty(roleName))
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
-
-            var role = await _unitOfWork.RoleRepository.GetRoleByNameAsync(roleName);
-
-            if (role == null)
-            {
-                return;
-            }
-
-            role.Users.Remove(user);
-            await _unitOfWork.SaveAsync();
-        }
-
-        public Task<IList<string>> GetRolesAsync(User user, CancellationToken cancellationToken)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
-
-            var userRole = new List<string> {user.Role.Name};
-
-            return Task.FromResult<IList<string>>(userRole);
-        }
-
-        public async Task<bool> IsInRoleAsync(User user, string roleName, CancellationToken cancellationToken)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
-
-            if (string.IsNullOrEmpty(roleName))
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
-
-            var role = await _unitOfWork.RoleRepository.GetRoleByNameAsync(roleName);
-
-            if (role == null)
-            {
-                return false;
-            }
-
-            return role.Users.Contains(user);
-        }
-
-        public async Task<IList<User>> GetUsersInRoleAsync(string roleName, CancellationToken cancellationToken)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-
-            if (string.IsNullOrEmpty(roleName))
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
-
-            var role = await _unitOfWork.RoleRepository.GetRoleByNameAsync(roleName);
-
-            if (role == null)
-            {
-                return new List<User>();
-            }
-
-            return role.Users;
         }
     }
 }
