@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using iTechArt.SurveysSite.DomainModel;
+﻿using iTechArt.SurveysSite.DomainModel;
 using Microsoft.AspNetCore.Identity;
+using System;
+using System.Threading.Tasks;
 
 namespace iTechArt.SurveysSite.Foundation
 {

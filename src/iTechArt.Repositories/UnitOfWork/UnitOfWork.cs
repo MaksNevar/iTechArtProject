@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using iTechArt.Common;
+﻿using iTechArt.Common;
 using iTechArt.Repositories.Repository;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace iTechArt.Repositories.UnitOfWork
 {

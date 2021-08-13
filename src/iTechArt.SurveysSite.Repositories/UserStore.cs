@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using iTechArt.Common;
+﻿using iTechArt.Common;
 using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Repositories.UnitOfWorks;
 using Microsoft.AspNetCore.Identity;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace iTechArt.SurveysSite.Repositories
 {

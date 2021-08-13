@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using iTechArt.Common;
+﻿using iTechArt.Common;
 using iTechArt.Repositories.Repository;
 using iTechArt.SurveysSite.DomainModel;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace iTechArt.SurveysSite.Repositories.Repositories
 {

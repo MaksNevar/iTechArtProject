@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using iTechArt.SurveysSite.DomainModel;
+﻿using iTechArt.SurveysSite.DomainModel;
+using System.Threading.Tasks;
 
 namespace iTechArt.SurveysSite.Foundation
 {
