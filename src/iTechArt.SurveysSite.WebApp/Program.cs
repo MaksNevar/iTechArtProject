@@ -61,7 +61,7 @@ namespace iTechArt.SurveysSite.WebApp
                 Role = adminRole
             };
 
-            await userManager.CreateAsync(admin);
+            await userManager.CreateAsync(admin, "admin123");
         }
     }
 }
