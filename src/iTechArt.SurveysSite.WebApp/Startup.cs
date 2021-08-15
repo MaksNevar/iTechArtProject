@@ -4,6 +4,7 @@ using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Foundation;
 using iTechArt.SurveysSite.Repositories;
 using iTechArt.SurveysSite.Repositories.DbContexts;
+using iTechArt.SurveysSite.Repositories.Stores;
 using iTechArt.SurveysSite.Repositories.UnitOfWorks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -41,11 +42,14 @@ namespace iTechArt.SurveysSite.WebApp
             {
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = User.MinPasswordLength;
             });
             builder.AddSignInManager<SignInManager<User>>();
             builder.AddUserStore<UserStore>();
             builder.AddRoles<Role>();
             builder.AddRoleStore<RoleStore>();
+            builder.AddUserValidator<UserValidator>();
+            builder.AddPasswordValidator<PasswordValidator>();
 
             services.AddAuthentication(options =>
                 {

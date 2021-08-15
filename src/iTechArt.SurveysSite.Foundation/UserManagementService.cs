@@ -20,7 +20,7 @@ namespace iTechArt.SurveysSite.Foundation
         {
             if (string.IsNullOrEmpty(userName))
             {
-                throw new ArgumentNullException(nameof(userName));
+                throw new ArgumentNullException(nameof(userName), "Username cannot be null");
             }
 
             var user = await _userManager.FindByNameAsync(userName);

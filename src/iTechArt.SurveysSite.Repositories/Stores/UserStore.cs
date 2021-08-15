@@ -1,12 +1,12 @@
-﻿using iTechArt.Common;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using iTechArt.Common;
 using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Repositories.UnitOfWorks;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace iTechArt.SurveysSite.Repositories
+namespace iTechArt.SurveysSite.Repositories.Stores
 {
     [UsedImplicitly]
     public class UserStore : IUserPasswordStore<User>
@@ -137,10 +137,15 @@ namespace iTechArt.SurveysSite.Repositories
         public async Task<User> FindByIdAsync(string userId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
+
+            if (!int.TryParse(userId, out var id))
+            {
+                throw new InvalidCastException("User id is not convertible to integer");
+            }
+
+            var user = await _unitOfWork.UserRepository.GetByIdAsync(id);
 
             return user;
-
         }
 
         public async Task<User> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)

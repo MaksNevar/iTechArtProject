@@ -1,6 +1,5 @@
 ﻿using iTechArt.SurveysSite.DomainModel;
 using Microsoft.AspNetCore.Identity;
-using System;
 using System.Threading.Tasks;
 
 namespace iTechArt.SurveysSite.Foundation
@@ -22,16 +21,6 @@ namespace iTechArt.SurveysSite.Foundation
 
         public async Task<bool> SignInAsync(string login, string password)
         {
-            if (string.IsNullOrEmpty(login))
-            {
-                throw new ArgumentNullException(nameof(login));
-            }
-
-            if (string.IsNullOrEmpty(password))
-            {
-                throw new ArgumentNullException(nameof(password));
-            }
-
             var result = await _signInManager.PasswordSignInAsync(login, password, false, false);
 
             return result.Succeeded;
@@ -44,16 +33,6 @@ namespace iTechArt.SurveysSite.Foundation
 
         public async Task<IdentityResult> RegisterAsync(User user, string password)
         {
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
-
-            if (string.IsNullOrEmpty(password))
-            {
-                throw new ArgumentNullException(nameof(password));
-            }
-
             var role = await _roleManager.FindByNameAsync(RoleNames.UserRole);
 
             user.Role = role;

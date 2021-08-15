@@ -8,12 +8,12 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 {
     public class RegisterController : Controller
     {
-        private readonly IAccountService _userService;
+        private readonly IAccountService _accountService;
 
 
-        public RegisterController(IAccountService userService)
+        public RegisterController(IAccountService accountService)
         {
-            _userService = userService;
+            _accountService = accountService;
         }
 
 
@@ -38,7 +38,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 Email = registerModel.Email
             };
 
-            var result = await _userService.RegisterAsync(userToRegister, registerModel.Password);
+            var result = await _accountService.RegisterAsync(userToRegister, registerModel.Password);
 
             if (result.Succeeded)
             {

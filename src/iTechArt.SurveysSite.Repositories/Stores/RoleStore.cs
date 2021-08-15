@@ -1,13 +1,13 @@
-﻿using iTechArt.Common;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using iTechArt.Common;
 using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Repositories.Repositories;
 using iTechArt.SurveysSite.Repositories.UnitOfWorks;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace iTechArt.SurveysSite.Repositories
+namespace iTechArt.SurveysSite.Repositories.Stores
 {
     [UsedImplicitly]
     public class RoleStore : IRoleStore<Role>
@@ -21,7 +21,6 @@ namespace iTechArt.SurveysSite.Repositories
             _unitOfWork = unitOfWork;
             _roleRepository = (IRoleRepository)_unitOfWork.GetRepository<Role>();
         }
-
 
         public void Dispose()
         {
