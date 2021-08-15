@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using iTechArt.Common;
 using iTechArt.SurveysSite.DomainModel;
 using Microsoft.AspNetCore.Identity;
 
-namespace iTechArt.SurveysSite.Repositories
+namespace iTechArt.SurveysSite.Repositories.Validators
 {
+    [UsedImplicitly]
     public class UserValidator : IUserValidator<User>
     {
         public async Task<IdentityResult> ValidateAsync(UserManager<User> userManager, User user)
