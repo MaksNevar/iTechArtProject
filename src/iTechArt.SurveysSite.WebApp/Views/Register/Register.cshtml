@@ -3,51 +3,55 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link href="/css/Login.css" rel="stylesheet" />
+    <link href="/css/LoginAndRegistration.css" rel="stylesheet" />
 </head>
 <div class="simple-login-container">
     <h2>Register</h2>
     <form method="post" asp-controller="Register" asp-action="Register">
         <div class="row">
             <div class="col-md-12 form-group">
-                @Html.TextBoxFor(model => model.Login, new { type = "text", @class = "form-control", placeholder = "Login", autocomplete = "off" })
+                <label asp-for="Login"></label>
+                <input class="form-control" type="text" asp-for="Login" autocomplete="off"/>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 form-group">
-                @Html.TextBoxFor(model => model.Email, new { type = "email", @class = "form-control", placeholder = "Email", autocomplete = "off" })
+                <label asp-for="Email"></label>
+                <input class="form-control" type="email" asp-for="Email" autocomplete="off"/>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 form-group">
-                @Html.TextBoxFor(model => model.Password, new { type = "password", @class = "form-control", placeholder = "Password", autocomplete = "off", id = "password" })
+                <label asp-for="Password"></label>
+                <input class="form-control" type="password" asp-for="Password" autocomplete="off" id="password"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="ConfirmPassword"></label>
+                <input class="form-control" type="password" asp-for="ConfirmPassword" autocomplete="off"/>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 form-group form-check">
-                <input class="form-check-input" type="checkbox" id="showPass" value=""/>
+                <input class="form-check-input" type="checkbox" id="showPass" value="" />
                 <label class="form-check-label" for="showPass" id="labelPass">
                     Show password
                 </label>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 form-group">
-                @Html.TextBoxFor(model => model.ConfirmPassword, new { type = "password", @class = "form-control", placeholder = "Confirm password", autocomplete = "off" })
-            </div>
-        </div>
-        <div class="row">
             @Html.ValidationSummary(false)
         </div>
-    <div class="row">
-        <div class="col-md-12 form-group">
-            <input type="submit" class="btn btn-block btn-login" value="Sign up">
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <input type="submit" class="btn btn-block btn-login" value="Sign up">
+            </div>
         </div>
-    </div>
         <script>
-            $(function() {
+            $(function () {
 
-                $("#showPass").change(function() {
+                $("#showPass").change(function () {
                     var checked = $(this).is(":checked");
                     if (checked) {
                         $("#password").attr("type", "text");
@@ -57,9 +61,9 @@
                 });
             });
         </script>
-    @if (!string.IsNullOrEmpty(ViewBag.Message))
-    {
-        <script>
+        @if (!string.IsNullOrEmpty(ViewBag.Message))
+        {
+            <script>
             window.onload = function() {
                 alert("@ViewBag.Message");
             };
@@ -67,7 +71,7 @@
                     window.location.href = "/SignIn/Login";
                 },
                 2000);
-        </script>
-    }
+            </script>
+        }
     </form>
 </div>

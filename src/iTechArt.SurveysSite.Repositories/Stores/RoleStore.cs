@@ -138,7 +138,13 @@ namespace iTechArt.SurveysSite.Repositories.Stores
         public async Task<Role> FindByIdAsync(string roleId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            var role = await _unitOfWork.RoleRepository.GetByIdAsync(roleId);
+
+            if (!int.TryParse(roleId, out var id))
+            {
+                throw new InvalidCastException("Role id is not valid");
+            }
+
+            var role = await _unitOfWork.RoleRepository.GetByIdAsync(id);
 
             return role;
         }
