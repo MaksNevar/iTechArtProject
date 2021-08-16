@@ -140,7 +140,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (!int.TryParse(userId, out var id))
             {
-                throw new InvalidCastException("User id is not convertible to integer");
+                throw new InvalidCastException("User id is not valid");
             }
 
             var user = await _unitOfWork.UserRepository.GetByIdAsync(id);

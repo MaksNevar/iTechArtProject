@@ -3,19 +3,21 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link href="/css/Login.css" rel="stylesheet"/>
+    <link href="/css/LoginAndRegistration.css" rel="stylesheet"/>
 </head>
 <div class="simple-login-container">
     <h2>Login</h2>
     <form method="post" asp-controller="SignIn" asp-action="Login">
         <div class="row">
             <div class="col-md-12 form-group">
-                @Html.TextBoxFor(model => model.UserName, new {type="text", @class="form-control", placeholder="Login", autocomplete="off"})
+                <label asp-for="UserName"></label>
+                <input type="text" class="form-control" asp-for="UserName" autocomplete="off"/>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 form-group">
-                @Html.TextBoxFor(model => model.Password, new {type="password", @class="form-control", placeholder="Enter your password", autocomplete="off"})
+                <label asp-for="Password"></label>
+                <input type="password" class="form-control" asp-for="Password" autocomplete="off"/>
             </div>
         </div>
         <div class="row">

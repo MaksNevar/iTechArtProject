@@ -5,6 +5,7 @@ namespace iTechArt.SurveysSite.WebApp.ViewModels
     public class UserViewModel
     {
         [Required(ErrorMessage = "Please enter username")]
+        [Display(Name = "Login")]
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "Please enter password")]
