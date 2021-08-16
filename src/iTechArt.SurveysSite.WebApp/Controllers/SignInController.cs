@@ -7,12 +7,14 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 {
     public class SignInController : Controller
     {
-        private readonly IUserService _userService;
+        private readonly IAccountService _accountService;
+        private readonly IUserManagementService _userManagementService;
 
 
-        public SignInController(IUserService userService)
+        public SignInController(IAccountService accountService, IUserManagementService userManagementService)
         {
-            _userService = userService;
+            _accountService = accountService;
+            _userManagementService = userManagementService;
         }
 
 
@@ -31,7 +33,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 return View(userView);
             }
 
-            var user = await _userService.GetUserByUsernameAsync(userView.UserName);
+            var user = await _userManagementService.GetUserByUsernameAsync(userView.UserName);
 
             if (user == null)
             {
@@ -40,7 +42,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 return View(userView);
             }
 
-            var result = await _userService.SignInAsync(userView.UserName, userView.Password);
+            var result = await _accountService.SignInAsync(userView.UserName, userView.Password);
 
             if (result)
             {
@@ -55,7 +57,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
-            await _userService.SignOutAsync();
+            await _accountService.SignOutAsync();
 
             return Redirect("~/Home/Index");
         }

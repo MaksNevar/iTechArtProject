@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using iTechArt.SurveysSite.Repositories.DbContexts;
 
 namespace iTechArt.SurveysSite.Repositories.Migrations
 {
     [DbContext(typeof(SurveysSiteDbContext))]
-    partial class SurveysSiteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210810081328_Adding_roles")]
+    partial class Adding_roles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,20 +38,6 @@ namespace iTechArt.SurveysSite.Repositories.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserRole");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("iTechArt.SurveysSite.DomainModel.User", b =>

@@ -1,19 +1,21 @@
-﻿using System.Threading.Tasks;
-using iTechArt.SurveysSite.DomainModel;
+﻿using iTechArt.SurveysSite.DomainModel;
 using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace iTechArt.SurveysSite.Foundation
 {
-    public class UserService : IUserService
+    public class AccountService : IAccountService
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly RoleManager<Role> _roleManager;
 
 
-        public UserService(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountService(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<Role> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
 
@@ -29,11 +31,14 @@ namespace iTechArt.SurveysSite.Foundation
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<User> GetUserByUsernameAsync(string userName)
+        public async Task<IdentityResult> RegisterAsync(User user, string password)
         {
-            var user = await _userManager.FindByNameAsync(userName);
+            var role = await _roleManager.FindByNameAsync(RoleNames.UserRole);
 
-            return user;
+            user.Role = role;
+            var result = await _userManager.CreateAsync(user, password);
+
+            return result;
         }
     }
 }

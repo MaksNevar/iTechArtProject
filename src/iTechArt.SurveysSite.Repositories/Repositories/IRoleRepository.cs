@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 
 namespace iTechArt.SurveysSite.Repositories.Repositories
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IRoleRepository : IRepository<Role>
     {
-        Task<User> GetUserByNameAsync(string normalizedUserName);
+        Task<Role> GetRoleByNameAsync(string normalizedName);
     }
 }

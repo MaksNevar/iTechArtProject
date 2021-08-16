@@ -14,17 +14,48 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-                .Property(user => user.UserName)
-                .IsRequired();
+            modelBuilder.Entity<User>(options =>
+            {
+                options.Property(user => user.UserName)
+                    .IsRequired();
 
-            modelBuilder.Entity<User>()
-                .Property(user => user.PasswordHash)
-                .IsRequired();
+                options.Property(user => user.PasswordHash)
+                    .IsRequired();
 
-            modelBuilder.Entity<User>()
-                .Property(user => user.NormalizedUserName)
-                .IsRequired();
+                options.Property(user => user.NormalizedUserName)
+                    .IsRequired();
+
+                options.Property(user => user.Email)
+                    .IsRequired();
+
+                options.HasOne(user => user.Role)
+                    .WithMany(role => role.Users)
+                    .IsRequired();
+            });
+
+            modelBuilder.Entity<Role>(options =>
+            {
+                options.ToTable("UserRole");
+
+                options.Property(role => role.Name)
+                    .IsRequired();
+
+                options.Property(role => role.NormalizedName)
+                    .IsRequired();
+
+                options.HasData(new Role
+                    {
+                        Id = 1,
+                        Name = RoleNames.AdminRole,
+                        NormalizedName = RoleNames.AdminRole.ToUpper()
+                    },
+                    new Role
+                    {
+                        Id = 2,
+                        Name = RoleNames.UserRole,
+                        NormalizedName = RoleNames.UserRole.ToUpper()
+                    });
+            });
         }
     }
 }

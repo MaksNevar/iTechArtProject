@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Repositories.DbContexts;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using System.Threading.Tasks;
 
 namespace iTechArt.SurveysSite.WebApp
 {
@@ -35,20 +35,9 @@ namespace iTechArt.SurveysSite.WebApp
                     .GetRequiredService<SurveysSiteDbContext>();
                 await dbContext.Database.MigrateAsync();
 
-                var userManager = serviceScope
-                    .ServiceProvider
-                    .GetRequiredService<UserManager<User>>();
-                var admin = await userManager.FindByNameAsync("admin");
-
-                if (admin == null)
-                {
-                    admin = new User
-                    {
-                        UserName = "admin"
-                    };
-
-                    await userManager.CreateAsync(admin, "admin123");
-                }
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<User>>();
+                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
+                await AddInitialDataAsync(userManager, roleManager);
             }
 
             await host.RunAsync();
@@ -61,5 +50,18 @@ namespace iTechArt.SurveysSite.WebApp
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        private static async Task AddInitialDataAsync(UserManager<User> userManager, RoleManager<Role> roleManager)
+        {
+            var adminRole = await roleManager.FindByNameAsync(RoleNames.AdminRole);
+            var admin = new User
+            {
+                UserName = "admin",
+                Email = "admin123@mail.ru",
+                Role = adminRole
+            };
+
+            await userManager.CreateAsync(admin, "admin123");
+        }
     }
 }

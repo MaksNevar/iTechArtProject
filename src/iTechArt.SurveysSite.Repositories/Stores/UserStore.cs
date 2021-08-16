@@ -6,7 +6,7 @@ using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Repositories.UnitOfWorks;
 using Microsoft.AspNetCore.Identity;
 
-namespace iTechArt.SurveysSite.Repositories
+namespace iTechArt.SurveysSite.Repositories.Stores
 {
     [UsedImplicitly]
     public class UserStore : IUserPasswordStore<User>
@@ -140,19 +140,18 @@ namespace iTechArt.SurveysSite.Repositories
 
             if (!int.TryParse(userId, out var id))
             {
-                return null;
+                throw new InvalidCastException("User id is not valid");
             }
 
             var user = await _unitOfWork.UserRepository.GetByIdAsync(id);
 
             return user;
-
         }
 
         public async Task<User> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            var user = await _unitOfWork.UserRepository.GetByNameAsync(normalizedUserName);
+            var user = await _unitOfWork.UserRepository.GetUserByNameAsync(normalizedUserName);
 
             return user;
         }

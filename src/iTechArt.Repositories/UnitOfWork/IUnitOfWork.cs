@@ -1,6 +1,6 @@
-﻿using System;
+﻿using iTechArt.Repositories.Repository;
+using System;
 using System.Threading.Tasks;
-using iTechArt.Repositories.Repository;
 
 namespace iTechArt.Repositories.UnitOfWork
 {
