@@ -53,7 +53,6 @@ namespace iTechArt.SurveysSite.WebApp
             services.Replace(ServiceDescriptor.Scoped<IUserValidator<User>, UserValidator>());
             services.Replace(ServiceDescriptor.Scoped<IPasswordValidator<User>, PasswordValidator>());
 
-
             services.AddAuthentication(options =>
                 {
                     options.DefaultScheme = IdentityConstants.ApplicationScheme;
