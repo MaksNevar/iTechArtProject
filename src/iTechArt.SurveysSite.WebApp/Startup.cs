@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Serilog;
 
 namespace iTechArt.SurveysSite.WebApp
@@ -48,8 +49,10 @@ namespace iTechArt.SurveysSite.WebApp
             builder.AddUserStore<UserStore>();
             builder.AddRoles<Role>();
             builder.AddRoleStore<RoleStore>();
-            builder.AddUserValidator<UserValidator>();
-            builder.AddPasswordValidator<PasswordValidator>();
+
+            services.Replace(ServiceDescriptor.Scoped<IUserValidator<User>, UserValidator>());
+            services.Replace(ServiceDescriptor.Scoped<IPasswordValidator<User>, PasswordValidator>());
+
 
             services.AddAuthentication(options =>
                 {
