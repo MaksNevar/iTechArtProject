@@ -3,3 +3,11 @@
     margin: 0 auto;
     width: 50%;
 }
+
+.flex {
+    display: flex;
+}
+
+.nav-item {
+    margin-bottom: 20px;
+}
