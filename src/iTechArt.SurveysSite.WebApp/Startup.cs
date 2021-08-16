@@ -5,12 +5,10 @@ using iTechArt.SurveysSite.Foundation;
 using iTechArt.SurveysSite.Repositories.DbContexts;
 using iTechArt.SurveysSite.Repositories.Stores;
 using iTechArt.SurveysSite.Repositories.UnitOfWorks;
-using iTechArt.SurveysSite.Repositories.Validators;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Serilog;
 
 namespace iTechArt.SurveysSite.WebApp
@@ -49,9 +47,6 @@ namespace iTechArt.SurveysSite.WebApp
             builder.AddUserStore<UserStore>();
             builder.AddRoles<Role>();
             builder.AddRoleStore<RoleStore>();
-
-            services.Replace(ServiceDescriptor.Scoped<IUserValidator<User>, UserValidator>());
-            services.Replace(ServiceDescriptor.Scoped<IPasswordValidator<User>, PasswordValidator>());
 
             services.AddAuthentication(options =>
                 {
