@@ -4,6 +4,10 @@
     width: 50%;
 }
 
+.button-menu {
+    margin-top: 34px;
+}
+
 .flex {
     display: flex;
 }
