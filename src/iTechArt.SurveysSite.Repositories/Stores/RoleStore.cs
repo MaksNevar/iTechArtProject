@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using iTechArt.Common;
 using iTechArt.SurveysSite.DomainModel;
-using iTechArt.SurveysSite.Repositories.Repositories;
 using iTechArt.SurveysSite.Repositories.UnitOfWorks;
 using Microsoft.AspNetCore.Identity;
 
@@ -13,13 +12,11 @@ namespace iTechArt.SurveysSite.Repositories.Stores
     public class RoleStore : IRoleStore<Role>
     {
         private readonly ISurveysSiteUnitOfWork _unitOfWork;
-        private readonly IRoleRepository _roleRepository;
 
 
         public RoleStore(ISurveysSiteUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _roleRepository = (IRoleRepository)_unitOfWork.GetRepository<Role>();
         }
 
         public void Dispose()
@@ -36,7 +33,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
                 throw new ArgumentNullException(nameof(role));
             }
 
-            _roleRepository.Create(role);
+            _unitOfWork.RoleRepository.Create(role);
             await _unitOfWork.SaveAsync();
 
             return IdentityResult.Success;
@@ -51,7 +48,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
                 throw new ArgumentNullException(nameof(role));
             }
 
-            _roleRepository.Update(role);
+            _unitOfWork.RoleRepository.Update(role);
             await _unitOfWork.SaveAsync();
 
             return IdentityResult.Success;
@@ -66,7 +63,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
                 throw new ArgumentNullException(nameof(role));
             }
 
-            _roleRepository.Delete(role);
+            _unitOfWork.RoleRepository.Delete(role);
             await _unitOfWork.SaveAsync();
 
             return IdentityResult.Success;
@@ -141,7 +138,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
         public async Task<Role> FindByIdAsync(string roleId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            var role = await _roleRepository.GetByIdAsync(roleId);
+            var role = await _unitOfWork.RoleRepository.GetByIdAsync(roleId);
 
             return role;
         }
@@ -149,7 +146,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
         public async Task<Role> FindByNameAsync(string normalizedRoleName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            var role = await _roleRepository.GetRoleByNameAsync(normalizedRoleName);
+            var role = await _unitOfWork.RoleRepository.GetRoleByNameAsync(normalizedRoleName);
 
             return role;
         }
