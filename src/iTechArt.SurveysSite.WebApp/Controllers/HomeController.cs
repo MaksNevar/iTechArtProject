@@ -8,5 +8,20 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         {
             return View();
         }
+
+        public IActionResult NewSurvey()
+        {
+            return View();
+        }
+
+        public IActionResult MySurveys()
+        {
+            return View();
+        }
+
+        public IActionResult SurveysTemplates()
+        {
+            return View();
+        }
     }
 }

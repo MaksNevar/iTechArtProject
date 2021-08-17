@@ -12,6 +12,6 @@
     display: flex;
 }
 
-.nav-item {
+.nav-item .btn-dark {
     margin-bottom: 20px;
 }
