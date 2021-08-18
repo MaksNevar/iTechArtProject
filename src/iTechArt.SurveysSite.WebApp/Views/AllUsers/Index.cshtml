@@ -1,0 +1,45 @@
+﻿@using iTechArt.SurveysSite.DomainModel
+@model List<iTechArt.SurveysSite.WebApp.ViewModels.UserViewModel>
+<head>
+    <link rel="stylesheet" href="/css/AllUsersPage.css"/>
+</head>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>
+            Username
+        </th>
+        <th>
+            Date of registration
+        </th>
+        <th>
+            Role
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+    </thead>
+    @foreach (var user in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => user.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => user.DateOfRegistration)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => user.RoleName)
+    </td>
+    <td>
+        @if (user.RoleName != RoleNames.AdminRole)
+        {
+            <a asp-controller="UserManagement" asp-action="DeleteUser" asp-route-id="@user.Id" onclick="return confirm('Are you sure you want to delete user \'@user.Name\'?')">
+                <img src="/images/trashbin.png" class="trash-image">
+            </a>
+        }
+    </td>
+    </tr>
+    }
+    </table>

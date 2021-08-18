@@ -8,5 +8,10 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         {
             return View();
         }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }

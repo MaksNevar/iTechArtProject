@@ -1,4 +1,5 @@
-﻿using iTechArt.Common;
+﻿using System.Collections.Generic;
+using iTechArt.Common;
 using iTechArt.Repositories.Repository;
 using iTechArt.SurveysSite.DomainModel;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,21 @@ namespace iTechArt.SurveysSite.Repositories.Repositories
                 .SingleOrDefaultAsync(userToFind => userToFind.NormalizedUserName == normalizedUserName);
 
             return user;
+        }
+
+        public async Task<string> GetUserRoleAsync(User user)
+        {
+            var role = await DbContext.Set<Role>()
+                .SingleOrDefaultAsync(roleToFind => roleToFind.Users.Contains(user));
+
+            return role.Name;
+        }
+
+        public async Task<IReadOnlyCollection<User>> GetAllUsersAsync()
+        {
+            var users = DbContext.Set<User>().Include(user => user.Role).AsNoTracking();
+
+            return await users.ToListAsync();
         }
     }
 }

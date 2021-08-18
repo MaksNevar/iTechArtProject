@@ -59,6 +59,11 @@ namespace iTechArt.SurveysSite.WebApp
             services.AddScoped<IAccountService, AccountService>();
 
             services.AddScoped<IUserManagementService, UserManagementService>();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/Home/AccessDenied";
+            });
         }
 
         public void Configure(IApplicationBuilder app)
@@ -70,6 +75,8 @@ namespace iTechArt.SurveysSite.WebApp
             app.UseRouting();
 
             app.UseAuthentication();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

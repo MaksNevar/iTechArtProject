@@ -26,7 +26,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(UserViewModel userView)
+        public async Task<IActionResult> Login(LoginViewModel userView)
         {
             if (!ModelState.IsValid)
             {

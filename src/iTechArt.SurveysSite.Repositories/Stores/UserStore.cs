@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using iTechArt.Common;
@@ -9,7 +11,7 @@ using Microsoft.AspNetCore.Identity;
 namespace iTechArt.SurveysSite.Repositories.Stores
 {
     [UsedImplicitly]
-    public class UserStore : IUserPasswordStore<User>
+    public class UserStore : IUserPasswordStore<User>, IUserRoleStore<User>, IQueryableUserStore<User>
     {
         private readonly ISurveysSiteUnitOfWork _unitOfWork;
 
@@ -89,7 +91,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
             return Task.CompletedTask;
         }
 
-        public async Task<IdentityResult> CreateAsync(User user, CancellationToken cancellationToken)
+        public Task<IdentityResult> CreateAsync(User user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -99,9 +101,8 @@ namespace iTechArt.SurveysSite.Repositories.Stores
             }
 
             _unitOfWork.UserRepository.Create(user);
-            await _unitOfWork.SaveAsync();
 
-            return IdentityResult.Success;
+            return Task.FromResult(IdentityResult.Success);
         }
 
         public async Task<IdentityResult> UpdateAsync(User user, CancellationToken cancellationToken)
@@ -195,5 +196,122 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             return Task.FromResult(user.PasswordHash != null);
         }
+
+        public async Task AddToRoleAsync(User user, string roleName, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            if (string.IsNullOrWhiteSpace(roleName))
+            {
+                throw new ArgumentNullException(nameof(roleName));
+            }
+
+            var role = await _unitOfWork.RoleRepository.GetRoleByNameAsync(roleName);
+
+            if (role == null)
+            {
+                throw new ArgumentNullException(nameof(role));
+            }
+
+            if (role.Users == null)
+            {
+                role.Users = new List<User>();
+            }
+
+            role.Users.Add(user);
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task RemoveFromRoleAsync(User user, string roleName, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            if (string.IsNullOrWhiteSpace(roleName))
+            {
+                throw new ArgumentNullException(nameof(roleName));
+            }
+
+            var role = await _unitOfWork.RoleRepository.GetRoleByNameAsync(roleName);
+
+            if (role == null)
+            {
+                throw new ArgumentNullException(nameof(role));
+            }
+
+            role.Users.Remove(user);
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task<IList<string>> GetRolesAsync(User user, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            var roleList = new List<string>
+            {
+                await _unitOfWork.UserRepository.GetUserRoleAsync(user)
+            };
+
+            return roleList;
+        }
+
+        public async Task<bool> IsInRoleAsync(User user, string roleName, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            if (string.IsNullOrEmpty(roleName))
+            {
+                throw new ArgumentNullException(nameof(roleName));
+            }
+
+            var role = await _unitOfWork.RoleRepository.GetRoleByNameAsync(roleName);
+
+            if (role?.Users == null)
+            {
+                return false;
+            }
+
+            return role.Users.Contains(user);
+        }
+
+        public async Task<IList<User>> GetUsersInRoleAsync(string roleName, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            if (string.IsNullOrEmpty(roleName))
+            {
+                throw new ArgumentNullException(nameof(roleName));
+            }
+
+            var role = await _unitOfWork.RoleRepository.GetRoleByNameAsync(roleName);
+
+            if (role == null)
+            {
+                return new List<User>();
+            }
+
+            return role.Users;
+        }
+
+        public IQueryable<User> Users => _unitOfWork.UserRepository.GetAllAsync().Result.AsQueryable();
     }
 }
