@@ -2,7 +2,7 @@
 
 namespace iTechArt.SurveysSite.WebApp.Controllers
 {
-    public sealed class HomeController : Controller
+    public class MySurveysController : Controller
     {
         public IActionResult Index()
         {
