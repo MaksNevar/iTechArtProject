@@ -44,6 +44,7 @@ namespace iTechArt.SurveysSite.Foundation
             var user = await _unitOfWork.UserRepository.GetByIdAsync(id);
 
             _unitOfWork.UserRepository.Delete(user);
+            await _userManager.RemoveFromRoleAsync(user, RoleNames.UserRole);
             await _unitOfWork.SaveAsync();
         }
     }

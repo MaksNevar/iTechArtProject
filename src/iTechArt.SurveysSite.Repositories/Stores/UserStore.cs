@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using iTechArt.Common;
@@ -11,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 namespace iTechArt.SurveysSite.Repositories.Stores
 {
     [UsedImplicitly]
-    public class UserStore : IUserPasswordStore<User>, IUserRoleStore<User>, IQueryableUserStore<User>
+    public class UserStore : IUserPasswordStore<User>, IUserRoleStore<User>
     {
         private readonly ISurveysSiteUnitOfWork _unitOfWork;
 
@@ -311,7 +310,5 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             return role.Users;
         }
-
-        public IQueryable<User> Users => _unitOfWork.UserRepository.GetAllAsync().Result.AsQueryable();
     }
 }
