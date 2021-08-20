@@ -4,9 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace iTechArt.SurveysSite.WebApp.Controllers
 {
     [Authorize]
-    public class MySurveysController : Controller
+    public class SurveyController : Controller
     {
-        public IActionResult Index()
+        public IActionResult MySurveys()
+        {
+            return View();
+        }
+
+        public IActionResult NewSurvey()
         {
             return View();
         }
