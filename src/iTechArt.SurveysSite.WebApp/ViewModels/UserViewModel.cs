@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace iTechArt.SurveysSite.WebApp.ViewModels
 {
@@ -8,7 +9,7 @@ namespace iTechArt.SurveysSite.WebApp.ViewModels
 
         public string Name { get; set; }
 
-        public string RoleName { get; set; }
+        public List<string> RoleNames { get; set; }
 
         public DateTime DateOfRegistration { get; set; }
     }

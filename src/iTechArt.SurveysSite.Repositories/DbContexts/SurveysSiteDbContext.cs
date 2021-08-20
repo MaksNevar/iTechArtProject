@@ -27,16 +27,10 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
 
                 options.Property(user => user.Email)
                     .IsRequired();
-
-                options.HasOne(user => user.Role)
-                    .WithMany(role => role.Users)
-                    .IsRequired();
             });
 
             modelBuilder.Entity<Role>(options =>
             {
-                options.ToTable("UserRole");
-
                 options.Property(role => role.Name)
                     .IsRequired();
 
@@ -55,6 +49,19 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
                         Name = RoleNames.UserRole,
                         NormalizedName = RoleNames.UserRole.ToUpper()
                     });
+            });
+
+            modelBuilder.Entity<UserRoles>(options =>
+            {
+                options.HasKey(ur => new {ur.UserId, ur.RoleId});
+
+                options.HasOne(ur => ur.User)
+                    .WithMany(user => user.UserRoles)
+                    .HasForeignKey(ur => ur.UserId);
+
+                options.HasOne(ur => ur.Role)
+                    .WithMany(role => role.UserRoles)
+                    .HasForeignKey(ur => ur.RoleId);
             });
         }
     }

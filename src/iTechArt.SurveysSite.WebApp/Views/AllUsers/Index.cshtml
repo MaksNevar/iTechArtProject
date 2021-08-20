@@ -30,10 +30,10 @@
         @Html.DisplayFor(modelItem => user.DateOfRegistration)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => user.RoleName)
+        @Html.DisplayFor(modelItem => user.RoleNames)
     </td>
     <td>
-        @if (user.RoleName != RoleNames.AdminRole)
+        @if (!user.RoleNames.Contains(RoleNames.AdminRole))
         {
             <a asp-controller="UserManagement" asp-action="DeleteUser" asp-route-id="@user.Id" onclick="return confirm('Are you sure you want to delete user \'@user.Name\'?')">
                 <img src="/images/trashbin.png" class="trash-image">

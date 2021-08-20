@@ -9,8 +9,8 @@ namespace iTechArt.SurveysSite.Repositories.Repositories
     {
         Task<User> GetUserByNameAsync(string normalizedUserName);
 
-        Task<string> GetUserRoleAsync(User user);
-
         Task<IReadOnlyCollection<User>> GetAllUsersAsync();
+
+        Task<List<string>> GetUserRoleNamesAsync(User user);
     }
 }

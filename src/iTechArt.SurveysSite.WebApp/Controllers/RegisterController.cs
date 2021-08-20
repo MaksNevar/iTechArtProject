@@ -37,7 +37,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             {
                 UserName = registerModel.Login,
                 Email = registerModel.Email,
-                DateOfRegistration = DateTime.Now
+                RegistrationDate = DateTime.Now
             };
 
             var result = await _accountService.RegisterAsync(userToRegister, registerModel.Password);

@@ -27,8 +27,8 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             {
                 Id = user.Id,
                 Name = user.UserName,
-                RoleName = user.Role.Name,
-                DateOfRegistration = user.DateOfRegistration
+                RoleNames = user.UserRoles.Select(ur => ur.Role.Name).ToList(),
+                DateOfRegistration = user.RegistrationDate
             }).ToList();
 
             return View(usersViewModel);

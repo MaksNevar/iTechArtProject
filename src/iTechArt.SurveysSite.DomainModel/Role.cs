@@ -10,6 +10,6 @@ namespace iTechArt.SurveysSite.DomainModel
 
         public string NormalizedName { get; set; }
 
-        public List<User> Users { get; set; }
+        public List<UserRoles> UserRoles { get; set; }
     }
 }
