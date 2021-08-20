@@ -26,9 +26,10 @@ namespace iTechArt.SurveysSite.Repositories.Repositories
 
         public async Task<List<User>> GetUsersInRoleAsync(Role role)
         {
-            var users = DbContext.Set<User>().
-                Include(user => user.UserRoles.Where(ur => ur.RoleId == role.Id))
-                .AsNoTracking();
+            var userRoles = DbContext.Set<User>()
+                .Where(roleToSelect => roleToSelect.Id == role.Id)
+                .SelectMany(roleToSelect => roleToSelect.UserRoles);
+            var users = userRoles.Select(ur => ur.User);
 
             return await users.ToListAsync();
         }
