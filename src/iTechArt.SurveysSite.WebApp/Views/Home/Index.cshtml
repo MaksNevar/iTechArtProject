@@ -1,4 +1,7 @@
-﻿@{
+﻿@using iTechArt.SurveysSite.DomainModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> _signInManager
+@{
     ViewData["Title"] = "Home Page";
 }
 <head>
@@ -6,7 +9,23 @@
     <link rel="stylesheet" href="/css/MainPageStyles.css"/>
 </head>
 <body>
-    <div>
-        <img src="/images/iTechArt_logo.png" class="logo"/>
-    </div>
+<div class="flex">
+    @if (_signInManager.IsSignedIn(User))
+    {
+        <div class="button-menu">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a type="submit" class="btn btn-dark" asp-controller="Survey" asp-action="NewSurvey">New survey</a>
+                </li>
+                <li class="nav-item">
+                    <a type="submit" class="btn btn-dark" asp-controller="Survey" asp-action="MySurveys">My surveys</a>
+                </li>
+                <li class="nav-item">
+                    <a type="submit" class="btn btn-dark" asp-controller="SurveysTemplates" asp-action="Index">Surveys templates</a>
+                </li>
+            </ul>
+        </div>
+    }
+    <img src="/images/iTechArt_logo.png" class="logo"/>
+</div>
 </body>
