@@ -28,22 +28,23 @@ namespace iTechArt.SurveysSite.Repositories.Repositories
 
         public async Task<IReadOnlyCollection<User>> GetAllUsersAsync()
         {
-            var users = DbContext.Set<User>().
-                Include(user => user.UserRoles)
+            var users = await DbContext.Set<User>()
+                .Include(user => user.UserRoles)
                 .ThenInclude(ur => ur.Role)
-                .AsNoTracking();
+                .AsNoTracking()
+                .ToListAsync();
 
-            return await users.ToListAsync();
+            return users;
         }
 
         public async Task<List<string>> GetUserRoleNamesAsync(User user)
         {
-            var userRoles = DbContext.Set<User>()
+            var roleNames = await DbContext.Set<User>()
                 .Where(userToSelect => userToSelect.Id == user.Id)
-                .SelectMany(userToSelect => userToSelect.UserRoles);
-            var roleNames = userRoles.Select(ur => ur.Role.Name);
+                .SelectMany(userToSelect => userToSelect.UserRoles.Select(ur => ur.Role.Name))
+                .ToListAsync();
 
-            return await roleNames.ToListAsync();
+            return roleNames;
         }
     }
 }

@@ -1,26 +1,27 @@
 ﻿using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Foundation;
 using iTechArt.SurveysSite.WebApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 
 namespace iTechArt.SurveysSite.WebApp.Controllers
 {
-    [Authorize(Roles = RoleNames.AdminRole)]
-    public class AllUsersController : Controller
+    public class UsersController : Controller
     {
         private readonly IUserManagementService _userManagementService;
 
 
-        public AllUsersController(IUserManagementService userManagementService)
+        public UsersController(IUserManagementService userManagementService)
         {
             _userManagementService = userManagementService;
         }
 
 
-        public async Task<IActionResult> Index()
+        [Authorize(Roles = RoleNames.AdminRole)]
+        [HttpGet]
+        public async Task<IActionResult> DisplayAllUsers()
         {
             var users = await _userManagementService.GetAllUsersAsync();
             var usersViewModel = users.Select(user => new UserViewModel
@@ -32,6 +33,16 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             }).ToList();
 
             return View(usersViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var user = await _userManagementService.GetUserByIdAsync(id);
+            await _userManagementService.DeleteUserAsync(user);
+
+            return RedirectToAction("DisplayAllUsers");
         }
     }
 }

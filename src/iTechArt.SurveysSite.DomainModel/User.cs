@@ -23,7 +23,7 @@ namespace iTechArt.SurveysSite.DomainModel
 
         public string NormalizedUserName { get; set; }
 
-        public List<UserRoles> UserRoles { get; set; }
+        public List<UserRole> UserRoles { get; set; }
 
         public DateTime RegistrationDate { get; set; }
     }

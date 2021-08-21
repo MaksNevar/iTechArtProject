@@ -51,7 +51,7 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
                     });
             });
 
-            modelBuilder.Entity<UserRoles>(options =>
+            modelBuilder.Entity<UserRole>(options =>
             {
                 options.HasKey(ur => new {ur.UserId, ur.RoleId});
 

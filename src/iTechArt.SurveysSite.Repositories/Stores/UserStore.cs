@@ -218,15 +218,13 @@ namespace iTechArt.SurveysSite.Repositories.Stores
                 throw new ArgumentNullException(nameof(role));
             }
 
-            var userRole = new UserRoles
+            var userRole = new UserRole
             {
                 UserId = user.Id,
-                RoleId = role.Id,
-                Role = role,
-                User = user
+                RoleId = role.Id
             };
 
-            _unitOfWork.GetRepository<UserRoles>().Create(userRole);
+            _unitOfWork.GetRepository<UserRole>().Create(userRole);
             await _unitOfWork.SaveAsync();
         }
 
@@ -251,8 +249,8 @@ namespace iTechArt.SurveysSite.Repositories.Stores
                 throw new ArgumentNullException(nameof(role));
             }
 
-            var userRole = await _unitOfWork.GetRepository<UserRoles>().GetByIdAsync(user.Id, role.Id);
-            _unitOfWork.GetRepository<UserRoles>().Delete(userRole);
+            var userRole = await _unitOfWork.GetRepository<UserRole>().GetByIdAsync(user.Id, role.Id);
+            _unitOfWork.GetRepository<UserRole>().Delete(userRole);
             await _unitOfWork.SaveAsync();
         }
 
@@ -291,7 +289,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
                 throw new ArgumentNullException(nameof(role));
             }
 
-            var userRole = await _unitOfWork.GetRepository<UserRoles>().GetByIdAsync(user.Id, role.Id);
+            var userRole = await _unitOfWork.GetRepository<UserRole>().GetByIdAsync(user.Id, role.Id);
 
             return userRole != null;
         }

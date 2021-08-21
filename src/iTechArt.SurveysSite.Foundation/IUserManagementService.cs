@@ -10,6 +10,8 @@ namespace iTechArt.SurveysSite.Foundation
 
         Task<IReadOnlyCollection<User>> GetAllUsersAsync();
 
-        Task DeleteUserAsync(int id);
+        Task<User> GetUserByIdAsync(int id);
+
+        Task DeleteUserAsync(User user);
     }
 }

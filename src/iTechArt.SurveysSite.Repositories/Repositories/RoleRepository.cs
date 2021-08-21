@@ -19,19 +19,20 @@ namespace iTechArt.SurveysSite.Repositories.Repositories
 
         public async Task<Role> GetRoleByNameAsync(string normalizedName)
         {
-            var role = await DbContext.Set<Role>().SingleOrDefaultAsync(roleToFind => roleToFind.NormalizedName == normalizedName);
+            var role = await DbContext.Set<Role>()
+                .SingleOrDefaultAsync(roleToFind => roleToFind.NormalizedName == normalizedName);
 
             return role;
         }
 
         public async Task<List<User>> GetUsersInRoleAsync(Role role)
         {
-            var userRoles = DbContext.Set<User>()
+            var users = await DbContext.Set<User>()
                 .Where(roleToSelect => roleToSelect.Id == role.Id)
-                .SelectMany(roleToSelect => roleToSelect.UserRoles);
-            var users = userRoles.Select(ur => ur.User);
+                .SelectMany(roleToSelect => roleToSelect.UserRoles.Select(ur => ur.User))
+                .ToListAsync();
 
-            return await users.ToListAsync();
+            return users;
         }
     }
 }

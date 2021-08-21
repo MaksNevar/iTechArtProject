@@ -39,11 +39,14 @@ namespace iTechArt.SurveysSite.Foundation
             return users;
         }
 
-        public async Task DeleteUserAsync(int id)
+        public async Task<User> GetUserByIdAsync(int id)
         {
             var user = await _unitOfWork.UserRepository.GetByIdAsync(id);
 
-            await _userManager.RemoveFromRoleAsync(user, RoleNames.UserRole);
+            return user;
+        }
+        public async Task DeleteUserAsync(User user)
+        {
             _unitOfWork.UserRepository.Delete(user);
             await _unitOfWork.SaveAsync();
         }

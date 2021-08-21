@@ -1,6 +1,6 @@
 ﻿namespace iTechArt.SurveysSite.DomainModel
 {
-    public class UserRoles
+    public class UserRole
     {
         public int UserId { get; set; }
 
