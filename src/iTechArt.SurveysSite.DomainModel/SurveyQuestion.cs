@@ -7,5 +7,7 @@
         public string Description { get; set; }
 
         public Survey Survey { get; set; }
+
+        public string QuestionType { get; set; }
     }
 }

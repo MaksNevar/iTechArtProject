@@ -45,6 +45,7 @@ namespace iTechArt.SurveysSite.Foundation
 
             return user;
         }
+
         public async Task DeleteUserAsync(User user)
         {
             _unitOfWork.UserRepository.Delete(user);
