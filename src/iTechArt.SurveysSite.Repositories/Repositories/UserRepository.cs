@@ -37,10 +37,10 @@ namespace iTechArt.SurveysSite.Repositories.Repositories
             return users;
         }
 
-        public async Task<List<string>> GetUserRoleNamesAsync(User user)
+        public async Task<IReadOnlyCollection<string>> GetUserRolesAsync(int userId)
         {
             var roleNames = await DbContext.Set<User>()
-                .Where(userToSelect => userToSelect.Id == user.Id)
+                .Where(userToSelect => userToSelect.Id == userId)
                 .SelectMany(userToSelect => userToSelect.UserRoles.Select(ur => ur.Role.Name))
                 .ToListAsync();
 

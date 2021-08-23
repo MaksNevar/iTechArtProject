@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using iTechArt.Common;
@@ -263,9 +264,9 @@ namespace iTechArt.SurveysSite.Repositories.Stores
                 throw new ArgumentNullException(nameof(user));
             }
 
-            var roleNames = await _unitOfWork.UserRepository.GetUserRoleNamesAsync(user);
+            var roleNames = await _unitOfWork.UserRepository.GetUserRolesAsync(user.Id);
 
-            return roleNames;
+            return roleNames.ToList();
         }
 
         public async Task<bool> IsInRoleAsync(User user, string normalizedRoleName, CancellationToken cancellationToken)
@@ -310,9 +311,9 @@ namespace iTechArt.SurveysSite.Repositories.Stores
                 throw new ArgumentNullException(nameof(role));
             }
 
-            var users = await _unitOfWork.RoleRepository.GetUsersInRoleAsync(role);
+            var users = await _unitOfWork.RoleRepository.GetUsersInRoleAsync(role.Id);
 
-            return users;
+            return users.ToList();
         }
     }
 }
