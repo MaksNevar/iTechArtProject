@@ -1,12 +1,49 @@
-﻿<head>
-    <link rel="stylesheet" href="/css/PagesStyles.css" />
+﻿@using iTechArt.SurveysSite.DomainModel
+@model iTechArt.SurveysSite.WebApp.ViewModels.SurveyViewModel
+<head>
+    <link rel="stylesheet" href="/css/NewSurveyStyles.css"/>
 </head>
-<div>
-    <partial name="_RobotImagePartial" />
-    <div class="center">
-        <p class="text-dark text-lg-center rounded border border-primary bg-warning">
-            In the future you will be able to create a new survey here. Wait for the next version
-        </p>
-    </div>
-    <partial name="_ButtonToMainPagePartial" />
-</div>
+<body>
+    <form method="post" asp-action="NewSurvey">
+        <div class="row">
+            <label asp-for="Name"></label>
+            <input type="text" asp-for="Name"/>
+        </div>
+        <div class="row flex">
+            <button type="submit">Save</button>
+            <button type="submit">Cancel</button>
+        </div>
+        <div class="row">
+            <label asp-for="Questions[0].Description"></label>
+            <input type="text" asp-for="Questions[0].Description" disabled="disabled" value="Question with single choice" />
+            <label asp-for="Questions[0].QuestionType"></label>
+            <input type="hidden" asp-for="Questions[0].QuestionType" value="@SurveyQuestionType.ClosedQuestion" />
+            <ul>
+                <li>
+                    <label asp-for="Questions[0].Answers[0].Name"></label>
+                    <input type="radio" disabled="disabled" asp-for="Questions[0].Answers[0].Name" value="Choice 1" /><span>Choice 1</span>
+                </li>
+                <li>
+                    <label asp-for="Questions[0].Answers[1].Name"></label>
+                    <input type="radio" disabled="disabled" asp-for="Questions[0].Answers[1].Name" value="Choice 2" /><span>Choice 2</span>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <label asp-for="Questions[1].Description"></label>
+            <input type="text" asp-for="Questions[1].Description" disabled="disabled" value="Question with multiple choice" />
+            <label asp-for="Questions[0].QuestionType"></label>
+            <input type="hidden" asp-for="Questions[0].QuestionType" value="@SurveyQuestionType.OpenEndedQuestion" />
+            <ul>
+                <li>
+                    <label asp-for="Questions[1].Answers[0].Name"></label>
+                    <input type="checkbox" disabled="disabled" asp-for="Questions[1].Answers[0].Name" value="Choice 1" /><span>Choice 1</span>
+                </li>
+                <li>
+                    <label asp-for="Questions[1].Answers[1].Name"></label>
+                    <input type="checkbox" disabled="disabled" asp-for="Questions[1].Answers[1].Name" value="Choice 2" /><span>Choice 2</span>
+                </li>
+            </ul>
+        </div>
+    </form>
+</body>

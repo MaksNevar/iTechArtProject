@@ -11,11 +11,11 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
     [Authorize]
     public class SurveyController : Controller
     {
-        private readonly UserManagementService _userManagementService;
-        private readonly SurveyService _surveyService;
+        private readonly IUserManagementService _userManagementService;
+        private readonly ISurveyService _surveyService;
 
 
-        public SurveyController(SurveyService surveyService, UserManagementService userManagementService)
+        public SurveyController(ISurveyService surveyService, IUserManagementService userManagementService)
         {
             _surveyService = surveyService;
             _userManagementService = userManagementService;
