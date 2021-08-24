@@ -44,7 +44,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user), "User not found");
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             await _userManagementService.DeleteUserAsync(user);

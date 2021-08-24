@@ -33,7 +33,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             return Task.FromResult(user.Id.ToString());
@@ -45,7 +45,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             return Task.FromResult(user.UserName);
@@ -57,7 +57,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             user.UserName = userName;
@@ -71,7 +71,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             return Task.FromResult(user.NormalizedUserName);
@@ -83,7 +83,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             user.NormalizedUserName = normalizedName;
@@ -97,7 +97,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User can't be null");
             }
 
             _unitOfWork.UserRepository.Create(user);
@@ -112,7 +112,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             _unitOfWork.UserRepository.Update(user);
@@ -127,7 +127,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             _unitOfWork.UserRepository.Delete(user);
@@ -164,7 +164,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             user.PasswordHash = passwordHash;
@@ -178,7 +178,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             var passwordHash = user.PasswordHash;
@@ -192,7 +192,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             return Task.FromResult(user.PasswordHash != null);
@@ -204,19 +204,19 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             if (string.IsNullOrWhiteSpace(normalizedRoleName))
             {
-                throw new ArgumentNullException(nameof(normalizedRoleName));
+                throw new ArgumentNullException(nameof(normalizedRoleName), "Role name is not valid");
             }
 
             var role = await _unitOfWork.RoleRepository.GetRoleByNameAsync(normalizedRoleName);
 
             if (role == null)
             {
-                throw new ArgumentNullException(nameof(role));
+                throw new ArgumentNullException(nameof(role), "Role does not exist");
             }
 
             var userRole = new UserRole
@@ -235,19 +235,19 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             if (string.IsNullOrWhiteSpace(normalizedRoleName))
             {
-                throw new ArgumentNullException(nameof(normalizedRoleName));
+                throw new ArgumentNullException(nameof(normalizedRoleName), "Role name is not valid");
             }
 
             var role = await _unitOfWork.RoleRepository.GetRoleByNameAsync(normalizedRoleName);
 
             if (role == null)
             {
-                throw new ArgumentNullException(nameof(role));
+                throw new ArgumentNullException(nameof(role), "Role does not exist");
             }
 
             var userRole = await _unitOfWork.GetRepository<UserRole>().GetByIdAsync(user.Id, role.Id);
@@ -261,7 +261,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             var roleNames = await _unitOfWork.UserRepository.GetUserRolesAsync(user.Id);
@@ -275,19 +275,19 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             if (string.IsNullOrEmpty(normalizedRoleName))
             {
-                throw new ArgumentNullException(nameof(normalizedRoleName));
+                throw new ArgumentNullException(nameof(normalizedRoleName), "Role name is not valid");
             }
 
             var role = await _unitOfWork.RoleRepository.GetRoleByNameAsync(normalizedRoleName);
 
             if (role == null)
             {
-                throw new ArgumentNullException(nameof(role));
+                throw new ArgumentNullException(nameof(role), "Role does not exist");
             }
 
             var userRole = await _unitOfWork.GetRepository<UserRole>().GetByIdAsync(user.Id, role.Id);
@@ -301,14 +301,14 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (string.IsNullOrEmpty(normalizedRoleName))
             {
-                throw new ArgumentNullException(nameof(normalizedRoleName));
+                throw new ArgumentNullException(nameof(normalizedRoleName), "Role name is not valid");
             }
 
             var role = await _unitOfWork.RoleRepository.GetRoleByNameAsync(normalizedRoleName);
 
             if (role == null)
             {
-                throw new ArgumentNullException(nameof(role));
+                throw new ArgumentNullException(nameof(role), "Role does not exist");
             }
 
             var users = await _unitOfWork.RoleRepository.GetUsersInRoleAsync(role.Id);

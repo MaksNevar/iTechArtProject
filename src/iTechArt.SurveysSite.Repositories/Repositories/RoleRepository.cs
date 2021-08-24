@@ -27,9 +27,9 @@ namespace iTechArt.SurveysSite.Repositories.Repositories
 
         public async Task<IReadOnlyCollection<User>> GetUsersInRoleAsync(int roleId)
         {
-            var users = await DbContext.Set<User>()
-                .Where(roleToSelect => roleToSelect.Id == roleId)
-                .SelectMany(roleToSelect => roleToSelect.UserRoles.Select(ur => ur.User))
+            var users = await DbContext.Set<UserRole>()
+                .Where(ur => ur.RoleId == roleId)
+                .Select(ur => ur.User)
                 .ToListAsync();
 
             return users;

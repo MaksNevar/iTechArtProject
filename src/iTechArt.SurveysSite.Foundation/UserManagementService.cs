@@ -43,6 +43,11 @@ namespace iTechArt.SurveysSite.Foundation
         {
             var user = await _unitOfWork.UserRepository.GetByIdAsync(id);
 
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user), "User does not exist");
+            }
+
             return user;
         }
 
