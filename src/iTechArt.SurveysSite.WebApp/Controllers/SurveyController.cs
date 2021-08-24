@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
@@ -38,8 +37,13 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> NewSurvey(SurveyViewModel surveyViewModel)
+        public async Task<IActionResult> NewSurvey(SurveyViewModel surveyViewModel, string submit)
         {
+            if (submit == "cancel")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(surveyViewModel);
@@ -47,16 +51,9 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
             var userName = User.FindFirstValue(ClaimTypes.Name);
 
-            var surveyQuestions = surveyViewModel.Questions.Select(t => new SurveyQuestion
-            {
-                Description = t.Description,
-                QuestionType = t.QuestionType
-            }).ToList();
-
             var survey = new Survey
             {
                 Name = surveyViewModel.Name,
-                SurveyQuestions = surveyQuestions,
                 CreatingDate = DateTime.Now
             };
 

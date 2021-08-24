@@ -73,26 +73,6 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
                     .WithMany(user => user.Surveys)
                     .IsRequired();
             });
-
-            modelBuilder.Entity<SurveyQuestion>(options =>
-            {
-                options.Property(question => question.Description)
-                    .IsRequired();
-
-                options.HasOne(question => question.Survey)
-                    .WithMany(survey => survey.SurveyQuestions)
-                    .IsRequired();
-            });
-
-            modelBuilder.Entity<SurveyQuestionAnswer>(options =>
-            {
-                options.Property(answer => answer.Name)
-                    .IsRequired();
-
-                options.HasOne(answer => answer.SurveyQuestion)
-                    .WithMany(question => question.Answers)
-                    .IsRequired();
-            });
         }
     }
 }
