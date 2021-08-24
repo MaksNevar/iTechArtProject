@@ -37,13 +37,8 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> NewSurvey(SurveyViewModel surveyViewModel, string submit)
+        public async Task<IActionResult> NewSurvey(SurveyViewModel surveyViewModel)
         {
-            if (submit == "cancel")
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
             if (!ModelState.IsValid)
             {
                 return View(surveyViewModel);
@@ -59,6 +54,8 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
             var user = await _userManagementService.GetUserByUsernameAsync(userName);
             await _surveyService.CreateSurveyAsync(user, survey);
+
+            ViewBag.Message = "Survey created successfully";
 
             return View();
         }
