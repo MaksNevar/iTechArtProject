@@ -11,6 +11,6 @@ namespace iTechArt.SurveysSite.Repositories.Repositories
 
         Task<IReadOnlyCollection<User>> GetAllUsersAsync();
 
-        Task<List<string>> GetUserRoleNamesAsync(User user);
+        Task<IReadOnlyCollection<string>> GetUserRolesAsync(int userId);
     }
 }

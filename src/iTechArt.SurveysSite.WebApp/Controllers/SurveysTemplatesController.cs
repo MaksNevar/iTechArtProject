@@ -6,7 +6,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
     [Authorize]
     public class SurveysTemplatesController : Controller
     {
-        [Authorize]
+        [HttpGet]
         public IActionResult Index()
         {
             return View();

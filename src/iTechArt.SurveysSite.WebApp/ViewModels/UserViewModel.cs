@@ -9,7 +9,7 @@ namespace iTechArt.SurveysSite.WebApp.ViewModels
 
         public string Name { get; set; }
 
-        public List<string> RoleNames { get; set; }
+        public IReadOnlyCollection<string> RoleNames { get; set; }
 
         public DateTime DateOfRegistration { get; set; }
     }

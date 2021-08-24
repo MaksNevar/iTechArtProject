@@ -1,8 +1,14 @@
 ﻿.trash-image {
     width: 20px;
+    padding: 0;
 }
 
 .table {
-    width: 1000px;
+    width: 1300px;
     margin: auto;
+    font-size: 15px;
+}
+
+tr {
+    line-height: 30px;
 }

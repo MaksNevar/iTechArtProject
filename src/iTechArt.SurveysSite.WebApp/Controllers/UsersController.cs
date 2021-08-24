@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace iTechArt.SurveysSite.WebApp.Controllers
 {
+    [Authorize(Roles = RoleNames.AdminRole)]
     public class UsersController : Controller
     {
         private readonly IUserManagementService _userManagementService;
@@ -19,7 +21,6 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         }
 
 
-        [Authorize(Roles = RoleNames.AdminRole)]
         [HttpGet]
         public async Task<IActionResult> DisplayAllUsers()
         {
@@ -40,6 +41,12 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _userManagementService.GetUserByIdAsync(id);
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user), "User does not exist");
+            }
+
             await _userManagementService.DeleteUserAsync(user);
 
             return RedirectToAction("DisplayAllUsers");
