@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Foundation;
@@ -36,8 +38,15 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> NewSurvey(SurveyViewModel surveyViewModel, string userName)
+        public async Task<IActionResult> NewSurvey(SurveyViewModel surveyViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(surveyViewModel);
+            }
+
+            var userName = User.FindFirstValue(ClaimTypes.Name);
+
             var surveyQuestions = surveyViewModel.Questions.Select(t => new SurveyQuestion
             {
                 Description = t.Description,
@@ -47,7 +56,8 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             var survey = new Survey
             {
                 Name = surveyViewModel.Name,
-                SurveyQuestions = surveyQuestions
+                SurveyQuestions = surveyQuestions,
+                CreatingDate = DateTime.Now
             };
 
             var user = await _userManagementService.GetUserByUsernameAsync(userName);

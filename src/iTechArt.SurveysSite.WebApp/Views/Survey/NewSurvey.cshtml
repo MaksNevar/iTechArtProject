@@ -7,43 +7,49 @@
     <form method="post" asp-action="NewSurvey">
         <div class="row">
             <label asp-for="Name"></label>
-            <input type="text" asp-for="Name"/>
+            <input type="text" asp-for="Name" size="100"/>
         </div>
         <div class="row flex">
             <button type="submit">Save</button>
-            <button type="submit">Cancel</button>
         </div>
         <div class="row">
-            <label asp-for="Questions[0].Description"></label>
-            <input type="text" asp-for="Questions[0].Description" disabled="disabled" value="Question with single choice" />
-            <label asp-for="Questions[0].QuestionType"></label>
+            <label asp-for="Questions[0].Description" hidden></label>
+            <input type="text" class="no-border" asp-for="Questions[0].Description" readonly="readonly" value="Question with single choice" />
+            <label asp-for="Questions[0].QuestionType" hidden></label>
             <input type="hidden" asp-for="Questions[0].QuestionType" value="@SurveyQuestionType.ClosedQuestion" />
             <ul>
                 <li>
-                    <label asp-for="Questions[0].Answers[0].Name"></label>
-                    <input type="radio" disabled="disabled" asp-for="Questions[0].Answers[0].Name" value="Choice 1" /><span>Choice 1</span>
+                    <label asp-for="Questions[0].Answers[0].Name" hidden></label>
+                    <input type="radio" name="Single" value="Choice 1" disabled="disabled"/>
+                    <input type="text" class="no-border" asp-for="Questions[0].Answers[0].Name" value="Choice 1" readonly="readonly"/>
                 </li>
                 <li>
-                    <label asp-for="Questions[0].Answers[1].Name"></label>
-                    <input type="radio" disabled="disabled" asp-for="Questions[0].Answers[1].Name" value="Choice 2" /><span>Choice 2</span>
+                    <label asp-for="Questions[0].Answers[1].Name" hidden></label>
+                    <input type="radio" name="Single" value="Choice 2" disabled="disabled"/>
+                    <input type="text" class="no-border" asp-for="Questions[0].Answers[1].Name" value="Choice 2" readonly="readonly" />
                 </li>
             </ul>
         </div>
         <div class="row">
-            <label asp-for="Questions[1].Description"></label>
-            <input type="text" asp-for="Questions[1].Description" disabled="disabled" value="Question with multiple choice" />
-            <label asp-for="Questions[0].QuestionType"></label>
-            <input type="hidden" asp-for="Questions[0].QuestionType" value="@SurveyQuestionType.OpenEndedQuestion" />
+            <label asp-for="Questions[1].Description" hidden></label>
+            <input type="text" class="no-border" asp-for="Questions[1].Description" readonly="readonly" value="Question with multiple choice" />
+            <label asp-for="Questions[0].QuestionType" hidden></label>
+            <input type="hidden" asp-for="Questions[1].QuestionType" value="@SurveyQuestionType.OpenEndedQuestion" />
             <ul>
                 <li>
-                    <label asp-for="Questions[1].Answers[0].Name"></label>
-                    <input type="checkbox" disabled="disabled" asp-for="Questions[1].Answers[0].Name" value="Choice 1" /><span>Choice 1</span>
+                    <label asp-for="Questions[1].Answers[0].Name" hidden></label>
+                    <input type="checkbox" value="Choice 1" disabled="disabled"/>
+                    <input type="text" class="no-border" asp-for="Questions[1].Answers[0].Name" value="Choice 1" readonly="readonly" />
                 </li>
                 <li>
-                    <label asp-for="Questions[1].Answers[1].Name"></label>
-                    <input type="checkbox" disabled="disabled" asp-for="Questions[1].Answers[1].Name" value="Choice 2" /><span>Choice 2</span>
+                    <label asp-for="Questions[1].Answers[1].Name" hidden></label>
+                    <input type="checkbox" value="Choice 2" disabled="disabled" />
+                    <input type="text" class="no-border" asp-for="Questions[1].Answers[1].Name" value="Choice 2" readonly="readonly" />
                 </li>
             </ul>
+        </div>
+        <div class="row">
+            @Html.ValidationSummary(false)
         </div>
     </form>
 </body>

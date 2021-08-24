@@ -17,6 +17,7 @@ namespace iTechArt.SurveysSite.Foundation
 
         public async Task CreateSurveyAsync(User user, Survey survey)
         {
+            survey.User = user;
             _unitOfWork.GetRepository<Survey>().Create(survey);
             await _unitOfWork.SaveAsync();
         }

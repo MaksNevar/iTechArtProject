@@ -4,8 +4,7 @@ namespace iTechArt.SurveysSite.WebApp.ViewModels
 {
     public class SurveyQuestionAnswerViewModel
     {
-        [Required]
-        [Display(Name = "")]
+        [Display(Name = "Choice")]
         public string Name { get; set; }
     }
 }
