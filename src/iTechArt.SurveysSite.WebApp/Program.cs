@@ -36,8 +36,7 @@ namespace iTechArt.SurveysSite.WebApp
                 await dbContext.Database.MigrateAsync();
 
                 var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<User>>();
-                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
-                await AddInitialDataAsync(userManager, roleManager);
+                await AddInitialDataAsync(userManager);
             }
 
             await host.RunAsync();
@@ -51,17 +50,20 @@ namespace iTechArt.SurveysSite.WebApp
                     webBuilder.UseStartup<Startup>();
                 });
 
-        private static async Task AddInitialDataAsync(UserManager<User> userManager, RoleManager<Role> roleManager)
+        private static async Task AddInitialDataAsync(UserManager<User> userManager)
         {
-            var adminRole = await roleManager.FindByNameAsync(RoleNames.AdminRole);
             var admin = new User
             {
                 UserName = "admin",
                 Email = "admin123@mail.ru",
-                Role = adminRole
             };
 
-            await userManager.CreateAsync(admin, "admin123");
+            var result = await userManager.CreateAsync(admin, "admin123");
+
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(admin, RoleNames.AdminRole);
+            }
         }
     }
 }

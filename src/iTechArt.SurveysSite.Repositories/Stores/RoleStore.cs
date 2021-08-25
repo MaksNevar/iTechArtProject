@@ -30,7 +30,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (role == null)
             {
-                throw new ArgumentNullException(nameof(role));
+                throw new ArgumentNullException(nameof(role), "Role can't be null");
             }
 
             _unitOfWork.RoleRepository.Create(role);
@@ -45,7 +45,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (role == null)
             {
-                throw new ArgumentNullException(nameof(role));
+                throw new ArgumentNullException(nameof(role), "Role does not exist");
             }
 
             _unitOfWork.RoleRepository.Update(role);
@@ -60,7 +60,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (role == null)
             {
-                throw new ArgumentNullException(nameof(role));
+                throw new ArgumentNullException(nameof(role), "Role does not exist");
             }
 
             _unitOfWork.RoleRepository.Delete(role);
@@ -75,7 +75,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (role == null)
             {
-                throw new ArgumentNullException(nameof(role));
+                throw new ArgumentNullException(nameof(role), "Role does not exist");
             }
 
             return Task.FromResult(role.Id.ToString());
@@ -87,7 +87,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (role == null)
             {
-                throw new ArgumentNullException(nameof(role));
+                throw new ArgumentNullException(nameof(role), "Role does not exist");
             }
 
             return Task.FromResult(role.Name);
@@ -99,7 +99,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (role == null)
             {
-                throw new ArgumentNullException(nameof(role));
+                throw new ArgumentNullException(nameof(role), "Role does not exist");
             }
 
             role.Name = roleName;
@@ -113,7 +113,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (role == null)
             {
-                throw new ArgumentNullException(nameof(role));
+                throw new ArgumentNullException(nameof(role), "Role does not exist");
             }
 
             var normalizedName = role.NormalizedName;
@@ -127,7 +127,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (role == null)
             {
-                throw new ArgumentNullException(nameof(role));
+                throw new ArgumentNullException(nameof(role), "Role does not exist");
             }
 
             role.NormalizedName = normalizedName;

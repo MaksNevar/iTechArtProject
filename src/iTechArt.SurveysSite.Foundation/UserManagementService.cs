@@ -1,18 +1,22 @@
 ﻿using iTechArt.SurveysSite.DomainModel;
 using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using iTechArt.SurveysSite.Repositories.UnitOfWorks;
 
 namespace iTechArt.SurveysSite.Foundation
 {
     public class UserManagementService : IUserManagementService
     {
         private readonly UserManager<User> _userManager;
+        private readonly ISurveysSiteUnitOfWork _unitOfWork;
 
 
-        public UserManagementService(UserManager<User> userManager)
+        public UserManagementService(UserManager<User> userManager, ISurveysSiteUnitOfWork unitOfWork)
         {
             _userManager = userManager;
+            _unitOfWork = unitOfWork;
         }
 
 
@@ -26,6 +30,31 @@ namespace iTechArt.SurveysSite.Foundation
             var user = await _userManager.FindByNameAsync(userName);
 
             return user;
+        }
+
+        public async Task<IReadOnlyCollection<User>> GetAllUsersAsync()
+        {
+            var users = await _unitOfWork.UserRepository.GetAllUsersAsync();
+
+            return users;
+        }
+
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            var user = await _unitOfWork.UserRepository.GetByIdAsync(id);
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user), "User does not exist");
+            }
+
+            return user;
+        }
+
+        public async Task DeleteUserAsync(User user)
+        {
+            _unitOfWork.UserRepository.Delete(user);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

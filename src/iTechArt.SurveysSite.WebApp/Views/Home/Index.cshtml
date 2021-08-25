@@ -1,6 +1,7 @@
 ﻿@using iTechArt.SurveysSite.DomainModel
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<User> _signInManager
+
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -23,6 +24,12 @@
                 <li class="nav-item">
                     <a type="submit" class="btn btn-dark" asp-controller="SurveysTemplates" asp-action="Index">Surveys templates</a>
                 </li>
+                @if (User.IsInRole(RoleNames.AdminRole))
+                {
+                    <li class="nav-item">
+                        <a type="submit" class="btn btn-dark" asp-controller="Users" asp-action="DisplayAllUsers">Users</a>
+                    </li>
+                }
             </ul>
         </div>
     }

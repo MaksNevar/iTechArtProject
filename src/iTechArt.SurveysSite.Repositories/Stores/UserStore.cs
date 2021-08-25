@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using iTechArt.Common;
@@ -9,7 +11,7 @@ using Microsoft.AspNetCore.Identity;
 namespace iTechArt.SurveysSite.Repositories.Stores
 {
     [UsedImplicitly]
-    public class UserStore : IUserPasswordStore<User>
+    public class UserStore : IUserPasswordStore<User>, IUserRoleStore<User>
     {
         private readonly ISurveysSiteUnitOfWork _unitOfWork;
 
@@ -31,7 +33,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             return Task.FromResult(user.Id.ToString());
@@ -43,7 +45,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             return Task.FromResult(user.UserName);
@@ -55,7 +57,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             user.UserName = userName;
@@ -69,7 +71,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             return Task.FromResult(user.NormalizedUserName);
@@ -81,7 +83,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             user.NormalizedUserName = normalizedName;
@@ -95,7 +97,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User can't be null");
             }
 
             _unitOfWork.UserRepository.Create(user);
@@ -110,7 +112,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             _unitOfWork.UserRepository.Update(user);
@@ -125,7 +127,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             _unitOfWork.UserRepository.Delete(user);
@@ -162,7 +164,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             user.PasswordHash = passwordHash;
@@ -176,7 +178,7 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             var passwordHash = user.PasswordHash;
@@ -190,10 +192,128 @@ namespace iTechArt.SurveysSite.Repositories.Stores
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(user), "User does not exist");
             }
 
             return Task.FromResult(user.PasswordHash != null);
+        }
+
+        public async Task AddToRoleAsync(User user, string normalizedRoleName, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user), "User does not exist");
+            }
+
+            if (string.IsNullOrWhiteSpace(normalizedRoleName))
+            {
+                throw new ArgumentNullException(nameof(normalizedRoleName), "Role name is not valid");
+            }
+
+            var role = await _unitOfWork.RoleRepository.GetRoleByNameAsync(normalizedRoleName);
+
+            if (role == null)
+            {
+                throw new ArgumentNullException(nameof(role), "Role does not exist");
+            }
+
+            var userRole = new UserRole
+            {
+                UserId = user.Id,
+                RoleId = role.Id
+            };
+
+            _unitOfWork.GetRepository<UserRole>().Create(userRole);
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task RemoveFromRoleAsync(User user, string normalizedRoleName, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user), "User does not exist");
+            }
+
+            if (string.IsNullOrWhiteSpace(normalizedRoleName))
+            {
+                throw new ArgumentNullException(nameof(normalizedRoleName), "Role name is not valid");
+            }
+
+            var role = await _unitOfWork.RoleRepository.GetRoleByNameAsync(normalizedRoleName);
+
+            if (role == null)
+            {
+                throw new ArgumentNullException(nameof(role), "Role does not exist");
+            }
+
+            var userRole = await _unitOfWork.GetRepository<UserRole>().GetByIdAsync(user.Id, role.Id);
+            _unitOfWork.GetRepository<UserRole>().Delete(userRole);
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task<IList<string>> GetRolesAsync(User user, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user), "User does not exist");
+            }
+
+            var roleNames = await _unitOfWork.UserRepository.GetUserRolesAsync(user.Id);
+
+            return roleNames.ToList();
+        }
+
+        public async Task<bool> IsInRoleAsync(User user, string normalizedRoleName, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user), "User does not exist");
+            }
+
+            if (string.IsNullOrEmpty(normalizedRoleName))
+            {
+                throw new ArgumentNullException(nameof(normalizedRoleName), "Role name is not valid");
+            }
+
+            var role = await _unitOfWork.RoleRepository.GetRoleByNameAsync(normalizedRoleName);
+
+            if (role == null)
+            {
+                throw new ArgumentNullException(nameof(role), "Role does not exist");
+            }
+
+            var userRole = await _unitOfWork.GetRepository<UserRole>().GetByIdAsync(user.Id, role.Id);
+
+            return userRole != null;
+        }
+
+        public async Task<IList<User>> GetUsersInRoleAsync(string normalizedRoleName, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            if (string.IsNullOrEmpty(normalizedRoleName))
+            {
+                throw new ArgumentNullException(nameof(normalizedRoleName), "Role name is not valid");
+            }
+
+            var role = await _unitOfWork.RoleRepository.GetRoleByNameAsync(normalizedRoleName);
+
+            if (role == null)
+            {
+                throw new ArgumentNullException(nameof(role), "Role does not exist");
+            }
+
+            var users = await _unitOfWork.RoleRepository.GetUsersInRoleAsync(role.Id);
+
+            return users.ToList();
         }
     }
 }

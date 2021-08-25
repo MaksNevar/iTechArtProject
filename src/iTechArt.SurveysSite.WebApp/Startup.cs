@@ -62,6 +62,7 @@ namespace iTechArt.SurveysSite.WebApp
 
             services.ConfigureApplicationCookie(options =>
             {
+                options.AccessDeniedPath = "/Home/AccessDenied";
                 options.LoginPath = "/SignIn/Login";
             });
         }

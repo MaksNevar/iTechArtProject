@@ -1,4 +1,7 @@
-﻿namespace iTechArt.SurveysSite.DomainModel
+﻿using System;
+using System.Collections.Generic;
+
+namespace iTechArt.SurveysSite.DomainModel
 {
     public class User
     {
@@ -20,6 +23,8 @@
 
         public string NormalizedUserName { get; set; }
 
-        public Role Role { get; set; }
+        public List<UserRole> UserRoles { get; set; }
+
+        public DateTime RegistrationDate { get; set; }
     }
 }

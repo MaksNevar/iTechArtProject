@@ -1,14 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 
 namespace iTechArt.SurveysSite.WebApp.ViewModels
 {
     public class UserViewModel
     {
-        [Required(ErrorMessage = "Please enter username")]
-        [Display(Name = "Login")]
-        public string UserName { get; set; }
+        public int Id { get; set; }
 
-        [Required(ErrorMessage = "Please enter password")]
-        public string Password { get; set; }
+        public string Name { get; set; }
+
+        public IReadOnlyCollection<string> RoleNames { get; set; }
+
+        public DateTime DateOfRegistration { get; set; }
     }
 }

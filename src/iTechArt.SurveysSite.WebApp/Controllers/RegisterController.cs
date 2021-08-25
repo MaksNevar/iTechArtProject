@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Foundation;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +36,8 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             var userToRegister = new User
             {
                 UserName = registerModel.Login,
-                Email = registerModel.Email
+                Email = registerModel.Email,
+                RegistrationDate = DateTime.Now
             };
 
             var result = await _accountService.RegisterAsync(userToRegister, registerModel.Password);

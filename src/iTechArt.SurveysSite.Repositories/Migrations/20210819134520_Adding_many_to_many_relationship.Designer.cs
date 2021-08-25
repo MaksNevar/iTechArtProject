@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using iTechArt.SurveysSite.Repositories.DbContexts;
 
 namespace iTechArt.SurveysSite.Repositories.Migrations
 {
     [DbContext(typeof(SurveysSiteDbContext))]
-    partial class SurveysSiteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210819134520_Adding_many_to_many_relationship")]
+    partial class Adding_many_to_many_relationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,7 +86,7 @@ namespace iTechArt.SurveysSite.Repositories.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("iTechArt.SurveysSite.DomainModel.UserRole", b =>
+            modelBuilder.Entity("iTechArt.SurveysSite.DomainModel.UserRoles", b =>
                 {
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -96,10 +98,10 @@ namespace iTechArt.SurveysSite.Repositories.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("UserRole");
+                    b.ToTable("UserRoles");
                 });
 
-            modelBuilder.Entity("iTechArt.SurveysSite.DomainModel.UserRole", b =>
+            modelBuilder.Entity("iTechArt.SurveysSite.DomainModel.UserRoles", b =>
                 {
                     b.HasOne("iTechArt.SurveysSite.DomainModel.Role", "Role")
                         .WithMany("UserRoles")
