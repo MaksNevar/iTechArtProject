@@ -28,7 +28,7 @@
                 </ul>
             </div>
             <div class="row">
-                <input type="text" class="no-border" readonly="readonly" value="Question with multiple choice"/>
+                <input type="text" class="no-border" readonly="readonly" value="Question with multiple choices"/>
                 <ul>
                     <li>
                         <input type="checkbox" value="Choice 1" disabled="disabled"/>
@@ -43,6 +43,9 @@
         </div>
         <div class="row">
             @Html.ValidationSummary(false)
+        </div>
+        <div class="row">
+            <a class="btn btn-light rounded btn-main" asp-controller="Home" asp-action="Index">Back to main page</a>
         </div>
     </form>
 </body>
