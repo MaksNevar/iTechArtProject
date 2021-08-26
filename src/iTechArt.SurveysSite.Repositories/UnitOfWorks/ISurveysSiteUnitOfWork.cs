@@ -8,5 +8,7 @@ namespace iTechArt.SurveysSite.Repositories.UnitOfWorks
         IUserRepository UserRepository { get; }
 
         IRoleRepository RoleRepository { get; }
+
+        ISurveyRepository SurveyRepository { get; }
     }
 }

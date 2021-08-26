@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using iTechArt.Common;
 using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Repositories.UnitOfWorks;
@@ -20,10 +22,35 @@ namespace iTechArt.SurveysSite.Foundation
 
         public async Task CreateSurveyAsync(Survey survey)
         {
-            _unitOfWork.GetRepository<Survey>().Create(survey);
+            _unitOfWork.SurveyRepository.Create(survey);
             await _unitOfWork.SaveAsync();
 
             _logger.LogDebug($"The survey {survey.Title} created by {survey.Owner.UserName} on {survey.ChangeDate:MM/dd/yyyy}");
+        }
+
+        public async Task<IReadOnlyCollection<Survey>> GetAllUserSurveysAsync(int userId)
+        {
+            var surveys = await _unitOfWork.SurveyRepository.GetAllUserSurveysAsync(userId);
+
+            return surveys;
+        }
+
+        public async Task<Survey> GetByIdAsync(int id)
+        {
+            var survey = await _unitOfWork.SurveyRepository.GetByIdAsync(id);
+
+            if (survey == null)
+            {
+                throw new ArgumentNullException(nameof(survey), "Survey does not exist");
+            }
+
+            return survey;
+        }
+
+        public async Task DeleteSurveyAsync(Survey survey)
+        {
+            _unitOfWork.SurveyRepository.Delete(survey);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

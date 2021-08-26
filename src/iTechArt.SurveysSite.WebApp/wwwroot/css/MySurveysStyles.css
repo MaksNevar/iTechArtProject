@@ -1,0 +1,32 @@
+﻿.trash-image {
+    width: 20px;
+    padding: 0;
+}
+
+.table {
+    width: 1300px;
+    margin: auto;
+    font-size: 15px;
+}
+
+tr {
+    line-height: 30px;
+}
+
+.btn-create {
+    margin: 30px;
+    margin-left: 0;
+}
+
+.btn-main {
+    margin-left: 560px;
+    margin-top: 70px;
+}
+
+.center {
+    margin-top: 50px;
+}
+
+b {
+    font-size: 30px;
+}
