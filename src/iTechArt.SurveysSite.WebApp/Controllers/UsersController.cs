@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
@@ -41,11 +40,6 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _userManagementService.GetUserByIdAsync(id);
-
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user), "User does not exist");
-            }
 
             await _userManagementService.DeleteUserAsync(user);
 
