@@ -10,10 +10,10 @@ namespace iTechArt.SurveysSite.DomainModel
 
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        public string Title { get; set; }
 
-        public User User { get; set; }
+        public User Owner { get; set; }
 
-        public DateTime CreatingDate { get; set; }
+        public DateTime ChangeDate { get; set; }
     }
 }

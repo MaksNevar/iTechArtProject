@@ -5,26 +5,25 @@ using iTechArt.SurveysSite.Repositories.UnitOfWorks;
 
 namespace iTechArt.SurveysSite.Foundation
 {
-    public class SurveyService : ISurveyService
+    public class SurveyManagementService : ISurveyManagementService
     {
         private readonly ISurveysSiteUnitOfWork _unitOfWork;
         private readonly ILog _logger;
 
 
-        public SurveyService(ISurveysSiteUnitOfWork unitOfWork, ILog logger)
+        public SurveyManagementService(ISurveysSiteUnitOfWork unitOfWork, ILog logger)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
 
 
-        public async Task CreateSurveyAsync(User user, Survey survey)
+        public async Task CreateSurveyAsync(Survey survey)
         {
-            survey.User = user;
             _unitOfWork.GetRepository<Survey>().Create(survey);
             await _unitOfWork.SaveAsync();
 
-            _logger.LogDebug($"The survey {survey.Name} created by {user.UserName} on {survey.CreatingDate:MM/dd/yyyy}");
+            _logger.LogDebug($"The survey {survey.Title} created by {survey.Owner.UserName} on {survey.ChangeDate:MM/dd/yyyy}");
         }
     }
 }

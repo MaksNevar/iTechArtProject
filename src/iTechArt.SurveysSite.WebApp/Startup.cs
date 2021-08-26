@@ -66,7 +66,7 @@ namespace iTechArt.SurveysSite.WebApp
                 options.LoginPath = "/SignIn/Login";
             });
 
-            services.AddScoped<ISurveyService, SurveyService>();
+            services.AddScoped<ISurveyManagementService, SurveyManagementService>();
         }
 
         public void Configure(IApplicationBuilder app)

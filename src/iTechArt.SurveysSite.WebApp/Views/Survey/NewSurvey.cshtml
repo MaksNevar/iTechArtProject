@@ -10,8 +10,8 @@
             <span><input class="input" type="text" asp-for="Name" /></span>
         </div>
         <div class="row flex">
-            <button class="btn btn-light" type="submit">Save</button>
-            <a class="btn btn-light" asp-controller="Home" asp-action="Index">Cancel</a>
+            <button class="btn btn-dark" type="submit">Save</button>
+            <a class="btn btn-dark" asp-controller="Home" asp-action="Index">Cancel</a>
         </div>
         <div class="border border-dark">
             <div class="row">
@@ -44,9 +44,7 @@
         <div class="row">
             @Html.ValidationSummary(false)
         </div>
-        <div class="row">
-            <a class="btn btn-light rounded btn-main" asp-controller="Home" asp-action="Index">Back to main page</a>
-        </div>
+        <partial name="_ButtonToMainPagePartial"/>
     </form>
 </body>
 @if (!string.IsNullOrEmpty(ViewBag.Message))

@@ -15,3 +15,14 @@
 .nav-item .btn-dark {
     margin-bottom: 20px;
 }
+
+.center {
+    width: 281px;
+    height: 200px;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.text-lg-center {
+    font-size: 30px;
+}

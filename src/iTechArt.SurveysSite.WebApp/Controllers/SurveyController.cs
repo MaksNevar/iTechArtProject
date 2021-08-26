@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Foundation;
+using iTechArt.SurveysSite.Repositories;
 using iTechArt.SurveysSite.WebApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +13,10 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
     public class SurveyController : Controller
     {
         private readonly IUserManagementService _userManagementService;
-        private readonly ISurveyService _surveyService;
+        private readonly ISurveyManagementService _surveyService;
 
 
-        public SurveyController(ISurveyService surveyService, IUserManagementService userManagementService)
+        public SurveyController(ISurveyManagementService surveyService, IUserManagementService userManagementService)
         {
             _surveyService = surveyService;
             _userManagementService = userManagementService;
@@ -44,16 +44,16 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 return View(surveyViewModel);
             }
 
-            var userName = User.FindFirstValue(ClaimTypes.Name);
-
+            var userId = User.GetId();
+            var user = await _userManagementService.GetUserByIdAsync(userId);
             var survey = new Survey
             {
-                Name = surveyViewModel.Name,
-                CreatingDate = DateTime.Now
+                Title = surveyViewModel.Name,
+                ChangeDate = DateTime.Now,
+                Owner = user
             };
 
-            var user = await _userManagementService.GetUserByUsernameAsync(userName);
-            await _surveyService.CreateSurveyAsync(user, survey);
+            await _surveyService.CreateSurveyAsync(survey);
 
             ViewBag.Message = "Survey created successfully";
 

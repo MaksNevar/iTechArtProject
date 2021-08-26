@@ -13,25 +13,25 @@ namespace iTechArt.SurveysSite.Repositories.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    CreatingDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OwnerId = table.Column<int>(type: "int", nullable: false),
+                    ChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Survey", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Survey_User_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Survey_User_OwnerId",
+                        column: x => x.OwnerId,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Survey_UserId",
+                name: "IX_Survey_OwnerId",
                 table: "Survey",
-                column: "UserId");
+                column: "OwnerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

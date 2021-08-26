@@ -10,7 +10,7 @@ using iTechArt.SurveysSite.Repositories.DbContexts;
 namespace iTechArt.SurveysSite.Repositories.Migrations
 {
     [DbContext(typeof(SurveysSiteDbContext))]
-    [Migration("20210824133030_Adding_survey")]
+    [Migration("20210826083653_Adding_survey")]
     partial class Adding_survey
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,19 +62,19 @@ namespace iTechArt.SurveysSite.Repositories.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatingDate")
+                    b.Property<DateTime>("ChangeDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Survey");
                 });
@@ -127,13 +127,13 @@ namespace iTechArt.SurveysSite.Repositories.Migrations
 
             modelBuilder.Entity("iTechArt.SurveysSite.DomainModel.Survey", b =>
                 {
-                    b.HasOne("iTechArt.SurveysSite.DomainModel.User", "User")
+                    b.HasOne("iTechArt.SurveysSite.DomainModel.User", "Owner")
                         .WithMany("Surveys")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("iTechArt.SurveysSite.DomainModel.UserRole", b =>
