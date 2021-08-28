@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Claims;
 
-namespace iTechArt.SurveysSite.Repositories
+namespace iTechArt.SurveysSite.WebApp.Helpers
 {
     public static class ClaimsPrincipalExtensions
     {

@@ -23,7 +23,7 @@ namespace iTechArt.SurveysSite.Foundation
             _unitOfWork.GetRepository<Survey>().Create(survey);
             await _unitOfWork.SaveAsync();
 
-            _logger.LogDebug($"The survey {survey.Title} created by {survey.Owner.UserName} on {survey.ChangeDate:MM/dd/yyyy}");
+            _logger.LogInformation($"The survey {survey.Title} created by {survey.Owner.UserName} on {survey.ChangeDate:MM/dd/yyyy}");
         }
     }
 }
