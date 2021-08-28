@@ -25,7 +25,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
 
         [HttpGet]
-        public IActionResult DisplayMySurveys()
+        public async Task<IActionResult> DisplayMySurveys()
         {
             var userId = User.GetId();
             var surveys = await _surveyService.GetAllUserSurveysAsync(userId);
@@ -77,7 +77,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             var survey = await _surveyService.GetByIdAsync(id);
             await _surveyService.DeleteSurveyAsync(survey);
 
-            return RedirectToAction("MySurveys");
+            return RedirectToAction("DisplayMySurveys");
         }
     }
 }
