@@ -13,7 +13,7 @@ input {
 }
 
 .btn-dark {
-    width: 100px;
+    width: 130px;
     margin: 20px 15px 35px 11px;
 }
 
@@ -27,4 +27,8 @@ input {
     margin-left: 567px;
     margin-top: 70px;
     width: 180px;
+}
+
+.border {
+    margin-top: 40px;
 }

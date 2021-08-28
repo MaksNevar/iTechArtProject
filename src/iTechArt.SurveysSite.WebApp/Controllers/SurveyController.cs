@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Foundation;
-using iTechArt.SurveysSite.Repositories;
+using iTechArt.SurveysSite.WebApp.Helpers;
 using iTechArt.SurveysSite.WebApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +25,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> MySurveys()
+        public IActionResult DisplayMySurveys()
         {
             var userId = User.GetId();
             var surveys = await _surveyService.GetAllUserSurveysAsync(userId);
@@ -40,14 +40,14 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult NewSurvey()
+        public IActionResult CreateNewSurvey()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> NewSurvey(SurveyViewModel surveyViewModel)
+        public async Task<IActionResult> CreateNewSurvey(SurveyViewModel surveyViewModel)
         {
             if (!ModelState.IsValid)
             {
