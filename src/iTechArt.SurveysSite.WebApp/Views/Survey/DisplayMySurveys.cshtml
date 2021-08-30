@@ -35,8 +35,13 @@ else
                 <td>
                     @Html.DisplayFor(modelItem => survey.ChangeDate)
                 </td>
-                <td>
-                    <form method="post" asp-controller="Survey" asp-action="DeleteSurvey" asp-route-id="@survey.Id">
+                <td class="d-flex flex-row">
+                    <form method="get" asp-action="UpdateSurvey" asp-route-id="@survey.Id">
+                        <button type="submit" class="edit-button">
+                            <img src="/images/edit.png" class="trash-image">
+                        </button>
+                    </form>
+                    <form method="post" asp-action="DeleteSurvey" asp-route-id="@survey.Id">
                         <button type="submit" onclick="return confirm('Are you sure you want to delete survey \'@survey.Title\'?')">
                             <img src="/images/trashbin.png" class="trash-image">
                         </button>

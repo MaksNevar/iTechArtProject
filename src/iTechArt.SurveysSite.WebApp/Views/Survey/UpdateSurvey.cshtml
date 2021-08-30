@@ -1,12 +1,12 @@
 ﻿@model iTechArt.SurveysSite.WebApp.ViewModels.SurveyViewModel
 <head>
-    <link rel="stylesheet" href="/css/NewSurveyStyles.css"/>
+    <link rel="stylesheet" href="/css/NewSurveyStyles.css" />
 </head>
 <body>
     <form method="post" asp-action="CreateNewSurvey">
         <div class="row">
             <label asp-for="Title"></label>
-            <span><input class="input" type="text" asp-for="Title" /></span>
+            <span><input class="input" type="text" asp-for="Title" value="@Model.Title"/></span>
         </div>
         <div class="border border-dark">
             <div class="row">

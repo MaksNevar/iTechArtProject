@@ -79,5 +79,26 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
             return RedirectToAction("DisplayMySurveys");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateSurvey(int id)
+        {
+            var survey = await _surveyService.GetByIdAsync(id);
+            var surveyViewModel = new SurveyViewModel
+            {
+                Id = survey.Id,
+                Title = survey.Title
+            };
+
+            return View(surveyViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateSurvey(SurveyViewModel surveyViewModel)
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }
