@@ -65,6 +65,8 @@ namespace iTechArt.SurveysSite.WebApp
                 options.AccessDeniedPath = "/Home/AccessDenied";
                 options.LoginPath = "/SignIn/Login";
             });
+
+            services.AddScoped<ISurveyManagementService, SurveyManagementService>();
         }
 
         public void Configure(IApplicationBuilder app)

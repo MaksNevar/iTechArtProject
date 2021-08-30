@@ -63,6 +63,16 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
                     .WithMany(role => role.UserRoles)
                     .HasForeignKey(ur => ur.RoleId);
             });
+
+            modelBuilder.Entity<Survey>(options =>
+            {
+                options.Property(survey => survey.Title)
+                    .IsRequired();
+
+                options.HasOne(survey => survey.Owner)
+                    .WithMany(user => user.Surveys)
+                    .IsRequired();
+            });
         }
     }
 }
