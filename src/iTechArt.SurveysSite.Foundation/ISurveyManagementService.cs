@@ -13,5 +13,7 @@ namespace iTechArt.SurveysSite.Foundation
         public Task<Survey> GetByIdAsync(int surveyId);
 
         public Task DeleteSurveyAsync(Survey survey);
+
+        public Task UpdateSurveyAsync(Survey survey);
     }
 }

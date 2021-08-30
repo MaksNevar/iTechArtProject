@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="/css/NewSurveyStyles.css" />
 </head>
 <body>
-    <form method="post" asp-action="CreateNewSurvey">
+    <form method="post" asp-action="UpdateSurvey">
         <div class="row">
             <label asp-for="Title"></label>
             <span><input class="input" type="text" asp-for="Title" value="@Model.Title"/></span>
@@ -41,7 +41,7 @@
         </div>
         <div class="row flex">
             <button class="btn btn-dark center" type="submit">Save</button>
-            <a class="btn btn-dark center" asp-controller="Home" asp-action="Index">Cancel</a>
+            <a class="btn btn-dark center" asp-action="DisplayMySurveys" onclick="return confirm('Do you want to discard changes?');">Cancel</a>
         </div>
         <partial name="_ButtonToMainPagePartial" />
     </form>

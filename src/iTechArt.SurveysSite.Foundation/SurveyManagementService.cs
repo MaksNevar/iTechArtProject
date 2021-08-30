@@ -52,5 +52,11 @@ namespace iTechArt.SurveysSite.Foundation
             _unitOfWork.SurveyRepository.Delete(survey);
             await _unitOfWork.SaveAsync();
         }
+
+        public async Task UpdateSurveyAsync(Survey survey)
+        {
+            _unitOfWork.SurveyRepository.Update(survey);
+            await _unitOfWork.SaveAsync();
+        }
     }
 }

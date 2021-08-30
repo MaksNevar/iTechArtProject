@@ -97,7 +97,27 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateSurvey(SurveyViewModel surveyViewModel)
         {
-            return RedirectToAction("Index", "Home");
+            if (!ModelState.IsValid)
+            {
+                return View(surveyViewModel);
+            }
+
+            var userId = User.GetId();
+            var user = await _userManagementService.GetUserByIdAsync(userId);
+
+            var survey = new Survey
+            {
+                Id = surveyViewModel.Id,
+                ChangeDate = DateTime.Now,
+                Owner = user,
+                Title = surveyViewModel.Title
+            };
+
+            await _surveyService.UpdateSurveyAsync(survey);
+
+            ViewBag.Message = "Survey edited successfully";
+
+            return View(surveyViewModel);
         }
 
     }
