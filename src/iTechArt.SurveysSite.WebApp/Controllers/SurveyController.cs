@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Foundation;
@@ -24,9 +25,18 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
 
         [HttpGet]
-        public IActionResult DisplayMySurveys()
+        public async Task<IActionResult> DisplayMySurveys()
         {
-            return View();
+            var userId = User.GetId();
+            var surveys = await _surveyService.GetAllUserSurveysAsync(userId);
+            var surveyViewModel = surveys.Select(survey => new SurveyViewModel
+            {
+                Id = survey.Id,
+                Title = survey.Title,
+                ChangeDate = survey.ChangeDate
+            }).ToList();
+
+            return View(surveyViewModel);
         }
 
         [HttpGet]
@@ -48,7 +58,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             var user = await _userManagementService.GetUserByIdAsync(userId);
             var survey = new Survey
             {
-                Title = surveyViewModel.Name,
+                Title = surveyViewModel.Title,
                 ChangeDate = DateTime.Now,
                 Owner = user
             };
@@ -58,6 +68,16 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             ViewBag.Message = "Survey created successfully";
 
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteSurvey(int id)
+        {
+            var survey = await _surveyService.GetByIdAsync(id);
+            await _surveyService.DeleteSurveyAsync(survey);
+
+            return RedirectToAction("DisplayMySurveys");
         }
     }
 }

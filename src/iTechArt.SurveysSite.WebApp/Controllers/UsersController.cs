@@ -40,7 +40,6 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _userManagementService.GetUserByIdAsync(id);
-
             await _userManagementService.DeleteUserAsync(user);
 
             return RedirectToAction("DisplayAllUsers");
