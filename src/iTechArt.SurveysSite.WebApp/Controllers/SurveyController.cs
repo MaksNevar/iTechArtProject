@@ -119,6 +119,5 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
             return View(surveyViewModel);
         }
-
     }
 }
