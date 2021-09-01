@@ -21,7 +21,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> DisplayAllUsers()
+        public async Task<IActionResult> DisplayAll()
         {
             var users = await _userManagementService.GetAllUsersAsync();
             var usersViewModel = users.Select(user => new UserViewModel
@@ -37,12 +37,12 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var user = await _userManagementService.GetUserByIdAsync(id);
             await _userManagementService.DeleteUserAsync(user);
 
-            return RedirectToAction("DisplayAllUsers");
+            return RedirectToAction("DisplayAll");
         }
     }
 }

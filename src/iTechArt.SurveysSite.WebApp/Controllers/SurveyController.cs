@@ -28,7 +28,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> DisplayMySurveys()
+        public async Task<IActionResult> DisplayAll()
         {
             var userId = User.GetId();
             var surveys = await _surveyService.GetAllUserSurveysAsync(userId);
@@ -43,7 +43,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreateNewSurvey()
+        public IActionResult Create()
         {
             _survey = new SurveyViewModel
             {
@@ -55,7 +55,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateNewSurvey(SurveyViewModel surveyViewModel)
+        public async Task<IActionResult> Create(SurveyViewModel surveyViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -87,16 +87,16 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteSurvey(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var survey = await _surveyService.GetByIdAsync(id);
             await _surveyService.DeleteSurveyAsync(survey);
 
-            return RedirectToAction("DisplayMySurveys");
+            return RedirectToAction("DisplayAll");
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateSurvey(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             var survey = await _surveyService.GetByIdAsync(id);
             var surveyViewModel = new SurveyViewModel
@@ -110,7 +110,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateSurvey(SurveyViewModel surveyViewModel)
+        public async Task<IActionResult> Edit(SurveyViewModel surveyViewModel)
         {
             if (!ModelState.IsValid)
             {
