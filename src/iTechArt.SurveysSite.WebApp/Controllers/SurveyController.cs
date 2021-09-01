@@ -99,10 +99,18 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var survey = await _surveyService.GetByIdAsync(id);
+            var surveyQuestionsViewModel = survey.Questions.Select(t => new SurveyQuestionViewModel
+            {
+                Id = t.Id,
+                Title = t.Title,
+                QuestionType = t.QuestionType
+            }).ToList();
+
             var surveyViewModel = new SurveyViewModel
             {
                 Id = survey.Id,
-                Title = survey.Title
+                Title = survey.Title,
+                Questions = surveyQuestionsViewModel
             };
 
             return View(surveyViewModel);
@@ -119,13 +127,20 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
             var userId = User.GetId();
             var user = await _userManagementService.GetUserByIdAsync(userId);
+            var surveyQuestions = surveyViewModel.Questions.Select(t => new SurveyQuestion
+            {
+                Id = t.Id,
+                Title = t.Title,
+                QuestionType = t.QuestionType
+            }).ToList();
 
             var survey = new Survey
             {
                 Id = surveyViewModel.Id,
-                ChangeDate = DateTime.Now,
                 Owner = user,
-                Title = surveyViewModel.Title
+                Questions = surveyQuestions,
+                Title = surveyViewModel.Title,
+                ChangeDate = DateTime.Now
             };
 
             await _surveyService.UpdateSurveyAsync(survey);
@@ -157,7 +172,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 _survey.Questions.Add(openEndedQuestion);
             }
 
-            return View("CreateNewSurvey", _survey);
+            return View("Create", _survey);
         }
     }
 }
