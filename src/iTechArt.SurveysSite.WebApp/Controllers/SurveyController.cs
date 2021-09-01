@@ -55,13 +55,8 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateNewSurvey(SurveyViewModel surveyViewModel, string type)
+        public async Task<IActionResult> CreateNewSurvey(SurveyViewModel surveyViewModel)
         {
-            if (!string.IsNullOrEmpty(type))
-            {
-                return AddQuestion(type);
-            }
-
             if (!ModelState.IsValid)
             {
                 return View(surveyViewModel);
