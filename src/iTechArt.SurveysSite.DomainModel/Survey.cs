@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace iTechArt.SurveysSite.DomainModel
 {
@@ -15,5 +16,7 @@ namespace iTechArt.SurveysSite.DomainModel
         public User Owner { get; set; }
 
         public DateTime ChangeDate { get; set; }
+
+        public List<SurveyQuestion> Questions { get; set; }
     }
 }

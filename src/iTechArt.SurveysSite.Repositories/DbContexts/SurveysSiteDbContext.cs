@@ -17,6 +17,7 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
             modelBuilder.Entity<User>(options =>
             {
                 options.Property(user => user.UserName)
+                    .HasMaxLength(User.MaxUserNameLength)
                     .IsRequired();
 
                 options.Property(user => user.PasswordHash)
@@ -26,6 +27,7 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
                     .IsRequired();
 
                 options.Property(user => user.Email)
+                    .HasMaxLength(User.MaxEmailLength)
                     .IsRequired();
             });
 
@@ -67,10 +69,25 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
             modelBuilder.Entity<Survey>(options =>
             {
                 options.Property(survey => survey.Title)
+                    .HasMaxLength(Survey.NameMaxLength)
                     .IsRequired();
 
                 options.HasOne(survey => survey.Owner)
                     .WithMany(user => user.Surveys)
+                    .IsRequired();
+            });
+
+            modelBuilder.Entity<SurveyQuestion>(options =>
+            {
+                options.Property(question => question.Title)
+                    .HasMaxLength(SurveyQuestion.QuestionMaxLength)
+                    .IsRequired();
+
+                options.Property(question => question.QuestionType)
+                    .IsRequired();
+
+                options.HasOne(question => question.Survey)
+                    .WithMany(survey => survey.Questions)
                     .IsRequired();
             });
         }

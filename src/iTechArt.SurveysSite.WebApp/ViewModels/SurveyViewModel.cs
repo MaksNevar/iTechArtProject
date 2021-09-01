@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using iTechArt.SurveysSite.DomainModel;
 
@@ -15,5 +16,9 @@ namespace iTechArt.SurveysSite.WebApp.ViewModels
         public string Title { get; set; }
 
         public DateTime ChangeDate { get; set; }
+
+        [Required]
+        [MaxLength(7)]
+        public List<SurveyQuestionViewModel> Questions { get; set; }
     }
 }

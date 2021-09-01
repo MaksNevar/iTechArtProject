@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
@@ -13,6 +14,8 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
     [Authorize]
     public class SurveyController : Controller
     {
+        private static SurveyViewModel _survey;
+
         private readonly IUserManagementService _userManagementService;
         private readonly ISurveyManagementService _surveyService;
 
@@ -42,13 +45,23 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         [HttpGet]
         public IActionResult CreateNewSurvey()
         {
-            return View();
+            _survey = new SurveyViewModel
+            {
+                Questions = new List<SurveyQuestionViewModel>()
+            };
+
+            return View(_survey);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateNewSurvey(SurveyViewModel surveyViewModel)
+        public async Task<IActionResult> CreateNewSurvey(SurveyViewModel surveyViewModel, string type)
         {
+            if (!string.IsNullOrEmpty(type))
+            {
+                return AddQuestion(type);
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(surveyViewModel);
@@ -56,18 +69,25 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
             var userId = User.GetId();
             var user = await _userManagementService.GetUserByIdAsync(userId);
+            var surveyQuestions = surveyViewModel.Questions.Select(t => new SurveyQuestion
+            {
+                Title = t.Title,
+                QuestionType = t.QuestionType
+            }).ToList();
+
             var survey = new Survey
             {
                 Title = surveyViewModel.Title,
                 ChangeDate = DateTime.Now,
-                Owner = user
+                Owner = user,
+                Questions = surveyQuestions
             };
 
             await _surveyService.CreateSurveyAsync(survey);
 
             ViewBag.Message = "Survey created successfully";
 
-            return View();
+            return View(surveyViewModel);
         }
 
         [HttpPost]
@@ -118,6 +138,31 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             ViewBag.Message = "Survey edited successfully";
 
             return View(surveyViewModel);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddQuestion(string type)
+        {
+            if (type == "closed")
+            {
+                var closedQuestion = new SurveyQuestionViewModel
+                {
+                    QuestionType = QuestionType.Closed
+                };
+                _survey.Questions.Add(closedQuestion);
+            }
+            else
+            {
+                var openEndedQuestion = new SurveyQuestionViewModel
+                {
+                    QuestionType = QuestionType.OpenEnded
+                };
+                _survey.Questions.Add(openEndedQuestion);
+            }
+
+            return View("CreateNewSurvey", _survey);
         }
     }
 }
