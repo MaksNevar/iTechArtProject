@@ -1,10 +1,14 @@
 ﻿@model iTechArt.SurveysSite.WebApp.ViewModels.SurveyViewModel
+@{
+    TempData["View"] = "Edit";
+}
 <head>
     <link rel="stylesheet" href="/css/NewSurveyStyles.css" />
 </head>
 <body>
     <form method="post" asp-action="Edit">
-        <partial name="_SurveyTitlePartial"/>
-        <partial name="_CreateSurveyPartial"/>
+        <partial name="_SurveyTitlePartial" />
+        <partial name="_AddQuestionPartial"/>
+        <partial name="_CreateSurveyPartial" />
     </form>
 </body>

@@ -1,20 +1,27 @@
 ﻿@using iTechArt.SurveysSite.DomainModel
 @model iTechArt.SurveysSite.WebApp.ViewModels.SurveyQuestionViewModel
 <div class="row">
-    <label asp-for="Title" class="input-question"></label>
-    <input type="text" class="input input-question" asp-for="Title"/>
-    <label asp-for="QuestionType" hidden="hidden"></label>
-    <input asp-for="QuestionType" hidden="hidden" value="@Model.QuestionType"/>
+    <div class="flex flex-row">
+        <label asp-for="Title" class="input-question"></label>
+        <input type="text" class="input input-question" asp-for="Title" />
+        <label asp-for="QuestionType" hidden="hidden"></label>
+        <input asp-for="QuestionType" hidden="hidden" value="@Model.QuestionType" />
+        <label asp-for="Id" hidden="hidden"></label>
+        <input asp-for="Id" hidden="hidden" value="@Model.Id" />
+        <button class="no-background" type="submit" asp-action="RemoveQuestion" asp-route-id="@Model.Id">
+            <img src="/images/minus.png" />
+        </button>
+    </div>
     <span asp-validation-for="Title" class="input-question"></span>
     @if (Model.QuestionType == QuestionType.Closed)
     {
         <ul>
             <li>
-                <input type="radio" name="Single" value="Choice 1" disabled="disabled" />
+                <input class="input-question" type="radio" name="Single" value="Choice 1" disabled="disabled" />
                 <input type="text" class="no-border" value="Choice 1" readonly="readonly" />
             </li>
             <li>
-                <input type="radio" name="Single" value="Choice 2" disabled="disabled" />
+                <input class="input-question" type="radio" name="Single" value="Choice 2" disabled="disabled" />
                 <input type="text" class="no-border" value="Choice 2" readonly="readonly" />
             </li>
         </ul>
@@ -23,11 +30,11 @@
     {
         <ul>
             <li>
-                <input type="checkbox" value="Choice 1" disabled="disabled" />
+                <input class="input-question" type="checkbox" value="Choice 1" disabled="disabled" />
                 <input type="text" class="no-border" value="Choice 1" readonly="readonly" />
             </li>
             <li>
-                <input type="checkbox" value="Choice 2" disabled="disabled" />
+                <input class="input-question" type="checkbox" value="Choice 2" disabled="disabled" />
                 <input type="text" class="no-border" value="Choice 2" readonly="readonly" />
             </li>
         </ul>

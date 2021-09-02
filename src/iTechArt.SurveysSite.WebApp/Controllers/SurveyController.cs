@@ -106,14 +106,14 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 QuestionType = t.QuestionType
             }).ToList();
 
-            var surveyViewModel = new SurveyViewModel
+            _survey = new SurveyViewModel
             {
                 Id = survey.Id,
                 Title = survey.Title,
                 Questions = surveyQuestionsViewModel
             };
 
-            return View(surveyViewModel);
+            return View(_survey);
         }
 
         [HttpPost]
@@ -153,8 +153,12 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddQuestion(string type)
+        public IActionResult AddQuestion(SurveyViewModel surveyViewModel, string type)
         {
+            _survey = surveyViewModel;
+
+            _survey.Questions ??= new List<SurveyQuestionViewModel>();
+
             if (type == "closed")
             {
                 var closedQuestion = new SurveyQuestionViewModel
@@ -172,7 +176,21 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 _survey.Questions.Add(openEndedQuestion);
             }
 
-            return View("Create", _survey);
+            var viewPath = TempData["View"].ToString();
+            ModelState.Clear();
+            return View(viewPath, _survey);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RemoveQuestion(SurveyViewModel surveyViewModel, int index)
+        {
+            _survey = surveyViewModel;
+
+            _survey.Questions.RemoveAt(index);
+            var viewPath = TempData["View"].ToString();
+            ModelState.Clear();
+            return View(viewPath, _survey);
         }
     }
 }

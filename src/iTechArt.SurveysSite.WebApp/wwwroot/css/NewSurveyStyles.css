@@ -81,3 +81,16 @@ input {
 .input-question {
     margin-left: 26px;
 }
+
+
+.no-background {
+    border: none;
+    background-color: transparent;
+    outline: none;
+    margin-left: 500px;
+}
+
+.no-background img {
+    width: 30px;
+    padding: 0;
+}
