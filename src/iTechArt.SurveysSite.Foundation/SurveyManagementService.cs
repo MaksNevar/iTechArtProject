@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using iTechArt.Common;
 using iTechArt.SurveysSite.DomainModel;
@@ -55,7 +56,35 @@ namespace iTechArt.SurveysSite.Foundation
 
         public async Task UpdateSurveyAsync(Survey survey)
         {
-            await _unitOfWork.SurveyRepository.InsertUpdateOrDeleteGraphAsync(survey);
+            var existingSurvey = await GetByIdAsync(survey.Id);
+
+            foreach (var question in survey.Questions)
+            {
+                var existingQuestion = existingSurvey.Questions
+                    .SingleOrDefault(q => q.Id == question.Id);
+
+                if (existingQuestion == null)
+                {
+                    existingSurvey.Questions.Add(question);
+                }
+                else
+                {
+                    existingQuestion.Title = question.Title;
+                    _unitOfWork.GetRepository<SurveyQuestion>().Update(existingQuestion);
+                }
+            }
+
+            foreach (var question in existingSurvey.Questions)
+            {
+                if (survey.Questions.All(q => q.Id != question.Id))
+                {
+                    _unitOfWork.GetRepository<SurveyQuestion>().Delete(question);
+                }
+            }
+
+            existingSurvey.Title = survey.Title;
+            existingSurvey.ChangeDate = DateTime.Now;
+            _unitOfWork.SurveyRepository.Update(existingSurvey);
             await _unitOfWork.SaveAsync();
         }
     }

@@ -66,7 +66,7 @@
 <span asp-validation-for="Questions"></span>
 <div class="row flex">
     <button class="btn btn-dark center save-cancel" type="submit">Save</button>
-    <a class="btn btn-dark center save-cancel" asp-controller="Survey" asp-action="DisplayAll" onclick="return confirm('Do you want to discard survey?');">Cancel</a>
+    <a class="btn btn-dark center save-cancel" asp-controller="Survey" asp-action="Index" onclick="return confirm('Do you want to discard survey?');">Cancel</a>
 </div>
 <partial name="_ButtonToMainPagePartial" />
 @if (!string.IsNullOrEmpty(ViewBag.Message))

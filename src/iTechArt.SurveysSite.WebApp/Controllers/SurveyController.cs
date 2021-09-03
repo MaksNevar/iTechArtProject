@@ -114,7 +114,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 return RedirectToAction("AccessDenied", "Home");
             }
 
-            var surveyViewModel = new SurveyViewModel
+            var surveyQuestionsViewModel = survey.Questions.Select(t => new SurveyQuestionViewModel
             {
                 Id = t.Id,
                 Title = t.Title,
@@ -141,8 +141,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 return View(surveyViewModel);
             }
 
-            var userId = User.GetId();
-            var user = await _userManagementService.GetUserByIdAsync(userId);
+            var survey = await _surveyService.GetByIdAsync(surveyViewModel.Id);
             var surveyQuestions = surveyViewModel.Questions.Select(t => new SurveyQuestion
             {
                 Id = t.Id,
@@ -150,14 +149,8 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 QuestionType = t.QuestionTypeName
             }).ToList();
 
-            var survey = new Survey
-            {
-                Id = surveyViewModel.Id,
-                Owner = user,
-                Questions = surveyQuestions,
-                Title = surveyViewModel.Title,
-                ChangeDate = DateTime.Now
-            };
+            survey.Questions = surveyQuestions;
+            survey.Title = surveyViewModel.Title;
 
             await _surveyService.UpdateSurveyAsync(survey);
 
