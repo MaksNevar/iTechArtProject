@@ -36,7 +36,7 @@ namespace iTechArt.SurveysSite.Repositories.Repositories
             return survey;
         }
 
-        public async Task InsertUpdateOrDeleteGraph(Survey survey)
+        public async Task InsertUpdateOrDeleteGraphAsync(Survey survey)
         {
             var existingSurvey = await GetByIdAsync(survey.Id);
             DbContext.Entry(existingSurvey).CurrentValues.SetValues(survey);
