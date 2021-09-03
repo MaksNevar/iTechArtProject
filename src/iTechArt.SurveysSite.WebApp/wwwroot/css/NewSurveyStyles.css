@@ -36,6 +36,9 @@ input {
 .dropdown {
     position: relative;
     display: inline-block;
+    width: 45px;
+    margin-left: auto;
+    margin-right: 0;
 }
 
 .dropdown-content {
@@ -44,7 +47,7 @@ input {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 160px;
+    min-width: 180px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     z-index: 1;
 }

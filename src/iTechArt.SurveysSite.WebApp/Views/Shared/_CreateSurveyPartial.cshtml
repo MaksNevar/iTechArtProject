@@ -2,7 +2,7 @@
 @model iTechArt.SurveysSite.WebApp.ViewModels.SurveyViewModel
 <div class="flex flex-row">
     <label asp-for="Title"></label>
-    <span><input class="input input-question" type="text" asp-for="Title" /></span>
+    <span><input class="input input-question" type="text" asp-for="Title"/></span>
     <label asp-for="Id" hidden="hidden"></label>
     <input asp-for="Id" value="@Model.Id" hidden="hidden" />
 </div>
