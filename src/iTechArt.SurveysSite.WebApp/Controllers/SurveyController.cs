@@ -28,7 +28,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> DisplayAll()
+        public async Task<IActionResult> Index()
         {
             var userId = User.GetId();
             var surveys = await _surveyService.GetAllUserSurveysAsync(userId);
@@ -91,16 +91,30 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var survey = await _surveyService.GetByIdAsync(id);
+            var userId = User.GetId();
+
+            if (userId != survey.Owner.Id)
+            {
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
             await _surveyService.DeleteSurveyAsync(survey);
 
-            return RedirectToAction("DisplayAll");
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             var survey = await _surveyService.GetByIdAsync(id);
-            var surveyQuestionsViewModel = survey.Questions.Select(t => new SurveyQuestionViewModel
+            var userId = User.GetId();
+
+            if (userId != survey.Owner.Id)
+            {
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
+            var surveyViewModel = new SurveyViewModel
             {
                 Id = t.Id,
                 Title = t.Title,

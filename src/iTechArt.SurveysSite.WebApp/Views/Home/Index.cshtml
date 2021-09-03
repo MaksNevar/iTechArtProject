@@ -19,7 +19,7 @@
                     <a type="submit" class="btn btn-dark" asp-controller="Survey" asp-action="Create">New survey</a>
                 </li>
                 <li class="nav-item">
-                    <a type="submit" class="btn btn-dark" asp-controller="Survey" asp-action="DisplayAll">My surveys</a>
+                    <a type="submit" class="btn btn-dark" asp-controller="Survey" asp-action="Index">My surveys</a>
                 </li>
                 <li class="nav-item">
                     <a type="submit" class="btn btn-dark" asp-controller="SurveysTemplates" asp-action="Index">Surveys templates</a>
@@ -27,7 +27,7 @@
                 @if (User.IsInRole(RoleNames.AdminRole))
                 {
                     <li class="nav-item">
-                        <a type="submit" class="btn btn-dark" asp-controller="Users" asp-action="DisplayAll">Users</a>
+                        <a type="submit" class="btn btn-dark" asp-controller="Users" asp-action="Index">Users</a>
                     </li>
                 }
             </ul>
