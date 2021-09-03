@@ -10,5 +10,7 @@ namespace iTechArt.SurveysSite.Repositories.Repositories
         public Task<IReadOnlyCollection<Survey>> GetAllUserSurveysAsync(int userId);
 
         public Task<Survey> GetByIdAsync(int id);
+
+        public Task InsertUpdateOrDeleteGraph(Survey survey);
     }
 }

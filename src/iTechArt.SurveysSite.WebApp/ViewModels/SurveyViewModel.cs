@@ -18,7 +18,7 @@ namespace iTechArt.SurveysSite.WebApp.ViewModels
         public DateTime ChangeDate { get; set; }
 
         [Required]
-        [MaxLength(7)]
+        [MinLength(1, ErrorMessage = "Add at least one question")]
         public List<SurveyQuestionViewModel> Questions { get; set; }
     }
 }

@@ -35,5 +35,35 @@ namespace iTechArt.SurveysSite.Repositories.Repositories
 
             return survey;
         }
+
+        public async Task InsertUpdateOrDeleteGraph(Survey survey)
+        {
+            var existingSurvey = await GetByIdAsync(survey.Id);
+            DbContext.Entry(existingSurvey).CurrentValues.SetValues(survey);
+
+            foreach (var question in survey.Questions)
+            {
+                var existingQuestion = existingSurvey.Questions
+                    .SingleOrDefault(q => q.Id == question.Id);
+
+                if (existingQuestion == null)
+                {
+                    existingSurvey.Questions.Add(question);
+                }
+                else
+                {
+                    existingQuestion.Title = question.Title;
+                    DbContext.Update(existingQuestion);
+                }
+            }
+
+            foreach (var question in existingSurvey.Questions)
+            {
+                if (survey.Questions.All(q => q.Id != question.Id))
+                {
+                    DbContext.Remove(question);
+                }
+            }
+        }
     }
 }

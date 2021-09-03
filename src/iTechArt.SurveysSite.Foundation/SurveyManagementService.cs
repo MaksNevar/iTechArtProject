@@ -55,7 +55,7 @@ namespace iTechArt.SurveysSite.Foundation
 
         public async Task UpdateSurveyAsync(Survey survey)
         {
-            _unitOfWork.SurveyRepository.Update(survey);
+            await _unitOfWork.SurveyRepository.InsertUpdateOrDeleteGraph(survey);
             await _unitOfWork.SaveAsync();
         }
     }

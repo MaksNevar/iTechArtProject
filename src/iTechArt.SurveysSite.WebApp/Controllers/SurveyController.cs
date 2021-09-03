@@ -59,6 +59,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         {
             if (!ModelState.IsValid)
             {
+                surveyViewModel.Questions ??= new List<SurveyQuestionViewModel>();
                 return View(surveyViewModel);
             }
 
@@ -122,6 +123,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         {
             if (!ModelState.IsValid)
             {
+                surveyViewModel.Questions ??= new List<SurveyQuestionViewModel>();
                 return View(surveyViewModel);
             }
 
