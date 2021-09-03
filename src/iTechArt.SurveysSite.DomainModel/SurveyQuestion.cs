@@ -10,7 +10,7 @@
 
         public string Title { get; set; }
 
-        public QuestionType QuestionType { get; set; }
+        public string QuestionType { get; set; }
 
         public Survey Survey { get; set; }
     }

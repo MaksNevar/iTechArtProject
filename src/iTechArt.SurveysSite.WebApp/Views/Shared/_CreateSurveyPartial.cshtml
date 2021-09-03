@@ -25,8 +25,8 @@
             <div class="flex flex-row">
                 <label asp-for="Questions[i].Title" class="input-question"></label>
                 <input type="text" class="input input-question" asp-for="Questions[i].Title" value="@Model.Questions[i].Title" />
-                <label asp-for="Questions[i].QuestionType" hidden="hidden"></label>
-                <input asp-for="Questions[i].QuestionType" hidden="hidden" value="@Model.Questions[i].QuestionType" />
+                <label asp-for="Questions[i].QuestionTypeName" hidden="hidden"></label>
+                <input asp-for="Questions[i].QuestionTypeName" hidden="hidden" value="@Model.Questions[i].QuestionTypeName" />
                 <label asp-for="Questions[i].Id" hidden="hidden"></label>
                 <input asp-for="Questions[i].Id" hidden="hidden" value="@Model.Questions[i].Id" />
                 <button class="no-background" type="submit" asp-action="RemoveQuestion" asp-route-index="@i">
@@ -34,7 +34,7 @@
                 </button>
             </div>
             <span asp-validation-for="Questions[i].Title" class="input-question"></span>
-            @if (Model.Questions[i].QuestionType == QuestionType.Closed)
+            @if (Model.Questions[i].QuestionTypeName == SurveyQuestionType.Closed)
             {
                 <ul>
                     <li>

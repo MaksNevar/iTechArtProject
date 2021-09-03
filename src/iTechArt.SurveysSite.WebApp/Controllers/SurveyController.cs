@@ -68,7 +68,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             var surveyQuestions = surveyViewModel.Questions.Select(t => new SurveyQuestion
             {
                 Title = t.Title,
-                QuestionType = t.QuestionType
+                QuestionType = t.QuestionTypeName
             }).ToList();
 
             var survey = new Survey
@@ -104,7 +104,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             {
                 Id = t.Id,
                 Title = t.Title,
-                QuestionType = t.QuestionType
+                QuestionTypeName = t.QuestionType
             }).ToList();
 
             _survey = new SurveyViewModel
@@ -133,7 +133,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             {
                 Id = t.Id,
                 Title = t.Title,
-                QuestionType = t.QuestionType
+                QuestionType = t.QuestionTypeName
             }).ToList();
 
             var survey = new Survey
@@ -165,7 +165,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             {
                 var closedQuestion = new SurveyQuestionViewModel
                 {
-                    QuestionType = QuestionType.Closed
+                    QuestionTypeName = SurveyQuestionType.Closed
                 };
                 _survey.Questions.Add(closedQuestion);
             }
@@ -173,7 +173,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             {
                 var openEndedQuestion = new SurveyQuestionViewModel
                 {
-                    QuestionType = QuestionType.OpenEnded
+                    QuestionTypeName = SurveyQuestionType.OpenEnded
                 };
                 _survey.Questions.Add(openEndedQuestion);
             }

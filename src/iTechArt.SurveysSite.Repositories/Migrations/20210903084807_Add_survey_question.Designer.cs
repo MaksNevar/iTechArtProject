@@ -10,8 +10,8 @@ using iTechArt.SurveysSite.Repositories.DbContexts;
 namespace iTechArt.SurveysSite.Repositories.Migrations
 {
     [DbContext(typeof(SurveysSiteDbContext))]
-    [Migration("20210831103829_Adding_survey_questions")]
-    partial class Adding_survey_questions
+    [Migration("20210903084807_Add_survey_question")]
+    partial class Add_survey_question
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -87,8 +87,9 @@ namespace iTechArt.SurveysSite.Repositories.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("QuestionType")
-                        .HasColumnType("int");
+                    b.Property<string>("QuestionType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SurveyId")
                         .HasColumnType("int");

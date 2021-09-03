@@ -2,7 +2,7 @@
 
 namespace iTechArt.SurveysSite.Repositories.Migrations
 {
-    public partial class Adding_survey_questions : Migration
+    public partial class Add_survey_question : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +40,7 @@ namespace iTechArt.SurveysSite.Repositories.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    QuestionType = table.Column<int>(type: "int", nullable: false),
+                    QuestionType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SurveyId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

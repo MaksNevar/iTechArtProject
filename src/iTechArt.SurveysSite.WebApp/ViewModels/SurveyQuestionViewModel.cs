@@ -12,6 +12,6 @@ namespace iTechArt.SurveysSite.WebApp.ViewModels
         [MinLength(SurveyQuestion.QuestionMinLength, ErrorMessage = "The question title is too small")]
         public string Title { get; set; }
 
-        public QuestionType QuestionType { get; set; }
+        public string QuestionTypeName { get; set; }
     }
 }

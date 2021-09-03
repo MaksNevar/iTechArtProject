@@ -83,11 +83,11 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
                     .HasMaxLength(SurveyQuestion.QuestionMaxLength)
                     .IsRequired();
 
-                options.Property(question => question.QuestionType)
-                    .IsRequired();
-
                 options.HasOne(question => question.Survey)
                     .WithMany(survey => survey.Questions)
+                    .IsRequired();
+
+                options.Property(q => q.QuestionType)
                     .IsRequired();
             });
         }
