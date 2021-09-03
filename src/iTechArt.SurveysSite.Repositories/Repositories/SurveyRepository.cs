@@ -25,5 +25,14 @@ namespace iTechArt.SurveysSite.Repositories.Repositories
 
             return surveys;
         }
+
+        public async Task<Survey> GetByIdAsync(int id)
+        {
+            var survey = await DbContext.Set<Survey>()
+                .Include(s => s.Owner)
+                .SingleOrDefaultAsync(s => s.Id == id);
+
+            return survey;
+        }
     }
 }
