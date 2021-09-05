@@ -77,10 +77,10 @@ namespace iTechArt.SurveysSite.Repositories.DbContexts
                     .IsRequired();
             });
 
-            modelBuilder.Entity<SurveyQuestion>(options =>
+            modelBuilder.Entity<Question>(options =>
             {
                 options.Property(question => question.Title)
-                    .HasMaxLength(SurveyQuestion.QuestionMaxLength)
+                    .HasMaxLength(Question.QuestionMaxLength)
                     .IsRequired();
 
                 options.HasOne(question => question.Survey)

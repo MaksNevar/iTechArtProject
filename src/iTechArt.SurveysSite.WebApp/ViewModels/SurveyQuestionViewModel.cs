@@ -8,10 +8,10 @@ namespace iTechArt.SurveysSite.WebApp.ViewModels
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(SurveyQuestion.QuestionMaxLength, ErrorMessage = "The question title is too big")]
-        [MinLength(SurveyQuestion.QuestionMinLength, ErrorMessage = "The question title is too small")]
+        [MaxLength(Question.QuestionMaxLength, ErrorMessage = "The question title is too big")]
+        [MinLength(Question.QuestionMinLength, ErrorMessage = "The question title is too small")]
         public string Title { get; set; }
 
-        public string QuestionTypeName { get; set; }
+        public QuestionType QuestionType { get; set; }
     }
 }

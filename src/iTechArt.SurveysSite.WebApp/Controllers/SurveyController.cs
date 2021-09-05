@@ -65,10 +65,10 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
             var userId = User.GetId();
             var user = await _userManagementService.GetUserByIdAsync(userId);
-            var surveyQuestions = surveyViewModel.Questions.Select(t => new SurveyQuestion
+            var surveyQuestions = surveyViewModel.Questions.Select(t => new Question
             {
                 Title = t.Title,
-                QuestionType = t.QuestionTypeName
+                QuestionType = t.QuestionType
             }).ToList();
 
             var survey = new Survey
@@ -118,7 +118,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             {
                 Id = t.Id,
                 Title = t.Title,
-                QuestionTypeName = t.QuestionType
+                QuestionType = t.QuestionType
             }).ToList();
 
             _survey = new SurveyViewModel
@@ -142,11 +142,11 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             }
 
             var survey = await _surveyService.GetByIdAsync(surveyViewModel.Id);
-            var surveyQuestions = surveyViewModel.Questions.Select(t => new SurveyQuestion
+            var surveyQuestions = surveyViewModel.Questions.Select(t => new Question
             {
                 Id = t.Id,
                 Title = t.Title,
-                QuestionType = t.QuestionTypeName
+                QuestionType = t.QuestionType
             }).ToList();
 
             survey.Questions = surveyQuestions;
@@ -172,7 +172,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             {
                 var closedQuestion = new SurveyQuestionViewModel
                 {
-                    QuestionTypeName = SurveyQuestionType.Closed
+                    QuestionType = QuestionType.Closed
                 };
                 _survey.Questions.Add(closedQuestion);
             }
@@ -180,7 +180,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             {
                 var openEndedQuestion = new SurveyQuestionViewModel
                 {
-                    QuestionTypeName = SurveyQuestionType.OpenEnded
+                    QuestionType = QuestionType.OpenEnded
                 };
                 _survey.Questions.Add(openEndedQuestion);
             }

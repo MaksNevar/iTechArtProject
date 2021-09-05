@@ -70,7 +70,7 @@ namespace iTechArt.SurveysSite.Foundation
                 else
                 {
                     existingQuestion.Title = question.Title;
-                    _unitOfWork.GetRepository<SurveyQuestion>().Update(existingQuestion);
+                    _unitOfWork.GetRepository<Question>().Update(existingQuestion);
                 }
             }
 
@@ -78,7 +78,7 @@ namespace iTechArt.SurveysSite.Foundation
             {
                 if (survey.Questions.All(q => q.Id != question.Id))
                 {
-                    _unitOfWork.GetRepository<SurveyQuestion>().Delete(question);
+                    _unitOfWork.GetRepository<Question>().Delete(question);
                 }
             }
 

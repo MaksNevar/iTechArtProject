@@ -1,6 +1,6 @@
 ﻿namespace iTechArt.SurveysSite.DomainModel
 {
-    public class SurveyQuestion
+    public class Question
     {
         public const int QuestionMaxLength = 50;
         public const int QuestionMinLength = 5;
@@ -10,7 +10,7 @@
 
         public string Title { get; set; }
 
-        public string QuestionType { get; set; }
+        public QuestionType QuestionType { get; set; }
 
         public Survey Survey { get; set; }
     }

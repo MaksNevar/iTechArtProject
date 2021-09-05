@@ -17,6 +17,6 @@ namespace iTechArt.SurveysSite.DomainModel
 
         public DateTime ChangeDate { get; set; }
 
-        public List<SurveyQuestion> Questions { get; set; }
+        public List<Question> Questions { get; set; }
     }
 }
