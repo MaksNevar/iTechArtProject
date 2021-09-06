@@ -116,15 +116,21 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 return View(surveyViewModel);
             }
 
-            var survey = await _surveyService.GetByIdAsync(surveyViewModel.Id);
-            survey.Title = surveyViewModel.Title;
-            survey.ChangeDate = DateTime.Now;
-
-            await _surveyService.UpdateSurveyAsync(survey);
+            var survey = await ConvertToSurveyAsync(surveyViewModel);
+            var fromSurvey = await _surveyService.GetByIdAsync(surveyViewModel.Id);
+            await _surveyService.UpdateSurveyAsync(fromSurvey, survey);
 
             ViewBag.Message = "Survey edited successfully";
 
             return View(surveyViewModel);
+        }
+
+        private async Task<Survey> ConvertToSurveyAsync(SurveyViewModel surveyViewModel)
+        {
+            var survey = await _surveyService.GetByIdAsync(surveyViewModel.Id);
+            survey.Title = surveyViewModel.Title;
+
+            return survey;
         }
     }
 }

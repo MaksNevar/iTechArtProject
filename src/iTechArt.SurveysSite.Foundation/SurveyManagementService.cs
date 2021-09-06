@@ -53,10 +53,12 @@ namespace iTechArt.SurveysSite.Foundation
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task UpdateSurveyAsync(Survey survey)
+        public async Task UpdateSurveyAsync(Survey fromSurvey, Survey survey)
         {
-            _unitOfWork.SurveyRepository.Update(survey);
+            fromSurvey.Title = survey.Title;
+            fromSurvey.ChangeDate = DateTime.Now;
             await _unitOfWork.SaveAsync();
         }
+
     }
 }
