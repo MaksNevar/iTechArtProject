@@ -61,7 +61,7 @@ namespace iTechArt.SurveysSite.Foundation
             foreach (var question in survey.Questions)
             {
                 var existingQuestion = existingSurvey.Questions
-                    .SingleOrDefault(q => q.Id == question.Id);
+                    .SingleOrDefault(q => q.Id == question.Id && q.Id != 0);
 
                 if (existingQuestion == null)
                 {
