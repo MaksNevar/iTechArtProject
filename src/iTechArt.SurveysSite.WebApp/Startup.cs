@@ -67,6 +67,8 @@ namespace iTechArt.SurveysSite.WebApp
             });
 
             services.AddScoped<ISurveyManagementService, SurveyManagementService>();
+
+            services.AddScoped<IQuestionManagementService, QuestionManagementService>();
         }
 
         public void Configure(IApplicationBuilder app)

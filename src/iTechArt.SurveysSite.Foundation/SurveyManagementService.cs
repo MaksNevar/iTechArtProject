@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using iTechArt.Common;
 using iTechArt.SurveysSite.DomainModel;
@@ -12,12 +11,14 @@ namespace iTechArt.SurveysSite.Foundation
     {
         private readonly ISurveysSiteUnitOfWork _unitOfWork;
         private readonly ILog _logger;
+        private readonly IQuestionManagementService _questionManagementService;
 
 
-        public SurveyManagementService(ISurveysSiteUnitOfWork unitOfWork, ILog logger)
+        public SurveyManagementService(ISurveysSiteUnitOfWork unitOfWork, ILog logger, IQuestionManagementService questionManagementService)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
+            _questionManagementService = questionManagementService;
         }
 
 
@@ -54,37 +55,11 @@ namespace iTechArt.SurveysSite.Foundation
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task UpdateSurveyAsync(Survey survey)
+        public async Task UpdateSurveyAsync(Survey fromSurvey, Survey survey)
         {
-            var existingSurvey = await GetByIdAsync(survey.Id);
-
-            foreach (var question in survey.Questions)
-            {
-                var existingQuestion = existingSurvey.Questions
-                    .SingleOrDefault(q => q.Id == question.Id && q.Id != 0);
-
-                if (existingQuestion == null)
-                {
-                    existingSurvey.Questions.Add(question);
-                }
-                else
-                {
-                    existingQuestion.Title = question.Title;
-                    _unitOfWork.GetRepository<Question>().Update(existingQuestion);
-                }
-            }
-
-            foreach (var question in existingSurvey.Questions)
-            {
-                if (survey.Questions.All(q => q.Id != question.Id))
-                {
-                    _unitOfWork.GetRepository<Question>().Delete(question);
-                }
-            }
-
-            existingSurvey.Title = survey.Title;
-            existingSurvey.ChangeDate = DateTime.Now;
-            _unitOfWork.SurveyRepository.Update(existingSurvey);
+            _questionManagementService.UpdateQuestions(fromSurvey, survey);
+            fromSurvey.Title = survey.Title;
+            fromSurvey.ChangeDate = DateTime.Now;
             await _unitOfWork.SaveAsync();
         }
     }

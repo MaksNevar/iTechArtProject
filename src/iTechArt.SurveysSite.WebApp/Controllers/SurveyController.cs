@@ -141,18 +141,9 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 return View(surveyViewModel);
             }
 
-            var survey = await _surveyService.GetByIdAsync(surveyViewModel.Id);
-            var surveyQuestions = surveyViewModel.Questions.Select(t => new Question
-            {
-                Id = t.Id,
-                Title = t.Title,
-                QuestionType = t.QuestionType
-            }).ToList();
-
-            survey.Questions = surveyQuestions;
-            survey.Title = surveyViewModel.Title;
-
-            await _surveyService.UpdateSurveyAsync(survey);
+            var survey = await ConvertToSurveyAsync(surveyViewModel);
+            var fromSurvey = await _surveyService.GetByIdAsync(surveyViewModel.Id);
+            await _surveyService.UpdateSurveyAsync(fromSurvey, survey);
 
             ViewBag.Message = "Survey edited successfully";
 
@@ -200,6 +191,23 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
             var viewPath = TempData["View"].ToString();
             ModelState.Clear();
             return View(viewPath, _survey);
+        }
+
+
+        private async Task<Survey> ConvertToSurveyAsync(SurveyViewModel surveyViewModel)
+        {
+            var survey = await _surveyService.GetByIdAsync(surveyViewModel.Id);
+            var questions = surveyViewModel.Questions.Select(q => new Question
+            {
+                Id = q.Id,
+                Title = q.Title,
+                QuestionType = q.QuestionType
+            }).ToList();
+
+            survey.Questions = questions;
+            survey.Title = surveyViewModel.Title;
+
+            return survey;
         }
     }
 }
