@@ -90,7 +90,6 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var survey = await _surveyService.GetByIdAsync(id);
-            var userId = User.GetId();
 
             if (!IsUserValid(survey.Owner.Id))
             {
