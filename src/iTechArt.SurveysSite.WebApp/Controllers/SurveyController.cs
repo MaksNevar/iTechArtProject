@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
@@ -15,15 +14,13 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
     public class SurveyController : Controller
     {
         private static SurveyViewModel _survey;
-
-        private readonly IUserManagementService _userManagementService;
+        
         private readonly ISurveyManagementService _surveyService;
 
 
-        public SurveyController(ISurveyManagementService surveyService, IUserManagementService userManagementService)
+        public SurveyController(ISurveyManagementService surveyService)
         {
             _surveyService = surveyService;
-            _userManagementService = userManagementService;
         }
 
 
@@ -63,21 +60,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 return View(surveyViewModel);
             }
 
-            var userId = User.GetId();
-            var user = await _userManagementService.GetUserByIdAsync(userId);
-            var surveyQuestions = surveyViewModel.Questions.Select(t => new Question
-            {
-                Title = t.Title,
-                QuestionType = t.QuestionType
-            }).ToList();
-
-            var survey = new Survey
-            {
-                Title = surveyViewModel.Title,
-                ChangeDate = DateTime.Now,
-                Owner = user,
-                Questions = surveyQuestions
-            };
+            var survey = ConvertToSurvey(surveyViewModel);
 
             await _surveyService.CreateSurveyAsync(survey);
 
@@ -92,7 +75,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         {
             var survey = await _surveyService.GetByIdAsync(id);
 
-            if (!IsUserValid(survey.Owner.Id))
+            if (!IsUserValid(survey.OwnerId))
             {
                 return RedirectToAction("AccessDenied", "Home");
             }
@@ -107,7 +90,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         {
             var survey = await _surveyService.GetByIdAsync(id);
 
-            if (!IsUserValid(survey.Owner.Id))
+            if (!IsUserValid(survey.OwnerId))
             {
                 return RedirectToAction("AccessDenied", "Home");
             }
@@ -139,9 +122,9 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 return View(surveyViewModel);
             }
 
-            var survey = await ConvertToSurveyAsync(surveyViewModel);
+            var survey = ConvertToSurvey(surveyViewModel);
 
-            if (!IsUserValid(survey.Owner.Id))
+            if (!IsUserValid(survey.OwnerId))
             {
                 return RedirectToAction("AccessDenied", "Home");
             }
@@ -198,9 +181,8 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         }
 
 
-        private async Task<Survey> ConvertToSurveyAsync(SurveyViewModel surveyViewModel)
+        private Survey ConvertToSurvey(SurveyViewModel surveyViewModel)
         {
-            var survey = await _surveyService.GetByIdAsync(surveyViewModel.Id);
             var questions = surveyViewModel.Questions.Select(q => new Question
             {
                 Id = q.Id,
@@ -208,8 +190,13 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 QuestionType = q.QuestionType
             }).ToList();
 
-            survey.Questions = questions;
-            survey.Title = surveyViewModel.Title;
+            var survey = new Survey
+            {
+                Questions = questions,
+                Title = surveyViewModel.Title,
+                ChangeDate = surveyViewModel.ChangeDate,
+                OwnerId = User.GetId()
+            };
 
             return survey;
         }

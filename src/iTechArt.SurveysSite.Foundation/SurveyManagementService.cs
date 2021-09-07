@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using iTechArt.Common;
 using iTechArt.SurveysSite.DomainModel;
@@ -11,14 +12,12 @@ namespace iTechArt.SurveysSite.Foundation
     {
         private readonly ISurveysSiteUnitOfWork _unitOfWork;
         private readonly ILog _logger;
-        private readonly IQuestionManagementService _questionManagementService;
 
 
-        public SurveyManagementService(ISurveysSiteUnitOfWork unitOfWork, ILog logger, IQuestionManagementService questionManagementService)
+        public SurveyManagementService(ISurveysSiteUnitOfWork unitOfWork, ILog logger)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
-            _questionManagementService = questionManagementService;
         }
 
 
@@ -57,10 +56,42 @@ namespace iTechArt.SurveysSite.Foundation
 
         public async Task UpdateSurveyAsync(Survey fromSurvey, Survey survey)
         {
-            _questionManagementService.UpdateQuestions(fromSurvey, survey);
+            UpdateQuestions(fromSurvey, survey);
             fromSurvey.Title = survey.Title;
             fromSurvey.ChangeDate = DateTime.Now;
             await _unitOfWork.SaveAsync();
+        }
+
+
+        private void UpdateQuestions(Survey fromSurvey, Survey survey)
+        {
+            var questionsToAdd = new List<Question>();
+
+            foreach (var question in survey.Questions)
+            {
+                var existingQuestion = fromSurvey.Questions
+                    .SingleOrDefault(q => q.Id == question.Id);
+
+                if (existingQuestion == null)
+                {
+                    questionsToAdd.Add(question);
+                }
+                else
+                {
+                    existingQuestion.Title = question.Title;
+                    _unitOfWork.GetRepository<Question>().Update(existingQuestion);
+                }
+            }
+
+            foreach (var question in fromSurvey.Questions)
+            {
+                if (survey.Questions.All(q => q.Id != question.Id))
+                {
+                    _unitOfWork.GetRepository<Question>().Delete(question);
+                }
+            }
+
+            fromSurvey.Questions.AddRange(questionsToAdd);
         }
     }
 }

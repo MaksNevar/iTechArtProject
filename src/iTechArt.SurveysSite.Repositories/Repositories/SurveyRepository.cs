@@ -30,7 +30,6 @@ namespace iTechArt.SurveysSite.Repositories.Repositories
         {
             var survey = await DbContext.Set<Survey>()
                 .Include(s => s.Questions)
-                .Include(s => s.Owner)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(s => s.Id == id);
 
