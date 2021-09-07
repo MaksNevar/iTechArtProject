@@ -114,14 +114,14 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 return View(surveyViewModel);
             }
 
-            var survey = await ConvertToSurveyAsync(surveyViewModel);
+            var fromSurvey = await _surveyService.GetByIdAsync(surveyViewModel.Id);
 
-            if (!IsUserValid(survey.Owner.Id))
+            if (!IsUserValid(fromSurvey.Owner.Id))
             {
                 return RedirectToAction("AccessDenied", "Home");
             }
 
-            var fromSurvey = await _surveyService.GetByIdAsync(surveyViewModel.Id);
+            var survey = ConvertToSurvey(surveyViewModel);
             await _surveyService.UpdateSurveyAsync(fromSurvey, survey);
 
             ViewBag.Message = "Survey edited successfully";
@@ -130,10 +130,13 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         }
 
 
-        private async Task<Survey> ConvertToSurveyAsync(SurveyViewModel surveyViewModel)
+        private static Survey ConvertToSurvey(SurveyViewModel surveyViewModel)
         {
-            var survey = await _surveyService.GetByIdAsync(surveyViewModel.Id);
-            survey.Title = surveyViewModel.Title;
+            var survey = new Survey
+            {
+                Title = surveyViewModel.Title,
+                ChangeDate = surveyViewModel.ChangeDate
+            };
 
             return survey;
         }
