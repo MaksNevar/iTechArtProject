@@ -25,7 +25,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> DisplayMySurveys()
+        public async Task<IActionResult> Index()
         {
             var userId = User.GetId();
             var surveys = await _surveyService.GetAllUserSurveysAsync(userId);
@@ -40,14 +40,14 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreateNewSurvey()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateNewSurvey(SurveyViewModel surveyViewModel)
+        public async Task<IActionResult> Create(SurveyViewModel surveyViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -72,12 +72,80 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteSurvey(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var survey = await _surveyService.GetByIdAsync(id);
+
+            if (!IsUserValid(survey.Owner.Id))
+            {
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
             await _surveyService.DeleteSurveyAsync(survey);
 
-            return RedirectToAction("DisplayMySurveys");
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var survey = await _surveyService.GetByIdAsync(id);
+
+            if (!IsUserValid(survey.Owner.Id))
+            {
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
+            var surveyViewModel = new SurveyViewModel
+            {
+                Id = survey.Id,
+                Title = survey.Title
+            };
+
+            return View(surveyViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(SurveyViewModel surveyViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(surveyViewModel);
+            }
+
+            var fromSurvey = await _surveyService.GetByIdAsync(surveyViewModel.Id);
+
+            if (!IsUserValid(fromSurvey.Owner.Id))
+            {
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
+            var survey = ConvertToSurvey(surveyViewModel);
+            await _surveyService.UpdateSurveyAsync(fromSurvey, survey);
+
+            ViewBag.Message = "Survey edited successfully";
+
+            return View(surveyViewModel);
+        }
+
+
+        private static Survey ConvertToSurvey(SurveyViewModel surveyViewModel)
+        {
+            var survey = new Survey
+            {
+                Title = surveyViewModel.Title,
+                ChangeDate = surveyViewModel.ChangeDate
+            };
+
+            return survey;
+        }
+
+        private bool IsUserValid(int id)
+        {
+            var userId = User.GetId();
+
+            return userId == id;
         }
     }
 }

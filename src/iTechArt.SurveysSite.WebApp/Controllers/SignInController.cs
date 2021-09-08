@@ -19,14 +19,14 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel userView)
+        public async Task<IActionResult> Index(LoginViewModel userView)
         {
             if (!ModelState.IsValid)
             {
