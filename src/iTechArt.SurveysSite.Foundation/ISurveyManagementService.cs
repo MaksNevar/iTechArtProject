@@ -14,6 +14,6 @@ namespace iTechArt.SurveysSite.Foundation
 
         public Task DeleteSurveyAsync(Survey survey);
 
-        public Task UpdateSurveyAsync(Survey formSurvey, Survey survey);
+        public Task UpdateSurveyAsync(Survey fromSurvey, Survey survey);
     }
 }
