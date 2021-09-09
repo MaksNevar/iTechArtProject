@@ -13,8 +13,6 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
     [Authorize]
     public class SurveyController : Controller
     {
-        private static SurveyViewModel _survey;
-        
         private readonly ISurveyManagementService _surveyService;
 
 
@@ -42,12 +40,12 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            _survey = new SurveyViewModel
+            var surveyViewModel = new SurveyViewModel
             {
                 Questions = new List<SurveyQuestionViewModel>()
             };
 
-            return View(_survey);
+            return View(surveyViewModel);
         }
 
         [HttpPost]
@@ -97,19 +95,19 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
 
             var surveyQuestionsViewModel = survey.Questions.Select(t => new SurveyQuestionViewModel
             {
-                Id = t.Id,
-                Title = t.Title,
+                QuestionId = t.Id,
+                QuestionTitle = t.Title,
                 QuestionType = t.QuestionType
             }).ToList();
 
-            _survey = new SurveyViewModel
+            var surveyViewModel = new SurveyViewModel
             {
                 Id = survey.Id,
                 Title = survey.Title,
                 Questions = surveyQuestionsViewModel
             };
 
-            return View(_survey);
+            return View(surveyViewModel);
         }
 
         [HttpPost]
@@ -142,9 +140,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddQuestion(SurveyViewModel surveyViewModel, string type)
         {
-            _survey = surveyViewModel;
-
-            _survey.Questions ??= new List<SurveyQuestionViewModel>();
+            surveyViewModel.Questions ??= new List<SurveyQuestionViewModel>();
 
             if (type == "closed")
             {
@@ -152,7 +148,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 {
                     QuestionType = QuestionType.Closed
                 };
-                _survey.Questions.Add(closedQuestion);
+                surveyViewModel.Questions.Add(closedQuestion);
             }
             else
             {
@@ -160,24 +156,23 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 {
                     QuestionType = QuestionType.OpenEnded
                 };
-                _survey.Questions.Add(openEndedQuestion);
+                surveyViewModel.Questions.Add(openEndedQuestion);
             }
 
             var viewPath = TempData["View"].ToString();
             ModelState.Clear();
-            return View(viewPath, _survey);
+            return View(viewPath, surveyViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult RemoveQuestion(SurveyViewModel surveyViewModel, int index)
         {
-            _survey = surveyViewModel;
-
-            _survey.Questions.RemoveAt(index);
+            var question = surveyViewModel.Questions.SingleOrDefault(q => q.QuestionId == index);
+            surveyViewModel.Questions.Remove(question);
             var viewPath = TempData["View"].ToString();
             ModelState.Clear();
-            return View(viewPath, _survey);
+            return View(viewPath, surveyViewModel);
         }
 
 
@@ -185,8 +180,8 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         {
             var questions = surveyViewModel.Questions.Select(q => new Question
             {
-                Id = q.Id,
-                Title = q.Title,
+                Id = q.QuestionId,
+                Title = q.QuestionTitle,
                 QuestionType = q.QuestionType
             }).ToList();
 

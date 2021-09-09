@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using iTechArt.Common;
 using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Repositories.UnitOfWorks;
 
@@ -11,22 +10,19 @@ namespace iTechArt.SurveysSite.Foundation
     public class SurveyManagementService : ISurveyManagementService
     {
         private readonly ISurveysSiteUnitOfWork _unitOfWork;
-        private readonly ILog _logger;
 
 
-        public SurveyManagementService(ISurveysSiteUnitOfWork unitOfWork, ILog logger)
+        public SurveyManagementService(ISurveysSiteUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _logger = logger;
         }
 
 
         public async Task CreateSurveyAsync(Survey survey)
         {
+            survey.ChangeDate = DateTime.Now;
             _unitOfWork.SurveyRepository.Create(survey);
             await _unitOfWork.SaveAsync();
-
-            _logger.LogInformation($"The survey {survey.Title} created by {survey.Owner.UserName} on {survey.ChangeDate:MM/dd/yyyy}");
         }
 
         public async Task<IReadOnlyCollection<Survey>> GetAllUserSurveysAsync(int userId)
@@ -56,9 +52,9 @@ namespace iTechArt.SurveysSite.Foundation
 
         public async Task UpdateSurveyAsync(Survey fromSurvey, Survey survey)
         {
-            UpdateQuestions(fromSurvey, survey);
             fromSurvey.Title = survey.Title;
             fromSurvey.ChangeDate = DateTime.Now;
+            UpdateQuestions(fromSurvey, survey);
             await _unitOfWork.SaveAsync();
         }
 

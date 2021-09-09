@@ -1,0 +1,44 @@
+﻿@using iTechArt.SurveysSite.DomainModel
+@model iTechArt.SurveysSite.WebApp.ViewModels.SurveyViewModel
+<div class="flex flex-row">
+    <label asp-for="Title"></label>
+    <span><input class="input input-question" type="text" asp-for="Title"/></span>
+    <label asp-for="Id" hidden="hidden"></label>
+    <input asp-for="Id" value="@Model.Id" hidden="hidden" />
+</div>
+<span asp-validation-for="Title"></span>
+<div class="row">
+    <div class="dropdown">
+        <a class="inactive">
+            <img class="plus-button" src="/images/plus.png" />
+        </a>
+        <div class="dropdown-content">
+            <button class="btn btn-dark" type="submit" asp-action="AddQuestion" asp-route-type="closed">Closed question</button>
+            <button class="btn btn-dark" type="submit" asp-action="AddQuestion" asp-route-type="openEnded">Open ended question</button>
+        </div>
+    </div>
+</div>
+<div class="border border-dark">
+    @for (var i = 0; i < Model.Questions.Count; ++i)
+    {
+        <partial name="_QuestionPartial" model="Model.Questions[i]"/>
+    }
+</div>
+<span asp-validation-for="Questions"></span>
+<div class="row flex">
+    <button class="btn btn-dark center save-cancel" type="submit">Save</button>
+    <a class="btn btn-dark center save-cancel" asp-controller="Survey" asp-action="Index" onclick="return confirm('Do you want to discard survey?');">Cancel</a>
+</div>
+<partial name="_ButtonToMainPagePartial" />
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <script>
+        window.onload = function() {
+            alert("@ViewBag.Message");
+        };
+        window.setTimeout(function() {
+                window.location.href = "/Survey/Index";
+            },
+            2000);
+    </script>
+}
