@@ -8,7 +8,7 @@
         <input asp-for="QuestionType" hidden="hidden" value="@Model.QuestionType" />
         <label asp-for="QuestionId" hidden="hidden"></label>
         <input asp-for="QuestionId" hidden="hidden" value="@Model.QuestionId" />
-        <button class="no-background" type="submit" asp-action="RemoveQuestion" asp-route-index="@Model.QuestionId">
+        <button class="no-background" type="submit" asp-route-index="@Model.QuestionId">
             <img src="/images/minus.png" />
         </button>
     </div>
