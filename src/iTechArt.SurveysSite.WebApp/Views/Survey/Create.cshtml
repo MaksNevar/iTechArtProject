@@ -1,12 +1,13 @@
-﻿@model iTechArt.SurveysSite.WebApp.ViewModels.SurveyViewModel
+﻿@using iTechArt.SurveysSite.WebApp.Controllers
+@model iTechArt.SurveysSite.WebApp.ViewModels.SurveyViewModel
 @{
-    TempData["View"] = "Create";
+    Model.Action = nameof(SurveyController.Create);
 }
 <head>
     <link rel="stylesheet" href="/css/NewSurveyStyles.css"/>
 </head>
 <body>
     <form method="post" asp-action="Create">
-        <partial name="_CreateSurveyPartial"/>
+        <partial name="_SurveyManagement"/>
     </form>
 </body>

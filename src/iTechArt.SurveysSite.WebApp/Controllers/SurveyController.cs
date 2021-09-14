@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Foundation;
@@ -40,10 +39,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var surveyViewModel = new SurveyViewModel
-            {
-                Questions = new List<SurveyQuestionViewModel>()
-            };
+            var surveyViewModel = new SurveyViewModel();
 
             return View(surveyViewModel);
         }
@@ -54,7 +50,6 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                surveyViewModel.Questions ??= new List<SurveyQuestionViewModel>();
                 return View(surveyViewModel);
             }
 
@@ -93,7 +88,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 return RedirectToAction("AccessDenied", "Home");
             }
 
-            var surveyQuestionsViewModel = survey.Questions.Select(t => new SurveyQuestionViewModel
+            var surveyQuestionsViewModel = survey.Questions.Select(t => new QuestionViewModel
             {
                 QuestionId = t.Id,
                 QuestionTitle = t.Title,
@@ -116,7 +111,6 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                surveyViewModel.Questions ??= new List<SurveyQuestionViewModel>();
                 return View(surveyViewModel);
             }
 

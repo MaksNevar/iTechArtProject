@@ -3,7 +3,7 @@ using iTechArt.SurveysSite.DomainModel;
 
 namespace iTechArt.SurveysSite.WebApp.ViewModels
 {
-    public class SurveyQuestionViewModel
+    public class QuestionViewModel
     {
         public int QuestionId { get; set; }
 

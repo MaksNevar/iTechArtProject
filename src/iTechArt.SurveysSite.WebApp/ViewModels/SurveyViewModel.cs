@@ -19,6 +19,8 @@ namespace iTechArt.SurveysSite.WebApp.ViewModels
 
         [Required]
         [MinLength(1, ErrorMessage = "Add at least one question")]
-        public List<SurveyQuestionViewModel> Questions { get; set; }
+        public List<QuestionViewModel> Questions { get; set; }
+
+        public string Action { get; set; }
     }
 }

@@ -81,12 +81,15 @@ input {
     margin-left: 26px;
 }
 
+.input-title {
+    margin-left: 26px;
+}
 
 .no-background {
     border: none;
     background-color: transparent;
     outline: none;
-    margin-left: 500px;
+    margin-left: auto;
 }
 
 .no-background img {

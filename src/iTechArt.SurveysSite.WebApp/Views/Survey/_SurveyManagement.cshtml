@@ -1,0 +1,67 @@
+﻿@using iTechArt.SurveysSite.WebApp.ViewModels
+@model iTechArt.SurveysSite.WebApp.ViewModels.SurveyViewModel
+<form method="post" asp-action="@Model.Action">
+    <div class="flex flex-row">
+        <label asp-for="Title"></label>
+        <span><input class="input input-title" type="text" asp-for="Title" /></span>
+        <label asp-for="Id" hidden="hidden"></label>
+        <input asp-for="Id" value="@Model.Id" hidden="hidden" />
+    </div>
+    <span asp-validation-for="Title"></span>
+    <div class="row">
+        <button class="btn btn-dark save-cancel" type="button" onclick="addQuestion()">Add question</button>
+    </div>
+    <div class="border border-dark" id="questions">
+        @if (Model.Questions != null)
+        {
+            @for (var i = 0; i < Model.Questions.Count; i++)
+            {
+                @await Html.PartialAsync("_Question", Model.Questions[i])
+            }
+        }
+    </div>
+    @*<template id="closedTemplate">
+            <fieldset>
+                @{
+                    var closedQuestion = new QuestionViewModel
+                    {
+                        QuestionType = QuestionType.Closed
+                    };
+                    @await Html.PartialAsync("_Question", closedQuestion)
+                }
+            </fieldset>
+        </template>
+        <template id="openEndedTemplate">
+            <fieldset>
+                @{
+                    var openEndedQuestion = new QuestionViewModel
+                    {
+                        QuestionType = QuestionType.OpenEnded
+                    };
+                    @await Html.PartialAsync("_Question", openEndedQuestion)
+                }
+            </fieldset>
+        </template>*@
+    <fieldset id="question" hidden="hidden">
+        @await Html.PartialAsync("_Question", new QuestionViewModel())
+    </fieldset>
+    <span asp-validation-for="Questions"></span>
+    <div class="row flex">
+        <button class="btn btn-dark center save-cancel" type="submit">Save</button>
+        <a class="btn btn-dark center save-cancel" asp-controller="Survey" asp-action="Index" onclick="return confirm('Do you want to discard survey?');">Cancel</a>
+    </div>
+    <partial name="_ButtonToMainPage" />
+</form>
+<script src="/js/scripts.js"></script>
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <script>
+        window.onload = function () {
+            alert(@ViewBag);
+        };
+        window.setTimeout(function () {
+                window.location.href = "/Survey/Index";
+            },
+            2000);
+    </script>
+}
