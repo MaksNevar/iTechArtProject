@@ -1,0 +1,56 @@
+﻿@using iTechArt.SurveysSite.WebApp.ViewModels
+@model SurveyViewModel
+<script src="/js/scripts.js"></script>
+<script src="/js/displayQuestions.js"></script>
+<form id="question-form" method="post" asp-action="@Model.Action">
+    <div class="flex flex-row">
+        <label asp-for="Title"></label>
+        <span><input id="survey-title" class="input input-title" type="text" asp-for="Title" required minlength="5" maxlength="50" /></span>
+        <label asp-for="Id" hidden="hidden"></label>
+        <input asp-for="Id" value="@Model.Id" hidden="hidden" />
+    </div>
+    <span asp-validation-for="Title"></span>
+    <div class="row">
+        <button class="btn btn-dark save-cancel" type="button" onclick="addQuestion()">Add question</button>
+    </div>
+    <div class="border border-dark" id="questions">
+        @if (Model.Questions != null)
+        {
+            @for (var i = 0; i < Model.Questions.Count; i++)
+            {
+                <fieldset id="question">
+                    @await Html.PartialAsync("_Question", Model.Questions[i])
+                </fieldset>
+                var questionType = (int)Model.Questions[i].QuestionType;
+                <script>
+                    displayQuestion(@questionType, @i)
+                </script>
+            }
+        }
+    </div>
+    <template id="question">
+        <fieldset>
+            @await Html.PartialAsync("_Question", new QuestionViewModel())
+        </fieldset>
+    </template>
+
+    <span asp-validation-for="Questions"></span>
+    <div class="row flex">
+        <button class="btn btn-dark center save-cancel" type="submit">Save</button>
+        <a class="btn btn-dark center save-cancel" asp-controller="Survey" asp-action="Index" onclick="return confirm('Do you want to discard survey?');">Cancel</a>
+    </div>
+    <partial name="_ButtonToMainPage" />
+</form>
+<script src="/js/validation.js"></script>
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <script>
+        window.onload = function() {
+            alert("@ViewBag.Message");
+        };
+        window.setTimeout(function() {
+                window.location.href = "/Survey/Index";
+            },
+            2000);
+    </script>
+}

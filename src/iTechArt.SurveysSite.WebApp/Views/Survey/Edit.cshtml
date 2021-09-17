@@ -1,10 +1,11 @@
-﻿@model iTechArt.SurveysSite.WebApp.ViewModels.SurveyViewModel
+﻿@using iTechArt.SurveysSite.WebApp.Controllers
+@model iTechArt.SurveysSite.WebApp.ViewModels.SurveyViewModel
+@{
+    Model.Action = nameof(SurveyController.Edit);
+}
 <head>
     <link rel="stylesheet" href="/css/NewSurveyStyles.css" />
 </head>
 <body>
-    <form method="post" asp-action="Edit">
-        <partial name="_CreateSurveyPartial" />
-        <partial name="_ButtonToMainPagePartial" />
-    </form>
+    <partial name="_SurveyManagement" />
 </body>

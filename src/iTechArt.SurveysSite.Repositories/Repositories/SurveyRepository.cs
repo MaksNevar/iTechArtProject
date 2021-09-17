@@ -29,7 +29,7 @@ namespace iTechArt.SurveysSite.Repositories.Repositories
         public async Task<Survey> GetByIdAsync(int id)
         {
             var survey = await DbContext.Set<Survey>()
-                .Include(s => s.Owner)
+                .Include(s => s.Questions)
                 .SingleOrDefaultAsync(s => s.Id == id);
 
             return survey;

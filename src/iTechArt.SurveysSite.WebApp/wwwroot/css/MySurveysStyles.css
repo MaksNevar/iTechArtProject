@@ -34,3 +34,9 @@ tr {
 b {
     font-size: 30px;
 }
+
+button {
+    border: none;
+    background-color: transparent;
+    outline: none;
+}

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using iTechArt.SurveysSite.DomainModel;
 using iTechArt.SurveysSite.Foundation;
@@ -13,14 +12,12 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
     [Authorize]
     public class SurveyController : Controller
     {
-        private readonly IUserManagementService _userManagementService;
         private readonly ISurveyManagementService _surveyService;
 
 
-        public SurveyController(ISurveyManagementService surveyService, IUserManagementService userManagementService)
+        public SurveyController(ISurveyManagementService surveyService)
         {
             _surveyService = surveyService;
-            _userManagementService = userManagementService;
         }
 
 
@@ -42,7 +39,9 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var surveyViewModel = new SurveyViewModel();
+
+            return View(surveyViewModel);
         }
 
         [HttpPost]
@@ -54,20 +53,13 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 return View(surveyViewModel);
             }
 
-            var userId = User.GetId();
-            var user = await _userManagementService.GetUserByIdAsync(userId);
-            var survey = new Survey
-            {
-                Title = surveyViewModel.Title,
-                ChangeDate = DateTime.Now,
-                Owner = user
-            };
+            var survey = ConvertToSurvey(surveyViewModel);
 
             await _surveyService.CreateSurveyAsync(survey);
 
             ViewBag.Message = "Survey created successfully";
 
-            return View();
+            return View(surveyViewModel);
         }
 
         [HttpPost]
@@ -76,7 +68,7 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         {
             var survey = await _surveyService.GetByIdAsync(id);
 
-            if (!IsUserValid(survey.Owner.Id))
+            if (!IsUserValid(survey.OwnerId))
             {
                 return RedirectToAction("AccessDenied", "Home");
             }
@@ -91,15 +83,23 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         {
             var survey = await _surveyService.GetByIdAsync(id);
 
-            if (!IsUserValid(survey.Owner.Id))
+            if (!IsUserValid(survey.OwnerId))
             {
                 return RedirectToAction("AccessDenied", "Home");
             }
 
+            var surveyQuestionsViewModel = survey.Questions.Select(t => new QuestionViewModel
+            {
+                QuestionId = t.Id,
+                QuestionTitle = t.Title,
+                QuestionType = t.QuestionType
+            }).ToList();
+
             var surveyViewModel = new SurveyViewModel
             {
                 Id = survey.Id,
-                Title = survey.Title
+                Title = survey.Title,
+                Questions = surveyQuestionsViewModel
             };
 
             return View(surveyViewModel);
@@ -114,14 +114,14 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
                 return View(surveyViewModel);
             }
 
-            var fromSurvey = await _surveyService.GetByIdAsync(surveyViewModel.Id);
+            var survey = ConvertToSurvey(surveyViewModel);
 
-            if (!IsUserValid(fromSurvey.Owner.Id))
+            if (!IsUserValid(survey.OwnerId))
             {
                 return RedirectToAction("AccessDenied", "Home");
             }
 
-            var survey = ConvertToSurvey(surveyViewModel);
+            var fromSurvey = await _surveyService.GetByIdAsync(surveyViewModel.Id);
             await _surveyService.UpdateSurveyAsync(fromSurvey, survey);
 
             ViewBag.Message = "Survey edited successfully";
@@ -130,12 +130,21 @@ namespace iTechArt.SurveysSite.WebApp.Controllers
         }
 
 
-        private static Survey ConvertToSurvey(SurveyViewModel surveyViewModel)
+        private Survey ConvertToSurvey(SurveyViewModel surveyViewModel)
         {
+            var questions = surveyViewModel.Questions.Select(q => new Question
+            {
+                Id = q.QuestionId,
+                Title = q.QuestionTitle,
+                QuestionType = q.QuestionType
+            }).ToList();
+
             var survey = new Survey
             {
+                Questions = questions,
                 Title = surveyViewModel.Title,
-                ChangeDate = surveyViewModel.ChangeDate
+                ChangeDate = surveyViewModel.ChangeDate,
+                OwnerId = User.GetId()
             };
 
             return survey;
