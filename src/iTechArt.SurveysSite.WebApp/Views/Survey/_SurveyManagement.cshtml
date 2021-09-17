@@ -1,9 +1,11 @@
 ﻿@using iTechArt.SurveysSite.WebApp.ViewModels
-@model iTechArt.SurveysSite.WebApp.ViewModels.SurveyViewModel
-<form method="post" asp-action="@Model.Action">
+@model SurveyViewModel
+<script src="/js/scripts.js"></script>
+<script src="/js/displayQuestions.js"></script>
+<form id="question-form" method="post" asp-action="@Model.Action">
     <div class="flex flex-row">
         <label asp-for="Title"></label>
-        <span><input class="input input-title" type="text" asp-for="Title" /></span>
+        <span><input id="survey-title" class="input input-title" type="text" asp-for="Title" required minlength="5" maxlength="50" /></span>
         <label asp-for="Id" hidden="hidden"></label>
         <input asp-for="Id" value="@Model.Id" hidden="hidden" />
     </div>
@@ -16,35 +18,22 @@
         {
             @for (var i = 0; i < Model.Questions.Count; i++)
             {
-                @await Html.PartialAsync("_Question", Model.Questions[i])
+                <fieldset id="question">
+                    @await Html.PartialAsync("_Question", Model.Questions[i])
+                </fieldset>
+                var questionType = (int)Model.Questions[i].QuestionType;
+                <script>
+                    displayQuestion(@questionType, @i)
+                </script>
             }
         }
     </div>
-    @*<template id="closedTemplate">
-            <fieldset>
-                @{
-                    var closedQuestion = new QuestionViewModel
-                    {
-                        QuestionType = QuestionType.Closed
-                    };
-                    @await Html.PartialAsync("_Question", closedQuestion)
-                }
-            </fieldset>
-        </template>
-        <template id="openEndedTemplate">
-            <fieldset>
-                @{
-                    var openEndedQuestion = new QuestionViewModel
-                    {
-                        QuestionType = QuestionType.OpenEnded
-                    };
-                    @await Html.PartialAsync("_Question", openEndedQuestion)
-                }
-            </fieldset>
-        </template>*@
-    <fieldset id="question" hidden="hidden">
-        @await Html.PartialAsync("_Question", new QuestionViewModel())
-    </fieldset>
+    <template id="question">
+        <fieldset>
+            @await Html.PartialAsync("_Question", new QuestionViewModel())
+        </fieldset>
+    </template>
+
     <span asp-validation-for="Questions"></span>
     <div class="row flex">
         <button class="btn btn-dark center save-cancel" type="submit">Save</button>
@@ -52,14 +41,14 @@
     </div>
     <partial name="_ButtonToMainPage" />
 </form>
-<script src="/js/scripts.js"></script>
+<script src="/js/validation.js"></script>
 @if (!string.IsNullOrEmpty(ViewBag.Message))
 {
     <script>
-        window.onload = function () {
-            alert(@ViewBag);
+        window.onload = function() {
+            alert("@ViewBag.Message");
         };
-        window.setTimeout(function () {
+        window.setTimeout(function() {
                 window.location.href = "/Survey/Index";
             },
             2000);
